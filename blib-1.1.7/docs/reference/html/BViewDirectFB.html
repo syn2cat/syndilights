@@ -1,0 +1,76 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BViewDirectFB</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-sim.html" title="Blinkenlights Simulation"><link rel="previous" href="BViewAA.html" title="BViewAA"><link rel="next" href="BViewPixbuf.html" title="BViewPixbuf"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BViewAA.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-sim.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BViewPixbuf.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BViewDirectFB"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BViewDirectFB</span></h2><p>BViewDirectFB &#8212; a DirectFB widget to display Blinkenlights</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BViewDirectFB.html#BViewDirectFB-struct">BViewDirectFB</a>;
+<a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a>* <a href="BViewDirectFB.html#b-view-directfb-new">b_view_directfb_new</a>          (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             IDirectFB *dfb,
+                                             IDirectFBSurface *dest,
+                                             GError **error);
+void        <a href="BViewDirectFB.html#b-view-directfb-update">b_view_directfb_update</a>          (<a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a> *view,
+                                             const guchar *frame_data);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2574604"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BViewDirectFB
+</pre></div><div class="refsect1" lang="en"><a name="id2574619"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2574629"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2574634"></a><h3><a name="BViewDirectFB-struct"></a>struct BViewDirectFB</h3><pre class="programlisting">struct BViewDirectFB;</pre><p>
+The <a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a> struct shouldn't be accessed directly. Its members
+are considered private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2574655"></a><h3><a name="b-view-directfb-new"></a>b_view_directfb_new ()</h3><pre class="programlisting"><a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a>* b_view_directfb_new          (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             IDirectFB *dfb,
+                                             IDirectFBSurface *dest,
+                                             GError **error);</pre><p>
+Creates a new <a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a> object suitable to display
+Blinkenlights movies that fit the <i class="parameter"><tt>theme</tt></i>. The view will render to
+the <i class="parameter"><tt>dest</tt></i> surface. If its size doesn't fit the screen size
+specified in the theme, the view is drawn centered on the <i class="parameter"><tt>dest</tt></i>
+surface.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>theme</tt></i> :</span></td><td> a <a href="BTheme.html" title="BTheme">BTheme</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dfb</tt></i> :</span></td><td> the DirectFB super interface
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest</tt></i> :</span></td><td> the destination surface
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a new <a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a> or <tt class="literal">NULL</tt> in case of an error
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2570561"></a><h3><a name="b-view-directfb-update"></a>b_view_directfb_update ()</h3><pre class="programlisting">void        b_view_directfb_update          (<a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a> *view,
+                                             const guchar *frame_data);</pre><p>
+Displays a new frame on the <i class="parameter"><tt>view</tt></i>. The <i class="parameter"><tt>view</tt></i> expects <i class="parameter"><tt>frame_data</tt></i>
+in the range of 0 to 255.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>view</tt></i> :</span></td><td> a <a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>frame_data</tt></i> :</span></td><td> the frame data to display
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2576683"></a><h2>See Also</h2><p>
+BViewGtk
+</p></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BViewAA.html"><b>&lt;&lt; BViewAA</b></a></td><td align="right"><a accesskey="n" href="BViewPixbuf.html"><b>BViewPixbuf &gt;&gt;</b></a></td></tr></table></body></html>

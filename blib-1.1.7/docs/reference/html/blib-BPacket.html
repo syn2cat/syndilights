@@ -1,0 +1,98 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BPacket</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="blib-BProtocol.html" title="BProtocol"><link rel="next" href="BProxyClient.html" title="BProxyClient"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BProtocol.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BProxyClient.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BPacket"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BPacket</span></h2><p>BPacket &#8212; the UDP packet used to transport a single frame</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="blib-BPacket.html#BPacket">BPacket</a>;
+union       <a href="blib-BPacket.html#BPacketHeader">BPacketHeader</a>;
+<a href="blib-BPacket.html#BPacket">BPacket</a>*    <a href="blib-BPacket.html#b-packet-new">b_packet_new</a>                    (gint width,
+                                             gint height,
+                                             gint channels,
+                                             gint maxval,
+                                             gint *data_size);
+gsize       <a href="blib-BPacket.html#b-packet-size">b_packet_size</a>                   (<a href="blib-BPacket.html#BPacket">BPacket</a> *packet);
+void        <a href="blib-BPacket.html#b-packet-hton">b_packet_hton</a>                   (<a href="blib-BPacket.html#BPacket">BPacket</a> *packet);
+void        <a href="blib-BPacket.html#b-packet-ntoh">b_packet_ntoh</a>                   (<a href="blib-BPacket.html#BPacket">BPacket</a> *packet);
+</pre></div><div class="refsect1" lang="en"><a name="id2566668"></a><h2>Description</h2><p>
+A <a href="blib-BPacket.html#BPacket">BPacket</a> consists of a mcu_frame_header struct followed by the
+actual frame data. It corresponds to a single animation frame.
+</p></div><div class="refsect1" lang="en"><a name="id2566685"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2566690"></a><h3><a name="BPacket"></a>struct BPacket</h3><pre class="programlisting">struct BPacket {
+
+  BPacketHeader      header;
+  guchar             data[0];
+};
+</pre><p>
+The <a href="blib-BPacket.html#BPacket">BPacket</a> struct has a variable size which is determined by the
+values passed to <a href="blib-BPacket.html#b-packet-new">b_packet_new</a>().
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><a href="blib-BPacket.html#BPacketHeader">BPacketHeader</a> <i class="structfield"><tt>header</tt></i></span></td><td>the Blinkenlights frame header
+</td></tr><tr><td><span class="term">guchar <i class="structfield"><tt>data</tt></i>[0]</span></td><td>the frame data
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2560961"></a><h3><a name="BPacketHeader"></a>union BPacketHeader</h3><pre class="programlisting">union BPacketHeader
+{
+  mcu_frame_header_t  mcu_frame_h;
+  heartbeat_header_t  heartbeat_h;
+};
+</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2560977"></a><h3><a name="b-packet-new"></a>b_packet_new ()</h3><pre class="programlisting"><a href="blib-BPacket.html#BPacket">BPacket</a>*    b_packet_new                    (gint width,
+                                             gint height,
+                                             gint channels,
+                                             gint maxval,
+                                             gint *data_size);</pre><p>
+Allocates a new <a href="blib-BPacket.html#BPacket">BPacket</a> structure and initializes it with the
+given values. If <i class="parameter"><tt>data_size</tt></i> is non-NULL the size of the data area
+(in bytes) is returned via this variable.
+</p><p>
+The packet should be freed with g_free() when it is not needed any
+longer.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>width</tt></i> :</span></td><td> the number of pixels per row
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>height</tt></i> :</span></td><td> the number of pixels per column
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>channels</tt></i> :</span></td><td> the number of channels per pixels
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>maxval</tt></i> :</span></td><td> the maximum value
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>data_size</tt></i> :</span></td><td> returns the size of the packet data
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated <a href="blib-BPacket.html#BPacket">BPacket</a>.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547533"></a><h3><a name="b-packet-size"></a>b_packet_size ()</h3><pre class="programlisting">gsize       b_packet_size                   (<a href="blib-BPacket.html#BPacket">BPacket</a> *packet);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>packet</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547581"></a><h3><a name="b-packet-hton"></a>b_packet_hton ()</h3><pre class="programlisting">void        b_packet_hton                   (<a href="blib-BPacket.html#BPacket">BPacket</a> *packet);</pre><p>
+Converts all members of <i class="parameter"><tt>packet</tt></i> from host to network byteorder.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>packet</tt></i> :</span></td><td> pointer to a <a href="blib-BPacket.html#BPacket">BPacket</a>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547629"></a><h3><a name="b-packet-ntoh"></a>b_packet_ntoh ()</h3><pre class="programlisting">void        b_packet_ntoh                   (<a href="blib-BPacket.html#BPacket">BPacket</a> *packet);</pre><p>
+Converts all members of <i class="parameter"><tt>packet</tt></i> from network to host byteorder.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>packet</tt></i> :</span></td><td> pointer to a <a href="blib-BPacket.html#BPacket">BPacket</a>
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BProtocol.html"><b>&lt;&lt; BProtocol</b></a></td><td align="right"><a accesskey="n" href="BProxyClient.html"><b>BProxyClient &gt;&gt;</b></a></td></tr></table></body></html>

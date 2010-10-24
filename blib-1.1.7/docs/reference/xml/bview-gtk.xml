@@ -1,0 +1,119 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BViewGtk">
+<refmeta>
+<refentrytitle>BViewGtk</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BViewGtk</refname><refpurpose>a GTK+ widget to display Blinkenlights</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BViewGtk-struct">BViewGtk</link>;
+<link linkend="GtkWidget">GtkWidget</link>*  <link linkend="b-view-gtk-new">b_view_gtk_new</link>                  (<link linkend="BTheme">BTheme</link> *theme,
+                                             <link linkend="GError">GError</link> **error);
+void        <link linkend="b-view-gtk-update">b_view_gtk_update</link>               (<link linkend="BViewGtk">BViewGtk</link> *view,
+                                             const <link linkend="guchar">guchar</link> *frame_data);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GtkObject">GtkObject</link>
+         +----<link linkend="GtkWidget">GtkWidget</link>
+               +----<link linkend="GtkDrawingArea">GtkDrawingArea</link>
+                     +----BViewGtk
+</synopsis>
+
+</refsect1>
+
+<refsect1>
+<title>Implemented Interfaces</title>
+<para>
+BViewGtk implements <link linkend="AtkImplementorIface">AtkImplementorIface</link>.
+</para>
+</refsect1>
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BViewGtk-struct"/>struct BViewGtk</title>
+<programlisting>struct BViewGtk;</programlisting>
+<para>
+The <link linkend="BViewGtk">BViewGtk</link> struct shouldn't be accessed directly. Its members are
+considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-view-gtk-new"/>b_view_gtk_new ()</title>
+<programlisting><link linkend="GtkWidget">GtkWidget</link>*  b_view_gtk_new                  (<link linkend="BTheme">BTheme</link> *theme,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a new widget suitable to display Blinkenlights movies that
+fit the <parameter>theme</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>theme</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BTheme">BTheme</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a new widget or <literal>NULL</literal> in case of an error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-view-gtk-update"/>b_view_gtk_update ()</title>
+<programlisting>void        b_view_gtk_update               (<link linkend="BViewGtk">BViewGtk</link> *view,
+                                             const <link linkend="guchar">guchar</link> *frame_data);</programlisting>
+<para>
+Displays a new frame on the <parameter>view</parameter>. The <parameter>view</parameter> expects <parameter>frame_data</parameter>
+in the range of 0 to 255.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>view</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BViewGtk">BViewGtk</link> widget
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>frame_data</parameter>&nbsp;:</term>
+<listitem><simpara> the frame data to display
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>See Also</title>
+<para>
+BViewDirectFB
+</para>
+</refsect1>
+
+</refentry>

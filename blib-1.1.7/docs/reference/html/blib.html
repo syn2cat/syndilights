@@ -1,0 +1,66 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BLib Overview</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="index.html" title="BLib Reference Manual"><link rel="previous" href="index.html" title="BLib Reference Manual"><link rel="next" href="blib-utils.html" title="Blinkenlights Utilities"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="index.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-utils.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="chapter" lang="en"><div class="titlepage"><div><div><h2 class="title"><a name="blib"></a>BLib Overview</h2></div></div><div></div></div><p>
+      BLib is a library of useful things to hack the <a href="http://www.blinkenlights.de/" target="_top">Blinkenlights</a>.  The
+      software used for the original Blinkenlights installation in
+      Berlin didn't fit our needs when we planned the installation in
+      Paris, dubbed <a href="http://www.blinkenlights.de/arcade/" target="_top">Arcade</a>. We
+      decided we need something more generic and developed BLib.
+    </p><p>
+      BLib was written by Daniel Mack, Michael Natterer and Sven
+      Neumann with modules contributed by 1stein (BPacman, BBreakout)
+      and Simon Budig (BMatrix).
+    </p><p>
+      There are a couple of software packages that use BLib:
+      </p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">blinkentools</span></td><td><p>
+	      A set of command-line utilities related to Blinkenlights.
+              It includes b2b, a converter for Blinkenmovies that can
+              apply some simple effects, b2mng, which creates MNG
+              animations from Blinkenmovies, and bsend, which sends movies
+              over the net using the Blinkenlights Network Protocol.
+	    </p></td></tr><tr><td><span class="term">blinkensim</span></td><td><p>
+	      A graphical Blinkenlights simulator that displays the UDP
+	      packets it receives according to the Blinkenlights Network
+	      Protocol. It supports themes and comes with <a href="http://www.directfb.org/" target="_top">DirectFB</a> and <a href="http://www.gtk.org/" target="_top">GTK+</a> backends.
+	    </p></td></tr><tr><td><span class="term">blccc</span></td><td><p>
+	      The Blinkenlights Chaos Control center is the heart of
+	      every Blinkenlights installation. This is the master
+	      process that controls the lights. It makes heavy use of
+	      BLib.
+	    </p></td></tr></tbody></table></div><p>
+    </p><p>
+      BLib depends on <a href="http://www.gtk.org/" target="_top">GLib</a>
+      version 2.0 (or newer). For the optional DirectFB view you need
+      <a href="http://www.directfb.org/" target="_top">DirectFB</a> version
+      0.9.11 (or newer) and the GTK+ view requires at least <a href="http://www.gtk.org/" target="_top">GTK+</a> version 2.0.3.
+    </p><p>
+      BLib is released under the GNU General Public License (GPL).
+    </p></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="index.html"><b>&lt;&lt; BLib Reference Manual</b></a></td><td align="right"><a accesskey="n" href="blib-utils.html"><b>Blinkenlights Utilities &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,0 +1,263 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BSender">
+<refmeta>
+<refentrytitle>BSender</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BSender</refname><refpurpose>sends Blinkenlights packets</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BSender-struct">BSender</link>;
+<link linkend="BSender">BSender</link>*    <link linkend="b-sender-new">b_sender_new</link>                    (void);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-sender-add-recipient">b_sender_add_recipient</link>          (<link linkend="BSender">BSender</link> *sender,
+                                             <link linkend="gint">gint</link> src_port,
+                                             const <link linkend="gchar">gchar</link> *dest_host,
+                                             <link linkend="gint">gint</link> dest_port,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-sender-remove-recipient">b_sender_remove_recipient</link>       (<link linkend="BSender">BSender</link> *sender,
+                                             const <link linkend="gchar">gchar</link> *dest_host,
+                                             <link linkend="gint">gint</link> dest_port,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="GList">GList</link>*      <link linkend="b-sender-list-recipients">b_sender_list_recipients</link>        (<link linkend="BSender">BSender</link> *sender);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-sender-configure">b_sender_configure</link>              (<link linkend="BSender">BSender</link> *sender,
+                                             <link linkend="gint">gint</link> width,
+                                             <link linkend="gint">gint</link> height,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="gint">gint</link> maxval);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-sender-send-frame">b_sender_send_frame</link>             (<link linkend="BSender">BSender</link> *sender,
+                                             const <link linkend="guchar">guchar</link> *data);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-sender-send-heartbeat">b_sender_send_heartbeat</link>         (<link linkend="BSender">BSender</link> *sender);
+void        <link linkend="b-sender-set-verbose">b_sender_set_verbose</link>            (<link linkend="BSender">BSender</link> *sender,
+                                             <link linkend="gboolean">gboolean</link> verbose);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BSender
+</synopsis>
+
+</refsect1>
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+The <link linkend="BSender">BSender</link> object sends Blinkenlights UDP packets to a number of
+recipients. Recipients can be added and removed at run-time.
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BSender-struct"/>struct BSender</title>
+<programlisting>struct BSender;</programlisting>
+<para>
+The <link linkend="BSender">BSender</link> struct is considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-sender-new"/>b_sender_new ()</title>
+<programlisting><link linkend="BSender">BSender</link>*    b_sender_new                    (void);</programlisting>
+<para>
+Creates a new <link linkend="BSender">BSender</link> object.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocated <link linkend="BSender">BSender</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-add-recipient"/>b_sender_add_recipient ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_sender_add_recipient          (<link linkend="BSender">BSender</link> *sender,
+                                             <link linkend="gint">gint</link> src_port,
+                                             const <link linkend="gchar">gchar</link> *dest_host,
+                                             <link linkend="gint">gint</link> dest_port,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Tries to resolve <parameter>host</parameter> and adds it to the <parameter>sender</parameter>'s list of recipients.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BSender">BSender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src_port</parameter>&nbsp;:</term>
+<listitem><simpara>  originating UDP port (-1 to leave unspecified)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest_host</parameter>&nbsp;:</term>
+<listitem><simpara> destination hostname or IP address
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest_port</parameter>&nbsp;:</term>
+<listitem><simpara> destination UDP port
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the recipient was successfully added, <literal>FALSE</literal>
+otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-remove-recipient"/>b_sender_remove_recipient ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_sender_remove_recipient       (<link linkend="BSender">BSender</link> *sender,
+                                             const <link linkend="gchar">gchar</link> *dest_host,
+                                             <link linkend="gint">gint</link> dest_port,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Removes all recipients with matching host and port from the
+<parameter>sender</parameter>'s list of recipients.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BSender">BSender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest_host</parameter>&nbsp;:</term>
+<listitem><simpara> destination hostname or IP address
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest_port</parameter>&nbsp;:</term>
+<listitem><simpara> destination UDP port
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if at least one matching recipient was found
+and removed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-list-recipients"/>b_sender_list_recipients ()</title>
+<programlisting><link linkend="GList">GList</link>*      b_sender_list_recipients        (<link linkend="BSender">BSender</link> *sender);</programlisting>
+<para>
+Creates a list of strings that describe the <parameter>senders</parameter>
+recipients. You should free the strings as well as the list when
+it is no longer needed.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BSender">BSender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocated <link linkend="GList">GList</link> of newly allocated strings
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-configure"/>b_sender_configure ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_sender_configure              (<link linkend="BSender">BSender</link> *sender,
+                                             <link linkend="gint">gint</link> width,
+                                             <link linkend="gint">gint</link> height,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="gint">gint</link> maxval);</programlisting>
+<para>
+Prepares <parameter>sender</parameter> to send Blinkenlights UDP packets with the given
+parameters.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BSender">BSender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>width</parameter>&nbsp;:</term>
+<listitem><simpara> number of pixels per row
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>height</parameter>&nbsp;:</term>
+<listitem><simpara> number of pixels per column
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>channels</parameter>&nbsp;:</term>
+<listitem><simpara> number of channels per pixel
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>maxval</parameter>&nbsp;:</term>
+<listitem><simpara> the maximum value
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if <parameter>sender</parameter> was successfully reconfigured,
+<literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-send-frame"/>b_sender_send_frame ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_sender_send_frame             (<link linkend="BSender">BSender</link> *sender,
+                                             const <link linkend="guchar">guchar</link> *data);</programlisting>
+<para>
+Sends Blinkenlights packets to all recipients registered with
+<parameter>sender</parameter>. The <parameter>data</parameter> should match the values of the last call to
+<link linkend="b-sender-configure">b_sender_configure</link>() for <parameter>sender</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="Bsender">Bsender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&nbsp;:</term>
+<listitem><simpara> the frame data to send
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>FALSE</literal> in case of a fatal error, <literal>TRUE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-send-heartbeat"/>b_sender_send_heartbeat ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_sender_send_heartbeat         (<link linkend="BSender">BSender</link> *sender);</programlisting>
+<warning><para><literal>b_sender_send_heartbeat</literal> is deprecated and should not be used in newly-written code.</para></warning>
+<para>
+This function is deprecated and might be removed in the future.
+If you need the heartbeat functionality, use <link linkend="BProxyClient">BProxyClient</link> instead.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="Bsender">Bsender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> always
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-sender-set-verbose"/>b_sender_set_verbose ()</title>
+<programlisting>void        b_sender_set_verbose            (<link linkend="BSender">BSender</link> *sender,
+                                             <link linkend="gboolean">gboolean</link> verbose);</programlisting>
+<para>
+In earlier BLib versions <link linkend="BSender">BSender</link> used to print a message to stderr
+when <link linkend="send">send</link>() failed. This message is now suppressed by default, but
+you can get the old behaviour back using this function.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>sender</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="Bsender">Bsender</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>verbose</parameter>&nbsp;:</term>
+<listitem><simpara> whether the <parameter>sender</parameter> should do verbose error reporting or not
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>See Also</title>
+<para>
+<link linkend="BReceiver">BReceiver</link>, <link linkend="BPacket">BPacket</link>
+</para>
+</refsect1>
+
+</refentry>

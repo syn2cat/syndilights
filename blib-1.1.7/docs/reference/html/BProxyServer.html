@@ -1,0 +1,102 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BProxyServer</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="BProxyClient.html" title="BProxyClient"><link rel="next" href="BReceiver.html" title="BReceiver"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BProxyClient.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BReceiver.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BProxyServer"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BProxyServer</span></h2><p>BProxyServer &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BProxyServer.html#BProxyServer-struct">BProxyServer</a>;
+<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a>* <a href="BProxyServer.html#b-proxy-server-new">b_proxy_server_new</a>            (gint port,
+                                             GError **error);
+gboolean    <a href="BProxyServer.html#b-proxy-server-send-packet">b_proxy_server_send_packet</a>      (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *server,
+                                             <a href="blib-BPacket.html#BPacket">BPacket</a> *packet);
+gint        <a href="BProxyServer.html#b-proxy-server-num-clients">b_proxy_server_num_clients</a>      (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *server);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2566821"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----<a href="BReceiver.html" title="BReceiver">BReceiver</a>
+         +----BProxyServer
+</pre></div><div class="refsect1" lang="en"><a name="id2566841"></a><h2>Signal Prototypes</h2><pre class="synopsis">
+
+"<a href="BProxyServer.html#BProxyServer-client-added">client-added</a>"
+            void        user_function      (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *bproxyserver,
+                                            gchar *arg1,
+                                            gint arg2,
+                                            gpointer user_data);
+"<a href="BProxyServer.html#BProxyServer-client-removed">client-removed</a>"
+            void        user_function      (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *bproxyserver,
+                                            gchar *arg1,
+                                            gint arg2,
+                                            gpointer user_data);
+</pre></div><div class="refsect1" lang="en"><a name="id2566911"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2565739"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2565744"></a><h3><a name="BProxyServer-struct"></a>struct BProxyServer</h3><pre class="programlisting">struct BProxyServer;</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2565758"></a><h3><a name="b-proxy-server-new"></a>b_proxy_server_new ()</h3><pre class="programlisting"><a href="BProxyServer.html" title="BProxyServer">BProxyServer</a>* b_proxy_server_new            (gint port,
+                                             GError **error);</pre><p>
+Creates a new <a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> object, ready to use.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>port</tt></i> :</span></td><td>  the local port to listen to for heartbeat packages
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> return location for a possible error
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocate <a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2565838"></a><h3><a name="b-proxy-server-send-packet"></a>b_proxy_server_send_packet ()</h3><pre class="programlisting">gboolean    b_proxy_server_send_packet      (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *server,
+                                             <a href="blib-BPacket.html#BPacket">BPacket</a> *packet);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>server</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>packet</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2565435"></a><h3><a name="b-proxy-server-num-clients"></a>b_proxy_server_num_clients ()</h3><pre class="programlisting">gint        b_proxy_server_num_clients      (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *server);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>server</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2565484"></a><h2>Signals</h2><div class="refsect2" lang="en"><a name="id2565490"></a><h3><a name="BProxyServer-client-added"></a>The "client-added" signal</h3><pre class="programlisting">void        user_function                  (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *bproxyserver,
+                                            gchar *arg1,
+                                            gint arg2,
+                                            gpointer user_data);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>bproxyserver</tt></i> :</span></td><td>the object which received the signal.
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>arg1</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>arg2</tt></i> :</span></td><td>
+
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td>user data set when the signal handler was connected.</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2564197"></a><h3><a name="BProxyServer-client-removed"></a>The "client-removed" signal</h3><pre class="programlisting">void        user_function                  (<a href="BProxyServer.html" title="BProxyServer">BProxyServer</a> *bproxyserver,
+                                            gchar *arg1,
+                                            gint arg2,
+                                            gpointer user_data);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>bproxyserver</tt></i> :</span></td><td>the object which received the signal.
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>arg1</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>arg2</tt></i> :</span></td><td>
+
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td>user data set when the signal handler was connected.</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BProxyClient.html"><b>&lt;&lt; BProxyClient</b></a></td><td align="right"><a accesskey="n" href="BReceiver.html"><b>BReceiver &gt;&gt;</b></a></td></tr></table></body></html>

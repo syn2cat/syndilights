@@ -1,0 +1,148 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BModule Internal API</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-modules.html" title="Blinkenlights Modules"><link rel="previous" href="BModuleInfo.html" title="BModuleInfo"><link rel="next" href="blib-sim.html" title="Blinkenlights Simulation"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BModuleInfo.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-modules.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-sim.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BModule-Internal-API"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BModule Internal API</span></h2><p>BModule Internal API &#8212; the internal API for users of BModules</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+<a href="BModule.html" title="BModule">BModule</a>*    <a href="blib-BModule-Internal-API.html#b-module-new">b_module_new</a>                    (GType module_type,
+                                             gint width,
+                                             gint height,
+                                             guchar *buffer,
+                                             <a href="BModule.html#BModulePaintCallback">BModulePaintCallback</a> paint_callback,
+                                             gpointer paint_data,
+                                             GError **error);
+void        <a href="blib-BModule-Internal-API.html#b-module-set-aspect">b_module_set_aspect</a>             (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gdouble aspect_ratio);
+gboolean    <a href="blib-BModule-Internal-API.html#b-module-prepare">b_module_prepare</a>                (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             GError **error);
+void        <a href="blib-BModule-Internal-API.html#b-module-relax">b_module_relax</a>                  (<a href="BModule.html" title="BModule">BModule</a> *module);
+void        <a href="blib-BModule-Internal-API.html#b-module-start">b_module_start</a>                  (<a href="BModule.html" title="BModule">BModule</a> *module);
+void        <a href="blib-BModule-Internal-API.html#b-module-stop">b_module_stop</a>                   (<a href="BModule.html" title="BModule">BModule</a> *module);
+void        <a href="blib-BModule-Internal-API.html#b-module-event">b_module_event</a>                  (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             <a href="BModule.html#BModuleEvent">BModuleEvent</a> *event);
+gint        <a href="blib-BModule-Internal-API.html#b-module-tick">b_module_tick</a>                   (<a href="BModule.html" title="BModule">BModule</a> *module);
+void        <a href="blib-BModule-Internal-API.html#b-module-describe">b_module_describe</a>               (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gchar **title,
+                                             gchar **description,
+                                             gchar **author);
+</pre></div><div class="refsect1" lang="en"><a name="id2565048"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2565058"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2565063"></a><h3><a name="b-module-new"></a>b_module_new ()</h3><pre class="programlisting"><a href="BModule.html" title="BModule">BModule</a>*    b_module_new                    (GType module_type,
+                                             gint width,
+                                             gint height,
+                                             guchar *buffer,
+                                             <a href="BModule.html#BModulePaintCallback">BModulePaintCallback</a> paint_callback,
+                                             gpointer paint_data,
+                                             GError **error);</pre><p>
+This function tries to create the class for the <i class="parameter"><tt>module_type</tt></i> and
+queries it with the given width and height. Only if the class can
+handle the requested size, a <a href="BModule.html" title="BModule">BModule</a> instance is created and
+initialized with the given values.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module_type</tt></i> :</span></td><td> the type of module to create
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>width</tt></i> :</span></td><td> width of the frame buffer
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>height</tt></i> :</span></td><td> height of the frame buffer
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>buffer</tt></i> :</span></td><td> pointer to a preallocated buffer or <tt class="literal">NULL</tt> 
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>paint_callback</tt></i> :</span></td><td> the function to call in <a href="BModule.html#b-module-paint">b_module_paint</a>()
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>paint_data</tt></i> :</span></td><td> data to pass to the <i class="parameter"><tt>paint_callback</tt></i>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the newly allocate <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2574852"></a><h3><a name="b-module-set-aspect"></a>b_module_set_aspect ()</h3><pre class="programlisting">void        b_module_set_aspect             (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gdouble aspect_ratio);</pre><p>
+Sets the pixel (or window) aspect ratio for the <i class="parameter"><tt>module</tt></i>. Most
+modules ignore this value but some may adapt their output to take
+the shape of pixels into account.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object 
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>aspect_ratio</tt></i> :</span></td><td> the new pixel aspect ratio (x / y)
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2574919"></a><h3><a name="b-module-prepare"></a>b_module_prepare ()</h3><pre class="programlisting">gboolean    b_module_prepare                (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             GError **error);</pre><p>
+This function first queries the module once more to check that it
+can handle the current settings. If the query succeeds, the prepare()
+method of the module is called. The module should then prepare
+itself and will be able to start as soon as <a href="blib-BModule-Internal-API.html#b-module-start">b_module_start</a>() is called.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> is the module has successfully prepared itself,
+<tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2571543"></a><h3><a name="b-module-relax"></a>b_module_relax ()</h3><pre class="programlisting">void        b_module_relax                  (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+Calls the relax() method of the <i class="parameter"><tt>module</tt></i> causing it to release
+resources allocated in <a href="blib-BModule-Internal-API.html#b-module-prepare">b_module_prepare</a>().</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2571602"></a><h3><a name="b-module-start"></a>b_module_start ()</h3><pre class="programlisting">void        b_module_start                  (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+Emits the start signal for <i class="parameter"><tt>module</tt></i>. If <i class="parameter"><tt>module</tt></i> has a lifetime set,
+a timer is installed that stops the module when the lifetime expires.
+</p><p>
+You need to prepare <i class="parameter"><tt>module</tt></i> by calling <a href="blib-BModule-Internal-API.html#b-module-prepare">b_module_prepare</a>() before it
+can be started.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2571666"></a><h3><a name="b-module-stop"></a>b_module_stop ()</h3><pre class="programlisting">void        b_module_stop                   (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+Emits the stop signal for <i class="parameter"><tt>module</tt></i>. You may only call this function
+for a <a href="BModule.html" title="BModule">BModule</a> that is currently running.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2571719"></a><h3><a name="b-module-event"></a>b_module_event ()</h3><pre class="programlisting">void        b_module_event                  (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             <a href="BModule.html#BModuleEvent">BModuleEvent</a> *event);</pre><p>
+Dispatches an event to <i class="parameter"><tt>module</tt></i> by calling its event() method with
+<i class="parameter"><tt>event</tt></i>. This function has no effect if the module is not currently
+running.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>event</tt></i> :</span></td><td> pointer to a <a href="BModule.html#BModuleEvent">BModuleEvent</a>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2571798"></a><h3><a name="b-module-tick"></a>b_module_tick ()</h3><pre class="programlisting">gint        b_module_tick                   (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+Calls the tick() method of <i class="parameter"><tt>module</tt></i>.  You may only call this function
+for a <a href="BModule.html" title="BModule">BModule</a> that is currently running.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the number of milliseconds until tick() should be
+called again or -1 to indicate that no further ticks are requested
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2522114"></a><h3><a name="b-module-describe"></a>b_module_describe ()</h3><pre class="programlisting">void        b_module_describe               (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gchar **title,
+                                             gchar **description,
+                                             gchar **author);</pre><p>
+This function queries <i class="parameter"><tt>module</tt></i> for a title, description and the name
+of the author. It does so by calling the modules describe() method.
+You may pass <tt class="literal">NULL</tt> as return location if you are not interested in
+a particular information. The <i class="parameter"><tt>title</tt></i> is guaranteed to be available,
+<i class="parameter"><tt>description</tt></i> and <i class="parameter"><tt>author</tt></i> may be <tt class="literal">NULL</tt> if the module doesn't provide
+this information.
+</p><p>
+You must free all returned strings using g_free() if you don't need
+them any longer.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>title</tt></i> :</span></td><td> return location for the module title or <tt class="literal">NULL</tt>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>description</tt></i> :</span></td><td> return location for the module description or <tt class="literal">NULL</tt>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>author</tt></i> :</span></td><td> return location for the name of the module author or <tt class="literal">NULL</tt>
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BModuleInfo.html"><b>&lt;&lt; BModuleInfo</b></a></td><td align="right"><a accesskey="n" href="blib-sim.html"><b>Blinkenlights Simulation &gt;&gt;</b></a></td></tr></table></body></html>

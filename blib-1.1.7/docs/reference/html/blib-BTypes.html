@@ -1,0 +1,51 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BTypes</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="BObject.html" title="BObject"><link rel="next" href="blib-BParams.html" title="BParams"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BObject.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BParams.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BTypes"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BTypes</span></h2><p>BTypes &#8212; Additional GTypes registered by BLib</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+#define     <a href="blib-BTypes.html#B-TYPE-FILENAME-CAPS">B_TYPE_FILENAME</a>
+#define     <a href="blib-BTypes.html#B-VALUE-HOLDS-FILENAME-CAPS">B_VALUE_HOLDS_FILENAME</a>          (value)
+
+</pre></div><div class="refsect1" lang="en"><a name="id2533394"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2535947"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2539638"></a><h3><a name="B-TYPE-FILENAME-CAPS"></a>B_TYPE_FILENAME</h3><pre class="programlisting">#define B_TYPE_FILENAME               (b_filename_get_type ())
+</pre><p>
+The filename type is derived from <tt class="literal">G_TYPE_STRING</tt> and is used to
+indicate that a string should be interpreted as a filename. This
+macro returns the GType for this type.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2534242"></a><h3><a name="B-VALUE-HOLDS-FILENAME-CAPS"></a>B_VALUE_HOLDS_FILENAME()</h3><pre class="programlisting">#define B_VALUE_HOLDS_FILENAME(value) (G_TYPE_CHECK_VALUE_TYPE ((value), B_TYPE_FILENAME))
+</pre><p>
+Return whether the given GValue can hold values of type <tt class="literal">B_TYPE_FILENAME</tt>.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td>a GValue
+
+
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BObject.html"><b>&lt;&lt; BObject</b></a></td><td align="right"><a accesskey="n" href="blib-BParams.html"><b>BParams &gt;&gt;</b></a></td></tr></table></body></html>

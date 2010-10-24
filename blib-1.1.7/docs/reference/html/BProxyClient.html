@@ -1,0 +1,77 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BProxyClient</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="blib-BPacket.html" title="BPacket"><link rel="next" href="BProxyServer.html" title="BProxyServer"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BPacket.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BProxyServer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BProxyClient"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BProxyClient</span></h2><p>BProxyClient &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BProxyClient.html#BProxyClient-struct">BProxyClient</a>;
+<a href="BProxyClient.html" title="BProxyClient">BProxyClient</a>* <a href="BProxyClient.html#b-proxy-client-new">b_proxy_client_new</a>            (const gchar *proxy_host,
+                                             gint proxy_port,
+                                             gint listen_port,
+                                             <a href="BReceiver.html#BReceiverCallback">BReceiverCallback</a> callback,
+                                             gpointer callback_data,
+                                             GError **error);
+gboolean    <a href="BProxyClient.html#b-proxy-client-send-heartbeat">b_proxy_client_send_heartbeat</a>   (<a href="BProxyClient.html" title="BProxyClient">BProxyClient</a> *client);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2567518"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----<a href="BReceiver.html" title="BReceiver">BReceiver</a>
+         +----BProxyClient
+</pre></div><div class="refsect1" lang="en"><a name="id2567538"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2567548"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2567553"></a><h3><a name="BProxyClient-struct"></a>struct BProxyClient</h3><pre class="programlisting">struct BProxyClient;</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2567568"></a><h3><a name="b-proxy-client-new"></a>b_proxy_client_new ()</h3><pre class="programlisting"><a href="BProxyClient.html" title="BProxyClient">BProxyClient</a>* b_proxy_client_new            (const gchar *proxy_host,
+                                             gint proxy_port,
+                                             gint listen_port,
+                                             <a href="BReceiver.html#BReceiverCallback">BReceiverCallback</a> callback,
+                                             gpointer callback_data,
+                                             GError **error);</pre><p>
+Creates a new <a href="BProxyClient.html" title="BProxyClient">BProxyClient</a> object, ready to use.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>proxy_host</tt></i> :</span></td><td> the blinkenproxy host
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>proxy_port</tt></i> :</span></td><td> the blinkenproxy port
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>listen_port</tt></i> :</span></td><td> the local port to listen to for Blinkenlights packages
+              or -1 to bind to an arbitrary free local port
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback</tt></i> :</span></td><td> the function to call when a new frame arrives
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback_data</tt></i> :</span></td><td> data to pass to the <i class="parameter"><tt>callback</tt></i>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> return location for a possible error
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocate <a href="BProxyClient.html" title="BProxyClient">BProxyClient</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2564953"></a><h3><a name="b-proxy-client-send-heartbeat"></a>b_proxy_client_send_heartbeat ()</h3><pre class="programlisting">gboolean    b_proxy_client_send_heartbeat   (<a href="BProxyClient.html" title="BProxyClient">BProxyClient</a> *client);</pre><p>
+Make the <i class="parameter"><tt>client</tt></i> send a heartbeat packet. This function should
+be called periodically with the suggested interval of
+<tt class="literal">B_HEARTBEAT_INTERVAL</tt>. To achieve, use this function with
+g_timeout_add().</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>client</tt></i> :</span></td><td> a <a href="BProxyClient.html" title="BProxyClient">BProxyClient</a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> always <tt class="literal">TRUE</tt>
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BPacket.html"><b>&lt;&lt; BPacket</b></a></td><td align="right"><a accesskey="n" href="BProxyServer.html"><b>BProxyServer &gt;&gt;</b></a></td></tr></table></body></html>

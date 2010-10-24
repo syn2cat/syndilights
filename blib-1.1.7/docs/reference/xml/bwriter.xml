@@ -1,0 +1,182 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BWriter">
+<refmeta>
+<refentrytitle>BWriter</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BWriter</refname><refpurpose>writes XML files</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BWriter">BWriter</link>;
+<link linkend="BWriter">BWriter</link>*    <link linkend="b-writer-new">b_writer_new</link>                    (<link linkend="FILE-CAPS">FILE</link> *stream,
+                                             <link linkend="gint">gint</link> indent);
+void        <link linkend="b-writer-free">b_writer_free</link>                   (<link linkend="BWriter">BWriter</link> *writer);
+void        <link linkend="b-write-header">b_write_header</link>                  (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *encoding);
+void        <link linkend="b-write-open-tag">b_write_open_tag</link>                (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *tag,
+                                             ...);
+void        <link linkend="b-write-close-tag">b_write_close_tag</link>               (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *tag);
+void        <link linkend="b-write-element">b_write_element</link>                 (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *tag,
+                                             const <link linkend="gchar">gchar</link> *value,
+                                             ...);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BWriter"/>struct BWriter</title>
+<programlisting>struct BWriter;</programlisting>
+<para>
+The <link linkend="BWriter">BWriter</link> struct is private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-writer-new"/>b_writer_new ()</title>
+<programlisting><link linkend="BWriter">BWriter</link>*    b_writer_new                    (<link linkend="FILE-CAPS">FILE</link> *stream,
+                                             <link linkend="gint">gint</link> indent);</programlisting>
+<para>
+Creates a new <link linkend="BWriter">BWriter</link> which gives a convenient interface to write
+XML data to <parameter>stream</parameter>. The writer should later be freed using
+<link linkend="b-writer-free">b_writer_free</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>stream</parameter>&nbsp;:</term>
+<listitem><simpara> a FILE stream prepared for writing
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>indent</parameter>&nbsp;:</term>
+<listitem><simpara> how many characters to indent per nesting level
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocate <link linkend="BWriter">BWriter</link> 
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-writer-free"/>b_writer_free ()</title>
+<programlisting>void        b_writer_free                   (<link linkend="BWriter">BWriter</link> *writer);</programlisting>
+<para>
+Frees the resources allocated for <parameter>writer</parameter>. You must not access
+<parameter>writer</parameter> after calling this function.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>writer</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BWriter">BWriter</link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-write-header"/>b_write_header ()</title>
+<programlisting>void        b_write_header                  (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *encoding);</programlisting>
+<para>
+Writes an XML header to the stream associated with <parameter>writer</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>writer</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BWriter">BWriter</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>encoding</parameter>&nbsp;:</term>
+<listitem><simpara> an optional encoding string or <literal>NULL</literal>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-write-open-tag"/>b_write_open_tag ()</title>
+<programlisting>void        b_write_open_tag                (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *tag,
+                                             ...);</programlisting>
+<para>
+Writes an opening XML tag with the element name <parameter>tag</parameter> to the stream
+associated with <parameter>writer</parameter>.  You can pass a <literal>NULL</literal>-terminated list of
+key/value pairs that are written out as attributes.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>writer</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BWriter">BWriter</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tag</parameter>&nbsp;:</term>
+<listitem><simpara> the name of the element to open
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&nbsp;:</term>
+<listitem><simpara> an optional key/value pairs interpreted as attributes
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-write-close-tag"/>b_write_close_tag ()</title>
+<programlisting>void        b_write_close_tag               (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *tag);</programlisting>
+<para>
+Writes a closing XML tag with the element name <parameter>tag</parameter> to the stream
+associated with <parameter>writer</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>writer</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BWriter">BWriter</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tag</parameter>&nbsp;:</term>
+<listitem><simpara> the name of the element to close
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-write-element"/>b_write_element ()</title>
+<programlisting>void        b_write_element                 (<link linkend="BWriter">BWriter</link> *writer,
+                                             const <link linkend="gchar">gchar</link> *tag,
+                                             const <link linkend="gchar">gchar</link> *value,
+                                             ...);</programlisting>
+<para>
+Writes an XML element with the name <parameter>tag</parameter> and the value <parameter>value</parameter> to
+the stream associated with <parameter>writer</parameter>. If <parameter>value</parameter> is <literal>NULL</literal>, an empty
+element is written. You can pass a <literal>NULL</literal>-terminated list of
+key/value pairs that are written out as attributes.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>writer</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BWriter">BWriter</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>tag</parameter>&nbsp;:</term>
+<listitem><simpara> the element name
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> the element value
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>...</parameter>&nbsp;:</term>
+<listitem><simpara> an optional key/value pairs interpreted as attributes
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

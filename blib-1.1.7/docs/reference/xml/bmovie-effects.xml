@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BMovieEffects">
+<refmeta>
+<refentrytitle>BMovieEffects</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BMovieEffects</refname><refpurpose>simple effects on a movie</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+void        <link linkend="b-movie-normalize">b_movie_normalize</link>               (<link linkend="BMovie">BMovie</link> *movie,
+                                             <link linkend="gint">gint</link> maxval);
+void        <link linkend="b-movie-apply-colormap">b_movie_apply_colormap</link>          (<link linkend="BMovie">BMovie</link> *movie,
+                                             <link linkend="guchar">guchar</link> *map);
+void        <link linkend="b-movie-apply-effects">b_movie_apply_effects</link>           (<link linkend="BMovie">BMovie</link> *movie,
+                                             <link linkend="BEffects">BEffects</link> *effects,
+                                             <link linkend="gboolean">gboolean</link> reverse,
+                                             <link linkend="gdouble">gdouble</link> speed);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="b-movie-normalize"/>b_movie_normalize ()</title>
+<programlisting>void        b_movie_normalize               (<link linkend="BMovie">BMovie</link> *movie,
+                                             <link linkend="gint">gint</link> maxval);</programlisting>
+<para>
+Changes the maximum value for <parameter>movie</parameter>, that is the value that will
+cause the lamp to glow with full intensity. This function iterates
+over all frames of the movie and changes the frame data accordingly.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>movie</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BMovie">BMovie</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>maxval</parameter>&nbsp;:</term>
+<listitem><simpara> the new maximum value to apply to <parameter>movie</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-movie-apply-colormap"/>b_movie_apply_colormap ()</title>
+<programlisting>void        b_movie_apply_colormap          (<link linkend="BMovie">BMovie</link> *movie,
+                                             <link linkend="guchar">guchar</link> *map);</programlisting>
+<para>
+Applies a mapping defined by <parameter>map</parameter> to all frames of the <parameter>movie</parameter>. The
+mapping must not exceed the movie's maxval.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>movie</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BMovie">BMovie</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>map</parameter>&nbsp;:</term>
+<listitem><simpara> a LUT that remaps each color value
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-movie-apply-effects"/>b_movie_apply_effects ()</title>
+<programlisting>void        b_movie_apply_effects           (<link linkend="BMovie">BMovie</link> *movie,
+                                             <link linkend="BEffects">BEffects</link> *effects,
+                                             <link linkend="gboolean">gboolean</link> reverse,
+                                             <link linkend="gdouble">gdouble</link> speed);</programlisting>
+<para>
+If <parameter>effects</parameter> is non-<literal>NULL</literal>, the effects described by it are applied
+to <parameter>movie</parameter>. If <parameter>reverse</parameter> is <literal>TRUE</literal>, the order of frames is reversed.
+If <parameter>speed</parameter> is different from 1.0, the frame timing is adjusted; for
+example a value of 2.0 makes the movie play with double speed.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>movie</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BMovie">BMovie</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>effects</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BEffects">BEffects</link> object or <literal>NULL</literal>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>reverse</parameter>&nbsp;:</term>
+<listitem><simpara> whether to reverse the order of frames in <parameter>movie</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>speed</parameter>&nbsp;:</term>
+<listitem><simpara> an adjustment factor to be applied on the frame timing
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

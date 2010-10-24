@@ -1,0 +1,166 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BPacket">
+<refmeta>
+<refentrytitle>BPacket</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BPacket</refname><refpurpose>the UDP packet used to transport a single frame</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BPacket">BPacket</link>;
+union       <link linkend="BPacketHeader">BPacketHeader</link>;
+<link linkend="BPacket">BPacket</link>*    <link linkend="b-packet-new">b_packet_new</link>                    (<link linkend="gint">gint</link> width,
+                                             <link linkend="gint">gint</link> height,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="gint">gint</link> maxval,
+                                             <link linkend="gint">gint</link> *data_size);
+<link linkend="gsize">gsize</link>       <link linkend="b-packet-size">b_packet_size</link>                   (<link linkend="BPacket">BPacket</link> *packet);
+void        <link linkend="b-packet-hton">b_packet_hton</link>                   (<link linkend="BPacket">BPacket</link> *packet);
+void        <link linkend="b-packet-ntoh">b_packet_ntoh</link>                   (<link linkend="BPacket">BPacket</link> *packet);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+A <link linkend="BPacket">BPacket</link> consists of a mcu_frame_header struct followed by the
+actual frame data. It corresponds to a single animation frame.
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BPacket"/>struct BPacket</title>
+<programlisting>struct BPacket {
+
+  BPacketHeader      header;
+  guchar             data[0];
+};
+</programlisting>
+<para>
+The <link linkend="BPacket">BPacket</link> struct has a variable size which is determined by the
+values passed to <link linkend="b-packet-new">b_packet_new</link>().
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="BPacketHeader">BPacketHeader</link> <structfield>header</structfield></term>
+<listitem><simpara>the Blinkenlights frame header
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="guchar">guchar</link> <structfield>data</structfield>[0]</term>
+<listitem><simpara>the frame data
+
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="BPacketHeader"/>union BPacketHeader</title>
+<programlisting>union BPacketHeader
+{
+  mcu_frame_header_t  mcu_frame_h;
+  heartbeat_header_t  heartbeat_h;
+};
+</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-packet-new"/>b_packet_new ()</title>
+<programlisting><link linkend="BPacket">BPacket</link>*    b_packet_new                    (<link linkend="gint">gint</link> width,
+                                             <link linkend="gint">gint</link> height,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="gint">gint</link> maxval,
+                                             <link linkend="gint">gint</link> *data_size);</programlisting>
+<para>
+Allocates a new <link linkend="BPacket">BPacket</link> structure and initializes it with the
+given values. If <parameter>data_size</parameter> is non-NULL the size of the data area
+(in bytes) is returned via this variable.
+</para>
+<para>
+The packet should be freed with <link linkend="g-free">g_free</link>() when it is not needed any
+longer.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>width</parameter>&nbsp;:</term>
+<listitem><simpara> the number of pixels per row
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>height</parameter>&nbsp;:</term>
+<listitem><simpara> the number of pixels per column
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>channels</parameter>&nbsp;:</term>
+<listitem><simpara> the number of channels per pixels
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>maxval</parameter>&nbsp;:</term>
+<listitem><simpara> the maximum value
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data_size</parameter>&nbsp;:</term>
+<listitem><simpara> returns the size of the packet data
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocated <link linkend="BPacket">BPacket</link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-packet-size"/>b_packet_size ()</title>
+<programlisting><link linkend="gsize">gsize</link>       b_packet_size                   (<link linkend="BPacket">BPacket</link> *packet);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-packet-hton"/>b_packet_hton ()</title>
+<programlisting>void        b_packet_hton                   (<link linkend="BPacket">BPacket</link> *packet);</programlisting>
+<para>
+Converts all members of <parameter>packet</parameter> from host to network byteorder.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara> pointer to a <link linkend="BPacket">BPacket</link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-packet-ntoh"/>b_packet_ntoh ()</title>
+<programlisting>void        b_packet_ntoh                   (<link linkend="BPacket">BPacket</link> *packet);</programlisting>
+<para>
+Converts all members of <parameter>packet</parameter> from network to host byteorder.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara> pointer to a <link linkend="BPacket">BPacket</link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

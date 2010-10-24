@@ -1,0 +1,60 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BParams</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="blib-BTypes.html" title="BTypes"><link rel="next" href="blib-BUtils.html" title="BUtils"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BTypes.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BUtils.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BParams"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BParams</span></h2><p>BParams &#8212; Additional Parameter types introduced by BLib</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+#define     <a href="blib-BParams.html#B-TYPE-PARAM-FILENAME-CAPS">B_TYPE_PARAM_FILENAME</a>
+GParamSpec* <a href="blib-BParams.html#b-param-spec-filename">b_param_spec_filename</a>           (const gchar *name,
+                                             const gchar *nick,
+                                             const gchar *blurb,
+                                             gchar *default_value,
+                                             GParamFlags flags);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2533076"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2558643"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2558648"></a><h3><a name="B-TYPE-PARAM-FILENAME-CAPS"></a>B_TYPE_PARAM_FILENAME</h3><pre class="programlisting">#define B_TYPE_PARAM_FILENAME           (b_param_filename_get_type ())
+</pre><p>
+The GType of the param spec for a <tt class="literal">B_TYPE_FILENAME</tt> property.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2558671"></a><h3><a name="b-param-spec-filename"></a>b_param_spec_filename ()</h3><pre class="programlisting">GParamSpec* b_param_spec_filename           (const gchar *name,
+                                             const gchar *nick,
+                                             const gchar *blurb,
+                                             gchar *default_value,
+                                             GParamFlags flags);</pre><p>
+Creates a new GParamSpec for a <a href="blib-BTypes.html#B-TYPE-FILENAME-CAPS">B_TYPE_FILENAME</a> property.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>name</tt></i> :</span></td><td> the property name
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>nick</tt></i> :</span></td><td> an optional short version of the name
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>blurb</tt></i> :</span></td><td> an optional description
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>default_value</tt></i> :</span></td><td> the default value (may be <tt class="literal">NULL</tt>)
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>flags</tt></i> :</span></td><td> the GParamFlags for this param_spec
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the newly allocate GParamSpec.
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BTypes.html"><b>&lt;&lt; BTypes</b></a></td><td align="right"><a accesskey="n" href="blib-BUtils.html"><b>BUtils &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BObject">
+<refmeta>
+<refentrytitle>BObject</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BObject</refname><refpurpose>an abstract base class derived from <link linkend="GObject">GObject</link></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BObject-struct">BObject</link>;
+void        <link linkend="b-object-set-filename">b_object_set_filename</link>           (<link linkend="BObject">BObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *filename);
+void        <link linkend="b-object-set-name">b_object_set_name</link>               (<link linkend="BObject">BObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *name);
+const <link linkend="gchar">gchar</link>* <link linkend="b-object-get-filename">b_object_get_filename</link>          (<link linkend="BObject">BObject</link> *object);
+const <link linkend="gchar">gchar</link>* <link linkend="b-object-get-name">b_object_get_name</link>              (<link linkend="BObject">BObject</link> *object);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BObject
+</synopsis>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>Properties</title>
+<synopsis>
+
+  &quot;<link linkend="BObject--filename">filename</link>&quot;             <link linkend="gchararray">gchararray</link>           : Read / Write
+  &quot;<link linkend="BObject--name">name</link>&quot;                 <link linkend="gchararray">gchararray</link>           : Read / Write
+</synopsis>
+</refsect1>
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+<link linkend="BObject">BObject</link> is directly derived from <link linkend="GObject">GObject</link> and adds name and filename
+ properties.
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BObject-struct"/>struct BObject</title>
+<programlisting>struct BObject;</programlisting>
+<para>
+The <link linkend="BObject">BObject</link> struct shouldn't be accessed directly. Its members are
+considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-object-set-filename"/>b_object_set_filename ()</title>
+<programlisting>void        b_object_set_filename           (<link linkend="BObject">BObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *filename);</programlisting>
+<para>
+Sets the filename associated with <parameter>object</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BObject">BObject</link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filename</parameter>&nbsp;:</term>
+<listitem><simpara> the new filename, a nul-terminated string in the filesystem's
+encoding.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-object-set-name"/>b_object_set_name ()</title>
+<programlisting>void        b_object_set_name               (<link linkend="BObject">BObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *name);</programlisting>
+<para>
+Sets the name associated with <parameter>object</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BObject">BObject</link>.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>name</parameter>&nbsp;:</term>
+<listitem><simpara> the new name, a nul-terminated string in UTF-8 encoding.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-object-get-filename"/>b_object_get_filename ()</title>
+<programlisting>const <link linkend="gchar">gchar</link>* b_object_get_filename          (<link linkend="BObject">BObject</link> *object);</programlisting>
+<para>
+This functions retrieves the filename associated with <parameter>object</parameter>. The
+returned value must not be freed.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BObject">BObject</link>. 
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the fileanme or <literal>NULL</literal> if no filename was set for <parameter>object</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-object-get-name"/>b_object_get_name ()</title>
+<programlisting>const <link linkend="gchar">gchar</link>* b_object_get_name              (<link linkend="BObject">BObject</link> *object);</programlisting>
+<para>
+This functions retrieves the name associated with <parameter>object</parameter>. If no
+name has been set for <parameter>object</parameter>, the name is generated from the
+<parameter>object</parameter>'s filename. The returned value must not be freed.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BObject">BObject</link>. 
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the name or <literal>NULL</literal> if no name and no filename was set
+for <parameter>object</parameter>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1>
+<title>Properties</title>
+<variablelist>
+<varlistentry><term><anchor id="BObject--filename"/>&quot;<literal>filename</literal>&quot; (<link linkend="gchararray">gchararray</link> : Read / Write)</term>
+<listitem>
+<para>The filename associated with the object. This is a string in the filesystems's encoding.</para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BObject--name"/>&quot;<literal>name</literal>&quot; (<link linkend="gchararray">gchararray</link> : Read / Write)</term>
+<listitem>
+<para>The name associated with the object. This is a string in UTF-8 encoding.</para>
+</listitem></varlistentry>
+
+</variablelist>
+</refsect1>
+
+
+
+
+</refentry>

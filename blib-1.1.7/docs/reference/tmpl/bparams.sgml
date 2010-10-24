@@ -1,0 +1,36 @@
+<!-- ##### SECTION Title ##### -->
+BParams
+
+<!-- ##### SECTION Short_Description ##### -->
+Additional Parameter types introduced by BLib
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### MACRO B_TYPE_PARAM_FILENAME ##### -->
+<para>
+The #GType of the param spec for a %B_TYPE_FILENAME property.
+</para>
+
+
+
+<!-- ##### FUNCTION b_param_spec_filename ##### -->
+<para>
+
+</para>
+
+@name: 
+@nick: 
+@blurb: 
+@default_value: 
+@flags: 
+@Returns: 
+
+

@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-bsocket">
+<refmeta>
+<refentrytitle>bsocket</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>bsocket</refname><refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+enum        <link linkend="BSocketOptions">BSocketOptions</link>;
+<link linkend="gboolean">gboolean</link>    <link linkend="b-socket-init">b_socket_init</link>                   (<link linkend="GError">GError</link> **error);
+<link linkend="gint">gint</link>        <link linkend="b-socket-udp-new">b_socket_udp_new</link>                (<link linkend="BSocketOptions">BSocketOptions</link> options,
+                                             <link linkend="GError">GError</link> **error);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BSocketOptions"/>enum BSocketOptions</title>
+<programlisting>typedef enum
+{
+  B_SO_NONE      = 0,
+  B_SO_BROADCAST = 1 &lt;&lt; 0,
+  B_SO_REUSEADDR = 1 &lt;&lt; 1
+} BSocketOptions;
+</programlisting>
+<para>
+
+</para><variablelist role="enum">
+<varlistentry>
+<term><literal>B_SO_NONE</literal></term>
+<listitem><simpara>     no options
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><literal>B_SO_BROADCAST</literal></term>
+<listitem><simpara>send and receive broadcast packages
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><literal>B_SO_REUSEADDR</literal></term>
+<listitem><simpara>allow the address and port to be reused
+
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-socket-init"/>b_socket_init ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_socket_init                   (<link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Initialize network sockets. This function does nothing on
+UNIXes. On Win32 it initializes the Winsock DLL. You may call this
+function any number of times, the initialization is only done once.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> return location for possible errors.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> on success, <literal>FALSE</literal> in case of an error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-socket-udp-new"/>b_socket_udp_new ()</title>
+<programlisting><link linkend="gint">gint</link>        b_socket_udp_new                (<link linkend="BSocketOptions">BSocketOptions</link> options,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates an UDP socket and configures it according to <parameter>options</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>options</parameter>&nbsp;:</term>
+<listitem><simpara> <link linkend="BSocketOptions">BSocketOptions</link> to set on the socket.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> return location for possible errors.
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a socket descriptor or -1 in case of an error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

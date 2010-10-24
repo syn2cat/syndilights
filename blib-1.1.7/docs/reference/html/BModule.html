@@ -1,0 +1,177 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BModule</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-modules.html" title="Blinkenlights Modules"><link rel="previous" href="blib-modules.html" title="Blinkenlights Modules"><link rel="next" href="blib-BModule-Utilities.html" title="BModule Utilities"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-modules.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-modules.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BModule-Utilities.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BModule"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BModule</span></h2><p>BModule &#8212; definition of the Blinkenlights Game API</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BModule.html#BModule-struct">BModule</a>;
+struct      <a href="BModule.html#BModuleEvent">BModuleEvent</a>;
+enum        <a href="BModule.html#BModuleEventType">BModuleEventType</a>;
+enum        <a href="BModule.html#BModuleKey">BModuleKey</a>;
+gboolean    (<a href="BModule.html#BModulePaintCallback">*BModulePaintCallback</a>)         (<a href="BModule.html" title="BModule">BModule</a> *bmodule,
+                                             guchar *buffer,
+                                             gpointer data);
+void        <a href="BModule.html#b-module-ticker-start">b_module_ticker_start</a>           (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gint timeout);
+void        <a href="BModule.html#b-module-ticker-stop">b_module_ticker_stop</a>            (<a href="BModule.html" title="BModule">BModule</a> *module);
+void        <a href="BModule.html#b-module-request-stop">b_module_request_stop</a>           (<a href="BModule.html" title="BModule">BModule</a> *module);
+void        <a href="BModule.html#b-module-paint">b_module_paint</a>                  (<a href="BModule.html" title="BModule">BModule</a> *module);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2564511"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BModule
+</pre></div><div class="refsect1" lang="en"><a name="id2564525"></a><h2>Properties</h2><pre class="synopsis">
+
+  "<a href="BModule.html#BModule--lifetime">lifetime</a>"             gint                 : Write / Construct
+  "<a href="BModule.html#BModule--speed">speed</a>"                gdouble              : Write / Construct
+</pre></div><div class="refsect1" lang="en"><a name="id2564556"></a><h2>Signal Prototypes</h2><pre class="synopsis">
+
+"<a href="BModule.html#BModule-start">start</a>"     void        user_function      (<a href="BModule.html" title="BModule">BModule</a> *bmodule,
+                                            gpointer user_data);
+"<a href="BModule.html#BModule-stop">stop</a>"      void        user_function      (<a href="BModule.html" title="BModule">BModule</a> *bmodule,
+                                            gpointer user_data);
+</pre></div><div class="refsect1" lang="en"><a name="id2571330"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2571340"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2571345"></a><h3><a name="BModule-struct"></a>struct BModule</h3><pre class="programlisting">struct BModule;</pre><p>
+The <a href="BModule.html" title="BModule">BModule</a> struct has a couple of fields that may be read directly
+from a <a href="BModule.html" title="BModule">BModule</a> implementation. You must however not change any
+members directly. Usually a <a href="BModule.html" title="BModule">BModule</a> uses the
+<i class="structfield"><tt>width</tt></i>, <i class="structfield"><tt>height</tt></i>,
+<i class="structfield"><tt>channels</tt></i>,
+<i class="structfield"><tt>maxval</tt></i>, <i class="structfield"><tt>aspect</tt></i>
+and <i class="structfield"><tt>num_players</tt></i> fields.
+</p><p>
+The <i class="structfield"><tt>buffer</tt></i> variable is the only one a
+<a href="BModule.html" title="BModule">BModule</a> may write to. It does so when it needs to update the frame
+buffer. It is however recommened to use utility functions like
+<a href="blib-BModule-Utilities.html#b-module-fill">b_module_fill</a>() instead of writing into the
+<i class="structfield"><tt>buffer</tt></i>. All other fields of <a href="BModule.html" title="BModule">BModule</a> are
+considered private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2571425"></a><h3><a name="BModuleEvent"></a>struct BModuleEvent</h3><pre class="programlisting">struct BModuleEvent {
+
+  gint             device_id;
+  BModuleEventType type;
+  BModuleKey       key;
+};
+</pre><p>
+The <a href="BModule.html#BModuleEvent">BModuleEvent</a> struct defines an event delivered to a <a href="BModule.html" title="BModule">BModule</a>.
+The <i class="structfield"><tt>key</tt></i> field is only valid if the type
+is <tt class="literal">B_EVENT_TYPE_KEY</tt>. More field may be added when new event types
+are added.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">gint <i class="structfield"><tt>device_id</tt></i></span></td><td>the event source
+</td></tr><tr><td><span class="term"><a href="BModule.html#BModuleEventType">BModuleEventType</a> <i class="structfield"><tt>type</tt></i></span></td><td>the type of event
+</td></tr><tr><td><span class="term"><a href="BModule.html#BModuleKey">BModuleKey</a> <i class="structfield"><tt>key</tt></i></span></td><td>the key
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2570815"></a><h3><a name="BModuleEventType"></a>enum BModuleEventType</h3><pre class="programlisting">typedef enum
+{
+  B_EVENT_TYPE_UNKNOWN = 0,
+  B_EVENT_TYPE_KEY,
+  B_EVENT_TYPE_PLAYER_ENTERED,
+  B_EVENT_TYPE_PLAYER_LEFT
+} BModuleEventType;
+</pre><p>
+This enumeration classifies an event into a number of types.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2570833"></a><h3><a name="BModuleKey"></a>enum BModuleKey</h3><pre class="programlisting">typedef enum
+{
+  B_KEY_0,
+  B_KEY_1,
+  B_KEY_2,
+  B_KEY_3,
+  B_KEY_4,
+  B_KEY_5,
+  B_KEY_6,
+  B_KEY_7,
+  B_KEY_8,
+  B_KEY_9,
+  B_KEY_HASH,
+  B_KEY_ASTERISK
+} BModuleKey;
+</pre><p>
+Enumeration of the possible key values in an event of type
+<tt class="literal">B_EVENT_TYPE_KEY</tt>.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2570855"></a><h3><a name="BModulePaintCallback"></a>BModulePaintCallback ()</h3><pre class="programlisting">gboolean    (*BModulePaintCallback)         (<a href="BModule.html" title="BModule">BModule</a> *bmodule,
+                                             guchar *buffer,
+                                             gpointer data);</pre><p>
+A callback that is registered when a <a href="BModule.html" title="BModule">BModule</a> is created using
+<a href="blib-BModule-Internal-API.html#b-module-new">b_module_new</a>(). It is called from <a href="BModule.html#b-module-paint">b_module_paint</a>() and typically
+causes a Blinkenlights frame packet to be emitted. You don't need
+to care about this if you are implementing a <a href="BModule.html" title="BModule">BModule</a>.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>bmodule</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>buffer</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>data</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2570962"></a><h3><a name="b-module-ticker-start"></a>b_module_ticker_start ()</h3><pre class="programlisting">void        b_module_ticker_start           (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gint timeout);</pre><p>
+Starts a timeout for <i class="parameter"><tt>module</tt></i> that will call cause its tick() method
+to be called in <i class="parameter"><tt>timeout</tt></i> milliseconds. The return value of the
+tick() method is then used to install a new timeout for <i class="parameter"><tt>module</tt></i>.
+This proceeds until the tick() method returns -1,
+<a href="BModule.html#b-module-ticker-stop">b_module_ticker_stop</a>() is called or the module is stopped.
+</p><p>
+You may only call this function for a <a href="BModule.html" title="BModule">BModule</a> that is currently
+running.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>timeout</tt></i> :</span></td><td> the timeout interval in milliseconds 
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2567811"></a><h3><a name="b-module-ticker-stop"></a>b_module_ticker_stop ()</h3><pre class="programlisting">void        b_module_ticker_stop            (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+Stops the ticker for <i class="parameter"><tt>module</tt></i>. If there is a pending timeout for
+<i class="parameter"><tt>module</tt></i>, it is removed.
+</p><p>
+You may only call this function for a <a href="BModule.html" title="BModule">BModule</a> that is currently
+running.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2567871"></a><h3><a name="b-module-request-stop"></a>b_module_request_stop ()</h3><pre class="programlisting">void        b_module_request_stop           (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+This function causes the module to be stopped. This is for example
+used when a game module decides that the game is over.
+</p><p>
+You may only call this function for a <a href="BModule.html" title="BModule">BModule</a> that is currently
+running.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2567927"></a><h3><a name="b-module-paint"></a>b_module_paint ()</h3><pre class="programlisting">void        b_module_paint                  (<a href="BModule.html" title="BModule">BModule</a> *module);</pre><p>
+This function causes a repaint of the screen.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2567973"></a><h2>Properties</h2><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><a name="BModule--lifetime"></a>"<tt class="literal">lifetime</tt>" (gint : Write / Construct)</span></td><td><p>Maximum time a module is allowed to run (in milliseconds).</p></td></tr><tr><td><span class="term"><a name="BModule--speed"></a>"<tt class="literal">speed</tt>" (gdouble : Write / Construct)</span></td><td><p>Allows to tune the playback speed.</p></td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id2573828"></a><h2>Signals</h2><div class="refsect2" lang="en"><a name="id2573833"></a><h3><a name="BModule-start"></a>The "start" signal</h3><pre class="programlisting">void        user_function                  (<a href="BModule.html" title="BModule">BModule</a> *bmodule,
+                                            gpointer user_data);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>bmodule</tt></i> :</span></td><td>the object which received the signal.
+
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td>user data set when the signal handler was connected.</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2573886"></a><h3><a name="BModule-stop"></a>The "stop" signal</h3><pre class="programlisting">void        user_function                  (<a href="BModule.html" title="BModule">BModule</a> *bmodule,
+                                            gpointer user_data);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>bmodule</tt></i> :</span></td><td>the object which received the signal.
+
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td>user data set when the signal handler was connected.</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-modules.html"><b>&lt;&lt; Blinkenlights Modules</b></a></td><td align="right"><a accesskey="n" href="blib-BModule-Utilities.html"><b>BModule Utilities &gt;&gt;</b></a></td></tr></table></body></html>

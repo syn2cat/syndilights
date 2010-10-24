@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BProxyClient">
+<refmeta>
+<refentrytitle>BProxyClient</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BProxyClient</refname><refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BProxyClient-struct">BProxyClient</link>;
+<link linkend="BProxyClient">BProxyClient</link>* <link linkend="b-proxy-client-new">b_proxy_client_new</link>            (const <link linkend="gchar">gchar</link> *proxy_host,
+                                             <link linkend="gint">gint</link> proxy_port,
+                                             <link linkend="gint">gint</link> listen_port,
+                                             <link linkend="BReceiverCallback">BReceiverCallback</link> callback,
+                                             <link linkend="gpointer">gpointer</link> callback_data,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-proxy-client-send-heartbeat">b_proxy_client_send_heartbeat</link>   (<link linkend="BProxyClient">BProxyClient</link> *client);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="BReceiver">BReceiver</link>
+         +----BProxyClient
+</synopsis>
+
+</refsect1>
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BProxyClient-struct"/>struct BProxyClient</title>
+<programlisting>struct BProxyClient;</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-proxy-client-new"/>b_proxy_client_new ()</title>
+<programlisting><link linkend="BProxyClient">BProxyClient</link>* b_proxy_client_new            (const <link linkend="gchar">gchar</link> *proxy_host,
+                                             <link linkend="gint">gint</link> proxy_port,
+                                             <link linkend="gint">gint</link> listen_port,
+                                             <link linkend="BReceiverCallback">BReceiverCallback</link> callback,
+                                             <link linkend="gpointer">gpointer</link> callback_data,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a new <link linkend="BProxyClient">BProxyClient</link> object, ready to use.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>proxy_host</parameter>&nbsp;:</term>
+<listitem><simpara> the blinkenproxy host
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>proxy_port</parameter>&nbsp;:</term>
+<listitem><simpara> the blinkenproxy port
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>listen_port</parameter>&nbsp;:</term>
+<listitem><simpara> the local port to listen to for Blinkenlights packages
+              or -1 to bind to an arbitrary free local port
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>callback</parameter>&nbsp;:</term>
+<listitem><simpara> the function to call when a new frame arrives
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>callback_data</parameter>&nbsp;:</term>
+<listitem><simpara> data to pass to the <parameter>callback</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> return location for a possible error
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocate <link linkend="BProxyClient">BProxyClient</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-proxy-client-send-heartbeat"/>b_proxy_client_send_heartbeat ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_proxy_client_send_heartbeat   (<link linkend="BProxyClient">BProxyClient</link> *client);</programlisting>
+<para>
+Make the <parameter>client</parameter> send a heartbeat packet. This function should
+be called periodically with the suggested interval of
+<literal>B_HEARTBEAT_INTERVAL</literal>. To achieve, use this function with
+<link linkend="g-timeout-add">g_timeout_add</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>client</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BProxyClient">BProxyClient</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> always <literal>TRUE</literal>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

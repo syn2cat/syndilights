@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<book xmlns="http://www.devhelp.net/book" title="BLib Reference Manual" link="index.html" author="" name="blib">
+  <chapters>
+    <sub name="BLib Overview" link="blib.html"/>
+    <sub name="Blinkenlights Utilities" link="blib-utils.html">
+      <sub name="BLib" link="blib-BLib.html"/>
+      <sub name="BObject" link="BObject.html"/>
+      <sub name="BTypes" link="blib-BTypes.html"/>
+      <sub name="BParams" link="blib-BParams.html"/>
+      <sub name="BUtils" link="blib-BUtils.html"/>
+      <sub name="BParser" link="blib-BParser.html"/>
+      <sub name="BWriter" link="blib-BWriter.html"/>
+    </sub>
+    <sub name="Blinkenlights Movies" link="blib-movies.html">
+      <sub name="BMovie" link="BMovie.html"/>
+      <sub name="BMovieEffects" link="blib-BMovieEffects.html"/>
+      <sub name="BEffects" link="BEffects.html"/>
+      <sub name="BMoviePlayer" link="BMoviePlayer.html"/>
+    </sub>
+    <sub name="Blinkenlights Network Protocol" link="blib-network.html">
+      <sub name="BProtocol" link="blib-BProtocol.html"/>
+      <sub name="BPacket" link="blib-BPacket.html"/>
+      <sub name="BProxyClient" link="BProxyClient.html"/>
+      <sub name="BProxyServer" link="BProxyServer.html"/>
+      <sub name="BReceiver" link="BReceiver.html"/>
+      <sub name="BSender" link="BSender.html"/>
+      <sub name="bsocket" link="blib-bsocket.html"/>
+    </sub>
+    <sub name="Blinkenlights Modules" link="blib-modules.html">
+      <sub name="BModule" link="BModule.html"/>
+      <sub name="BModule Utilities" link="blib-BModule-Utilities.html"/>
+      <sub name="BModuleInfo" link="BModuleInfo.html"/>
+      <sub name="BModule Internal API" link="blib-BModule-Internal-API.html"/>
+    </sub>
+    <sub name="Blinkenlights Simulation" link="blib-sim.html">
+      <sub name="BTheme" link="BTheme.html"/>
+      <sub name="BViewAA" link="BViewAA.html"/>
+      <sub name="BViewDirectFB" link="BViewDirectFB.html"/>
+      <sub name="BViewPixbuf" link="BViewPixbuf.html"/>
+      <sub name="BViewGtk" link="BViewGtk.html"/>
+    </sub>
+  </chapters>
+  <functions>
+    <function name="b_init ()" link="blib-BLib.html#b-init"/>
+    <function name="struct BObject" link="BObject.html#BObject-struct"/>
+    <function name="b_object_set_filename ()" link="BObject.html#b-object-set-filename"/>
+    <function name="b_object_set_name ()" link="BObject.html#b-object-set-name"/>
+    <function name="b_object_get_filename ()" link="BObject.html#b-object-get-filename"/>
+    <function name="b_object_get_name ()" link="BObject.html#b-object-get-name"/>
+    <function name="B_TYPE_FILENAME" link="blib-BTypes.html#B-TYPE-FILENAME-CAPS"/>
+    <function name="B_VALUE_HOLDS_FILENAME()" link="blib-BTypes.html#B-VALUE-HOLDS-FILENAME-CAPS"/>
+    <function name="B_TYPE_PARAM_FILENAME" link="blib-BParams.html#B-TYPE-PARAM-FILENAME-CAPS"/>
+    <function name="b_param_spec_filename ()" link="blib-BParams.html#b-param-spec-filename"/>
+    <function name="b_filename_from_utf8 ()" link="blib-BUtils.html#b-filename-from-utf8"/>
+    <function name="b_parse_int ()" link="blib-BUtils.html#b-parse-int"/>
+    <function name="b_parse_boolean ()" link="blib-BUtils.html#b-parse-boolean"/>
+    <function name="b_parse_double ()" link="blib-BUtils.html#b-parse-double"/>
+    <function name="b_parse_coordinates ()" link="blib-BUtils.html#b-parse-coordinates"/>
+    <function name="b_parse_rectangle ()" link="blib-BUtils.html#b-parse-rectangle"/>
+    <function name="b_parse_color ()" link="blib-BUtils.html#b-parse-color"/>
+    <function name="b_parse_param ()" link="blib-BUtils.html#b-parse-param"/>
+    <function name="b_object_set_property ()" link="blib-BUtils.html#b-object-set-property"/>
+    <function name="b_rectangle_union ()" link="blib-BUtils.html#b-rectangle-union"/>
+    <function name="b_rectangle_intersect ()" link="blib-BUtils.html#b-rectangle-intersect"/>
+    <function name="struct BParser" link="blib-BParser.html#BParser"/>
+    <function name="enum BParserState" link="blib-BParser.html#BParserState"/>
+    <function name="BParserStartFunc ()" link="blib-BParser.html#BParserStartFunc"/>
+    <function name="BParserEndFunc ()" link="blib-BParser.html#BParserEndFunc"/>
+    <function name="b_parser_new ()" link="blib-BParser.html#b-parser-new"/>
+    <function name="b_parser_free ()" link="blib-BParser.html#b-parser-free"/>
+    <function name="b_parser_parse ()" link="blib-BParser.html#b-parser-parse"/>
+    <function name="b_parser_end_parse ()" link="blib-BParser.html#b-parser-end-parse"/>
+    <function name="b_parser_parse_io_channel ()" link="blib-BParser.html#b-parser-parse-io-channel"/>
+    <function name="b_parser_get_state ()" link="blib-BParser.html#b-parser-get-state"/>
+    <function name="b_parse_encoding ()" link="blib-BParser.html#b-parse-encoding"/>
+    <function name="struct BWriter" link="blib-BWriter.html#BWriter"/>
+    <function name="b_writer_new ()" link="blib-BWriter.html#b-writer-new"/>
+    <function name="b_writer_free ()" link="blib-BWriter.html#b-writer-free"/>
+    <function name="b_write_header ()" link="blib-BWriter.html#b-write-header"/>
+    <function name="b_write_open_tag ()" link="blib-BWriter.html#b-write-open-tag"/>
+    <function name="b_write_close_tag ()" link="blib-BWriter.html#b-write-close-tag"/>
+    <function name="b_write_element ()" link="blib-BWriter.html#b-write-element"/>
+    <function name="B_MOVIE_MIN_DELAY" link="BMovie.html#B-MOVIE-MIN-DELAY-CAPS"/>
+    <function name="B_MOVIE_DEFAULT_DELAY" link="BMovie.html#B-MOVIE-DEFAULT-DELAY-CAPS"/>
+    <function name="struct BMovie" link="BMovie.html#BMovie-struct"/>
+    <function name="struct BMovieFrame" link="BMovie.html#BMovieFrame"/>
+    <function name="B_TYPE_MOVIE_BML" link="BMovie.html#B-TYPE-MOVIE-BML-CAPS"/>
+    <function name="B_TYPE_MOVIE_BLM" link="BMovie.html#B-TYPE-MOVIE-BLM-CAPS"/>
+    <function name="B_TYPE_MOVIE_GIF" link="BMovie.html#B-TYPE-MOVIE-GIF-CAPS"/>
+    <function name="b_movie_new_from_file ()" link="BMovie.html#b-movie-new-from-file"/>
+    <function name="b_movie_new_from_fd ()" link="BMovie.html#b-movie-new-from-fd"/>
+    <function name="b_movie_load ()" link="BMovie.html#b-movie-load"/>
+    <function name="b_movie_unload ()" link="BMovie.html#b-movie-unload"/>
+    <function name="b_movie_save ()" link="BMovie.html#b-movie-save"/>
+    <function name="b_movie_save_as ()" link="BMovie.html#b-movie-save-as"/>
+    <function name="b_movie_get_frame_at_time ()" link="BMovie.html#b-movie-get-frame-at-time"/>
+    <function name="b_movie_prepend_frame ()" link="BMovie.html#b-movie-prepend-frame"/>
+    <function name="b_movie_normalize ()" link="blib-BMovieEffects.html#b-movie-normalize"/>
+    <function name="b_movie_apply_colormap ()" link="blib-BMovieEffects.html#b-movie-apply-colormap"/>
+    <function name="b_movie_apply_effects ()" link="blib-BMovieEffects.html#b-movie-apply-effects"/>
+    <function name="struct BEffects" link="BEffects.html#BEffects-struct"/>
+    <function name="enum BEffectScope" link="BEffects.html#BEffectScope"/>
+    <function name="b_effects_new ()" link="BEffects.html#b-effects-new"/>
+    <function name="b_effects_apply ()" link="BEffects.html#b-effects-apply"/>
+    <function name="struct BMoviePlayer" link="BMoviePlayer.html#BMoviePlayer-struct"/>
+    <function name="MAGIC_MCU_SETUP" link="blib-BProtocol.html#MAGIC-MCU-SETUP-CAPS"/>
+    <function name="MAGIC_MCU_FRAME" link="blib-BProtocol.html#MAGIC-MCU-FRAME-CAPS"/>
+    <function name="MAGIC_MCU_DEVCTRL" link="blib-BProtocol.html#MAGIC-MCU-DEVCTRL-CAPS"/>
+    <function name="MAGIC_BLFRAME" link="blib-BProtocol.html#MAGIC-BLFRAME-CAPS"/>
+    <function name="MAGIC_BLFRAME_256" link="blib-BProtocol.html#MAGIC-BLFRAME-256-CAPS"/>
+    <function name="MAGIC_HEARTBEAT" link="blib-BProtocol.html#MAGIC-HEARTBEAT-CAPS"/>
+    <function name="MCU_LISTENER_PORT" link="blib-BProtocol.html#MCU-LISTENER-PORT-CAPS"/>
+    <function name="MCU_ID_ANY" link="blib-BProtocol.html#MCU-ID-ANY-CAPS"/>
+    <function name="MCU_DEVCTRL_OFF" link="blib-BProtocol.html#MCU-DEVCTRL-OFF-CAPS"/>
+    <function name="MCU_DEVCTRL_ON" link="blib-BProtocol.html#MCU-DEVCTRL-ON-CAPS"/>
+    <function name="B_HEARTBEAT_PORT" link="blib-BProtocol.html#B-HEARTBEAT-PORT-CAPS"/>
+    <function name="B_HEARTBEAT_INTERVAL" link="blib-BProtocol.html#B-HEARTBEAT-INTERVAL-CAPS"/>
+    <function name="struct BPacket" link="blib-BPacket.html#BPacket"/>
+    <function name="union BPacketHeader" link="blib-BPacket.html#BPacketHeader"/>
+    <function name="b_packet_new ()" link="blib-BPacket.html#b-packet-new"/>
+    <function name="b_packet_size ()" link="blib-BPacket.html#b-packet-size"/>
+    <function name="b_packet_hton ()" link="blib-BPacket.html#b-packet-hton"/>
+    <function name="b_packet_ntoh ()" link="blib-BPacket.html#b-packet-ntoh"/>
+    <function name="struct BProxyClient" link="BProxyClient.html#BProxyClient-struct"/>
+    <function name="b_proxy_client_new ()" link="BProxyClient.html#b-proxy-client-new"/>
+    <function name="b_proxy_client_send_heartbeat ()" link="BProxyClient.html#b-proxy-client-send-heartbeat"/>
+    <function name="struct BProxyServer" link="BProxyServer.html#BProxyServer-struct"/>
+    <function name="b_proxy_server_new ()" link="BProxyServer.html#b-proxy-server-new"/>
+    <function name="b_proxy_server_send_packet ()" link="BProxyServer.html#b-proxy-server-send-packet"/>
+    <function name="b_proxy_server_num_clients ()" link="BProxyServer.html#b-proxy-server-num-clients"/>
+    <function name="The &quot;client-added&quot; signal" link="BProxyServer.html#BProxyServer-client-added"/>
+    <function name="The &quot;client-removed&quot; signal" link="BProxyServer.html#BProxyServer-client-removed"/>
+    <function name="struct BReceiver" link="BReceiver.html#BReceiver-struct"/>
+    <function name="BReceiverCallback ()" link="BReceiver.html#BReceiverCallback"/>
+    <function name="b_receiver_new ()" link="BReceiver.html#b-receiver-new"/>
+    <function name="b_receiver_listen ()" link="BReceiver.html#b-receiver-listen"/>
+    <function name="b_receiver_listen_fd ()" link="BReceiver.html#b-receiver-listen-fd"/>
+    <function name="b_receiver_stop ()" link="BReceiver.html#b-receiver-stop"/>
+    <function name="struct BSender" link="BSender.html#BSender-struct"/>
+    <function name="b_sender_new ()" link="BSender.html#b-sender-new"/>
+    <function name="b_sender_add_recipient ()" link="BSender.html#b-sender-add-recipient"/>
+    <function name="b_sender_remove_recipient ()" link="BSender.html#b-sender-remove-recipient"/>
+    <function name="b_sender_list_recipients ()" link="BSender.html#b-sender-list-recipients"/>
+    <function name="b_sender_configure ()" link="BSender.html#b-sender-configure"/>
+    <function name="b_sender_send_frame ()" link="BSender.html#b-sender-send-frame"/>
+    <function name="b_sender_send_heartbeat ()" link="BSender.html#b-sender-send-heartbeat"/>
+    <function name="b_sender_set_verbose ()" link="BSender.html#b-sender-set-verbose"/>
+    <function name="enum BSocketOptions" link="blib-bsocket.html#BSocketOptions"/>
+    <function name="b_socket_init ()" link="blib-bsocket.html#b-socket-init"/>
+    <function name="b_socket_udp_new ()" link="blib-bsocket.html#b-socket-udp-new"/>
+    <function name="struct BModule" link="BModule.html#BModule-struct"/>
+    <function name="struct BModuleEvent" link="BModule.html#BModuleEvent"/>
+    <function name="enum BModuleEventType" link="BModule.html#BModuleEventType"/>
+    <function name="enum BModuleKey" link="BModule.html#BModuleKey"/>
+    <function name="BModulePaintCallback ()" link="BModule.html#BModulePaintCallback"/>
+    <function name="b_module_ticker_start ()" link="BModule.html#b-module-ticker-start"/>
+    <function name="b_module_ticker_stop ()" link="BModule.html#b-module-ticker-stop"/>
+    <function name="b_module_request_stop ()" link="BModule.html#b-module-request-stop"/>
+    <function name="b_module_paint ()" link="BModule.html#b-module-paint"/>
+    <function name="The &quot;start&quot; signal" link="BModule.html#BModule-start"/>
+    <function name="The &quot;stop&quot; signal" link="BModule.html#BModule-stop"/>
+    <function name="b_module_draw_point ()" link="blib-BModule-Utilities.html#b-module-draw-point"/>
+    <function name="b_module_draw_line ()" link="blib-BModule-Utilities.html#b-module-draw-line"/>
+    <function name="b_module_fill ()" link="blib-BModule-Utilities.html#b-module-fill"/>
+    <function name="struct BModuleInfo" link="BModuleInfo.html#BModuleInfo-struct"/>
+    <function name="b_module_info_new ()" link="BModuleInfo.html#b-module-info-new"/>
+    <function name="b_module_infos_scan_dir ()" link="BModuleInfo.html#b-module-infos-scan-dir"/>
+    <function name="b_module_new ()" link="blib-BModule-Internal-API.html#b-module-new"/>
+    <function name="b_module_set_aspect ()" link="blib-BModule-Internal-API.html#b-module-set-aspect"/>
+    <function name="b_module_prepare ()" link="blib-BModule-Internal-API.html#b-module-prepare"/>
+    <function name="b_module_relax ()" link="blib-BModule-Internal-API.html#b-module-relax"/>
+    <function name="b_module_start ()" link="blib-BModule-Internal-API.html#b-module-start"/>
+    <function name="b_module_stop ()" link="blib-BModule-Internal-API.html#b-module-stop"/>
+    <function name="b_module_event ()" link="blib-BModule-Internal-API.html#b-module-event"/>
+    <function name="b_module_tick ()" link="blib-BModule-Internal-API.html#b-module-tick"/>
+    <function name="b_module_describe ()" link="blib-BModule-Internal-API.html#b-module-describe"/>
+    <function name="struct BColor" link="BTheme.html#BColor"/>
+    <function name="struct BRectangle" link="BTheme.html#BRectangle"/>
+    <function name="struct BWindow" link="BTheme.html#BWindow"/>
+    <function name="B_WINDOW_VALUE_ALL" link="BTheme.html#B-WINDOW-VALUE-ALL-CAPS"/>
+    <function name="struct BOverlay" link="BTheme.html#BOverlay"/>
+    <function name="struct BTheme" link="BTheme.html#BTheme-struct"/>
+    <function name="b_theme_new_from_file ()" link="BTheme.html#b-theme-new-from-file"/>
+    <function name="b_theme_new_from_scratch ()" link="BTheme.html#b-theme-new-from-scratch"/>
+    <function name="b_theme_load ()" link="BTheme.html#b-theme-load"/>
+    <function name="b_theme_unload ()" link="BTheme.html#b-theme-unload"/>
+    <function name="struct BThemesQuery" link="BTheme.html#BThemesQuery"/>
+    <function name="enum BThemesQueryFlags" link="BTheme.html#BThemesQueryFlags"/>
+    <function name="b_themes_query ()" link="BTheme.html#b-themes-query"/>
+    <function name="BThemesForeachFunc ()" link="BTheme.html#BThemesForeachFunc"/>
+    <function name="b_themes_foreach ()" link="BTheme.html#b-themes-foreach"/>
+    <function name="b_themes_foreach_theme ()" link="BTheme.html#b-themes-foreach-theme"/>
+    <function name="b_themes_lookup_theme ()" link="BTheme.html#b-themes-lookup-theme"/>
+    <function name="b_theme_frame_diff_boundary ()" link="BTheme.html#b-theme-frame-diff-boundary"/>
+    <function name="struct BViewAA" link="BViewAA.html#BViewAA-struct"/>
+    <function name="b_view_aa_new ()" link="BViewAA.html#b-view-aa-new"/>
+    <function name="b_view_aa_update ()" link="BViewAA.html#b-view-aa-update"/>
+    <function name="struct BViewDirectFB" link="BViewDirectFB.html#BViewDirectFB-struct"/>
+    <function name="b_view_directfb_new ()" link="BViewDirectFB.html#b-view-directfb-new"/>
+    <function name="b_view_directfb_update ()" link="BViewDirectFB.html#b-view-directfb-update"/>
+    <function name="struct BViewPixbuf" link="BViewPixbuf.html#BViewPixbuf-struct"/>
+    <function name="b_view_pixbuf_new ()" link="BViewPixbuf.html#b-view-pixbuf-new"/>
+    <function name="b_view_pixbuf_new_theme ()" link="BViewPixbuf.html#b-view-pixbuf-new-theme"/>
+    <function name="b_view_pixbuf_load_image ()" link="BViewPixbuf.html#b-view-pixbuf-load-image"/>
+    <function name="b_view_pixbuf_render ()" link="BViewPixbuf.html#b-view-pixbuf-render"/>
+    <function name="struct BViewGtk" link="BViewGtk.html#BViewGtk-struct"/>
+    <function name="b_view_gtk_new ()" link="BViewGtk.html#b-view-gtk-new"/>
+    <function name="b_view_gtk_update ()" link="BViewGtk.html#b-view-gtk-update"/>
+  </functions>
+</book>

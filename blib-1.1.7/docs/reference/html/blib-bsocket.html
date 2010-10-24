@@ -1,0 +1,67 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>bsocket</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="BSender.html" title="BSender"><link rel="next" href="blib-modules.html" title="Blinkenlights Modules"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BSender.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-modules.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-bsocket"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">bsocket</span></h2><p>bsocket &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+enum        <a href="blib-bsocket.html#BSocketOptions">BSocketOptions</a>;
+gboolean    <a href="blib-bsocket.html#b-socket-init">b_socket_init</a>                   (GError **error);
+gint        <a href="blib-bsocket.html#b-socket-udp-new">b_socket_udp_new</a>                (<a href="blib-bsocket.html#BSocketOptions">BSocketOptions</a> options,
+                                             GError **error);
+</pre></div><div class="refsect1" lang="en"><a name="id2553549"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2569363"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2569368"></a><h3><a name="BSocketOptions"></a>enum BSocketOptions</h3><pre class="programlisting">typedef enum
+{
+  B_SO_NONE      = 0,
+  B_SO_BROADCAST = 1 &lt;&lt; 0,
+  B_SO_REUSEADDR = 1 &lt;&lt; 1
+} BSocketOptions;
+</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><tt class="literal">B_SO_NONE</tt></span></td><td>     no options
+</td></tr><tr><td><span class="term"><tt class="literal">B_SO_BROADCAST</tt></span></td><td>send and receive broadcast packages
+</td></tr><tr><td><span class="term"><tt class="literal">B_SO_REUSEADDR</tt></span></td><td>allow the address and port to be reused
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2569423"></a><h3><a name="b-socket-init"></a>b_socket_init ()</h3><pre class="programlisting">gboolean    b_socket_init                   (GError **error);</pre><p>
+Initialize network sockets. This function does nothing on
+UNIXes. On Win32 it initializes the Winsock DLL. You may call this
+function any number of times, the initialization is only done once.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> return location for possible errors.
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> on success, <tt class="literal">FALSE</tt> in case of an error
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2560594"></a><h3><a name="b-socket-udp-new"></a>b_socket_udp_new ()</h3><pre class="programlisting">gint        b_socket_udp_new                (<a href="blib-bsocket.html#BSocketOptions">BSocketOptions</a> options,
+                                             GError **error);</pre><p>
+Creates an UDP socket and configures it according to <i class="parameter"><tt>options</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>options</tt></i> :</span></td><td> <a href="blib-bsocket.html#BSocketOptions">BSocketOptions</a> to set on the socket.
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> return location for possible errors.
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a socket descriptor or -1 in case of an error
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BSender.html"><b>&lt;&lt; BSender</b></a></td><td align="right"><a accesskey="n" href="blib-modules.html"><b>Blinkenlights Modules &gt;&gt;</b></a></td></tr></table></body></html>

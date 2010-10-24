@@ -1,0 +1,81 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BEffects</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-movies.html" title="Blinkenlights Movies"><link rel="previous" href="blib-BMovieEffects.html" title="BMovieEffects"><link rel="next" href="BMoviePlayer.html" title="BMoviePlayer"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BMovieEffects.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-movies.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BMoviePlayer.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BEffects"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BEffects</span></h2><p>BEffects &#8212; simple effects on a single movie frame</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BEffects.html#BEffects-struct">BEffects</a>;
+enum        <a href="BEffects.html#BEffectScope">BEffectScope</a>;
+<a href="BEffects.html" title="BEffects">BEffects</a>*   <a href="BEffects.html#b-effects-new">b_effects_new</a>                   (void);
+void        <a href="BEffects.html#b-effects-apply">b_effects_apply</a>                 (<a href="BEffects.html" title="BEffects">BEffects</a> *effects,
+                                             guchar *frame_data,
+                                             gint width,
+                                             gint height,
+                                             gint channels,
+                                             gint maxval);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2507444"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BEffects
+</pre></div><div class="refsect1" lang="en"><a name="id2507459"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2507468"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2507474"></a><h3><a name="BEffects-struct"></a>struct BEffects</h3><pre class="programlisting">struct BEffects;</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2507488"></a><h3><a name="BEffectScope"></a>enum BEffectScope</h3><pre class="programlisting">typedef enum
+{
+  B_EFFECT_SCOPE_NONE  = 0,
+  B_EFFECT_SCOPE_LEFT  = 1 &lt;&lt; 0,
+  B_EFFECT_SCOPE_RIGHT = 1 &lt;&lt; 1,
+  B_EFFECT_SCOPE_ALL   = B_EFFECT_SCOPE_LEFT | B_EFFECT_SCOPE_RIGHT
+} BEffectScope;
+</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2507506"></a><h3><a name="b-effects-new"></a>b_effects_new ()</h3><pre class="programlisting"><a href="BEffects.html" title="BEffects">BEffects</a>*   b_effects_new                   (void);</pre><p>
+Creates a new <a href="BEffects.html" title="BEffects">BEffects</a> object with default values.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the newly allocate <a href="BEffects.html" title="BEffects">BEffects</a> object.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2509738"></a><h3><a name="b-effects-apply"></a>b_effects_apply ()</h3><pre class="programlisting">void        b_effects_apply                 (<a href="BEffects.html" title="BEffects">BEffects</a> *effects,
+                                             guchar *frame_data,
+                                             gint width,
+                                             gint height,
+                                             gint channels,
+                                             gint maxval);</pre><p>
+This function applies the effects described in the <i class="parameter"><tt>effects</tt></i> object
+to a single frame.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>effects</tt></i> :</span></td><td> a <a href="BEffects.html" title="BEffects">BEffects</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>frame_data</tt></i> :</span></td><td> data to apply the effects on
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>width</tt></i> :</span></td><td> width of the <i class="parameter"><tt>frame_data</tt></i> buffer
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>height</tt></i> :</span></td><td> height of the <i class="parameter"><tt>frame_data</tt></i> buffer
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>channels</tt></i> :</span></td><td> number of channels in the <i class="parameter"><tt>frame_data</tt></i> buffer
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>maxval</tt></i> :</span></td><td> the maximum value for the <i class="parameter"><tt>frame_data</tt></i> buffer
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BMovieEffects.html"><b>&lt;&lt; BMovieEffects</b></a></td><td align="right"><a accesskey="n" href="BMoviePlayer.html"><b>BMoviePlayer &gt;&gt;</b></a></td></tr></table></body></html>

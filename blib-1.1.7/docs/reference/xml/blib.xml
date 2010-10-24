@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BLib">
+<refmeta>
+<refentrytitle>BLib</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BLib</refname><refpurpose>BLib library initialization</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+void        <link linkend="b-init">b_init</link>                          (void);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="b-init"/>b_init ()</title>
+<programlisting>void        b_init                          (void);</programlisting>
+<para>
+This function initializes the BLib library. It calls <link linkend="g-type-init">g_type_init</link>()
+for you, initializes the random number generator and registers some
+transform functions needed for the deserialization routines.
+</para>
+<para>
+It is safe to call this function multiple times but you should at
+least call it once before you use any other BLib functions.</para>
+<para>
+
+</para></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

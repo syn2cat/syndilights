@@ -1,0 +1,101 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BMoviePlayer">
+<refmeta>
+<refentrytitle>BMoviePlayer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BMoviePlayer</refname><refpurpose>a <link linkend="BModule">BModule</link> that implements a <link linkend="BMovie">BMovie</link> player</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BMoviePlayer-struct">BMoviePlayer</link>;
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="BModule">BModule</link>
+         +----BMoviePlayer
+</synopsis>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>Properties</title>
+<synopsis>
+
+  &quot;<link linkend="BMoviePlayer--clear">clear</link>&quot;                <link linkend="gboolean">gboolean</link>             : Write / Construct
+  &quot;<link linkend="BMoviePlayer--h-align">h-align</link>&quot;              <link linkend="gdouble">gdouble</link>              : Write / Construct
+  &quot;<link linkend="BMoviePlayer--movie">movie</link>&quot;                <link linkend="BFilename">BFilename</link>            : Write / Construct
+  &quot;<link linkend="BMoviePlayer--reverse">reverse</link>&quot;              <link linkend="gboolean">gboolean</link>             : Write / Construct
+  &quot;<link linkend="BMoviePlayer--v-align">v-align</link>&quot;              <link linkend="gdouble">gdouble</link>              : Write / Construct
+</synopsis>
+</refsect1>
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BMoviePlayer-struct"/>struct BMoviePlayer</title>
+<programlisting>struct BMoviePlayer;</programlisting>
+<para>
+The <link linkend="BMoviePlayer">BMoviePlayer</link> struct is considered private.
+</para></refsect2>
+
+</refsect1>
+<refsect1>
+<title>Properties</title>
+<variablelist>
+<varlistentry><term><anchor id="BMoviePlayer--clear"/>&quot;<literal>clear</literal>&quot; (<link linkend="gboolean">gboolean</link> : Write / Construct)</term>
+<listitem>
+<para>Clear the screen before starting.</para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BMoviePlayer--h-align"/>&quot;<literal>h-align</literal>&quot; (<link linkend="gdouble">gdouble</link> : Write / Construct)</term>
+<listitem>
+<para>Horizontal alignment on the screen.</para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BMoviePlayer--movie"/>&quot;<literal>movie</literal>&quot; (<link linkend="BFilename">BFilename</link> : Write / Construct)</term>
+<listitem>
+<para>The filename of the movie to play.</para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BMoviePlayer--reverse"/>&quot;<literal>reverse</literal>&quot; (<link linkend="gboolean">gboolean</link> : Write / Construct)</term>
+<listitem>
+<para>Allows to play the movie backwards.</para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BMoviePlayer--v-align"/>&quot;<literal>v-align</literal>&quot; (<link linkend="gdouble">gdouble</link> : Write / Construct)</term>
+<listitem>
+<para>Vertical alignment on the screen.</para>
+</listitem></varlistentry>
+
+</variablelist>
+</refsect1>
+
+
+
+
+</refentry>

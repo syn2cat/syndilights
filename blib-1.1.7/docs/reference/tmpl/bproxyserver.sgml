@@ -1,0 +1,69 @@
+<!-- ##### SECTION Title ##### -->
+BProxyServer
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### STRUCT BProxyServer ##### -->
+<para>
+
+</para>
+
+
+<!-- ##### FUNCTION b_proxy_server_new ##### -->
+<para>
+
+</para>
+
+@port: 
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION b_proxy_server_send_packet ##### -->
+<para>
+
+</para>
+
+@server: 
+@packet: 
+@Returns: 
+
+
+<!-- ##### FUNCTION b_proxy_server_num_clients ##### -->
+<para>
+
+</para>
+
+@server: 
+@Returns: 
+
+
+<!-- ##### SIGNAL BProxyServer::client-added ##### -->
+<para>
+
+</para>
+
+@bproxyserver: the object which received the signal.
+@arg1: 
+@arg2: 
+
+<!-- ##### SIGNAL BProxyServer::client-removed ##### -->
+<para>
+
+</para>
+
+@bproxyserver: the object which received the signal.
+@arg1: 
+@arg2: 
+

@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BModule-Utilities">
+<refmeta>
+<refentrytitle>BModule Utilities</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BModule Utilities</refname><refpurpose>utility functions for <link linkend="BModule">BModule</link> implementations</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+void        <link linkend="b-module-draw-point">b_module_draw_point</link>             (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="gint">gint</link> x,
+                                             <link linkend="gint">gint</link> y,
+                                             <link linkend="guchar">guchar</link> value);
+void        <link linkend="b-module-draw-line">b_module_draw_line</link>              (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="gint">gint</link> x1,
+                                             <link linkend="gint">gint</link> y1,
+                                             <link linkend="gint">gint</link> x2,
+                                             <link linkend="gint">gint</link> y2,
+                                             <link linkend="guchar">guchar</link> value);
+void        <link linkend="b-module-fill">b_module_fill</link>                   (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="guchar">guchar</link> value);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="b-module-draw-point"/>b_module_draw_point ()</title>
+<programlisting>void        b_module_draw_point             (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="gint">gint</link> x,
+                                             <link linkend="gint">gint</link> y,
+                                             <link linkend="guchar">guchar</link> value);</programlisting>
+<para>
+Draws a point to the <parameter>module</parameter>'s frame buffer. It is safe to specify
+coordinates outside the buffer.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>x</parameter>&nbsp;:</term>
+<listitem><simpara> x coordinate
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>y</parameter>&nbsp;:</term>
+<listitem><simpara> y coordinate
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> the color to draw with
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-draw-line"/>b_module_draw_line ()</title>
+<programlisting>void        b_module_draw_line              (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="gint">gint</link> x1,
+                                             <link linkend="gint">gint</link> y1,
+                                             <link linkend="gint">gint</link> x2,
+                                             <link linkend="gint">gint</link> y2,
+                                             <link linkend="guchar">guchar</link> value);</programlisting>
+<para>
+Draws a one-pixel wide line between two points to the module's
+frame buffer. The endpoints are included in the line. If the line
+exceeds the buffer, it is properly clipped.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>x1</parameter>&nbsp;:</term>
+<listitem><simpara> x coordinate of the start point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>y1</parameter>&nbsp;:</term>
+<listitem><simpara> y coordinate of the start point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>x2</parameter>&nbsp;:</term>
+<listitem><simpara> x coordinate of the end point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>y2</parameter>&nbsp;:</term>
+<listitem><simpara> y coordinate of the end point
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> the color to draw with
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-fill"/>b_module_fill ()</title>
+<programlisting>void        b_module_fill                   (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="guchar">guchar</link> value);</programlisting>
+<para>
+Fills the module's framebuffer with <parameter>value</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> the color to draw with
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

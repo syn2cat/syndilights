@@ -1,0 +1,112 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BViewPixbuf</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-sim.html" title="Blinkenlights Simulation"><link rel="previous" href="BViewDirectFB.html" title="BViewDirectFB"><link rel="next" href="BViewGtk.html" title="BViewGtk"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BViewDirectFB.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-sim.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BViewGtk.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BViewPixbuf"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BViewPixbuf</span></h2><p>BViewPixbuf &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BViewPixbuf.html#BViewPixbuf-struct">BViewPixbuf</a>;
+<a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a>* <a href="BViewPixbuf.html#b-view-pixbuf-new">b_view_pixbuf_new</a>              (gint rows,
+                                             gint columns,
+                                             gint channels,
+                                             GError **error);
+<a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a>* <a href="BViewPixbuf.html#b-view-pixbuf-new-theme">b_view_pixbuf_new_theme</a>        (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             gboolean image_preload,
+                                             GError **error);
+const GdkPixbuf* <a href="BViewPixbuf.html#b-view-pixbuf-load-image">b_view_pixbuf_load_image</a>   (<a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> *view,
+                                             const gchar *filename,
+                                             GError **error);
+const GdkPixbuf* <a href="BViewPixbuf.html#b-view-pixbuf-render">b_view_pixbuf_render</a>       (<a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> *view,
+                                             const guchar *frame_data,
+                                             const <a href="BTheme.html#BRectangle">BRectangle</a> *clip,
+                                             GError **error);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2572706"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BViewPixbuf
+</pre></div><div class="refsect1" lang="en"><a name="id2572721"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2572730"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2572736"></a><h3><a name="BViewPixbuf-struct"></a>struct BViewPixbuf</h3><pre class="programlisting">struct BViewPixbuf;</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2572750"></a><h3><a name="b-view-pixbuf-new"></a>b_view_pixbuf_new ()</h3><pre class="programlisting"><a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a>* b_view_pixbuf_new              (gint rows,
+                                             gint columns,
+                                             gint channels,
+                                             GError **error);</pre><p>
+Creates a new <a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> for the given parameters. This is a
+simple version that renders a grayscale pixel for every window.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>rows</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>columns</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>channels</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a new view or <tt class="literal">NULL</tt> in case of an error
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2578434"></a><h3><a name="b-view-pixbuf-new-theme"></a>b_view_pixbuf_new_theme ()</h3><pre class="programlisting"><a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a>* b_view_pixbuf_new_theme        (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             gboolean image_preload,
+                                             GError **error);</pre><p>
+Creates a pixbuf renderer for Blinkenlights frames using the
+<i class="parameter"><tt>theme</tt></i>.  When image_preload is enabled, all images refered to by
+the theme are loaded. If an error occurs loading the images,
+<a href="BViewPixbuf.html#b-view-pixbuf-new">b_view_pixbuf_new</a>() will fail and return <tt class="literal">NULL</tt>. If a view is
+created with preloaded images, calling <a href="BViewPixbuf.html#b-view-pixbuf-render">b_view_pixbuf_render</a>() on
+it will always succeed so you can skip error checking later.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>theme</tt></i> :</span></td><td>         a <a href="BTheme.html" title="BTheme">BTheme</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>image_preload</tt></i> :</span></td><td> whether to preload all images
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td>         location to store the error occuring,
+                or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a new view or <tt class="literal">NULL</tt> in case of an error
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2575775"></a><h3><a name="b-view-pixbuf-load-image"></a>b_view_pixbuf_load_image ()</h3><pre class="programlisting">const GdkPixbuf* b_view_pixbuf_load_image   (<a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> *view,
+                                             const gchar *filename,
+                                             GError **error);</pre><p>
+Renders a frame on the <i class="parameter"><tt>view</tt></i> and returns a pointer to a GdkPixbuf
+holding the rendered image. The pixbuf is owned by the view, you
+may only read from it.
+</p><p>
+The <i class="parameter"><tt>view</tt></i> expects <i class="parameter"><tt>frame_data</tt></i> in the range of 0 to 255.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>view</tt></i> :</span></td><td>     a <a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>filename</tt></i> :</span></td><td> the filename of the image to load
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td>    location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a pointer to a GdkPixbuf with the rendered frame
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2575896"></a><h3><a name="b-view-pixbuf-render"></a>b_view_pixbuf_render ()</h3><pre class="programlisting">const GdkPixbuf* b_view_pixbuf_render       (<a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> *view,
+                                             const guchar *frame_data,
+                                             const <a href="BTheme.html#BRectangle">BRectangle</a> *clip,
+                                             GError **error);</pre><p>
+Renders a frame on the <i class="parameter"><tt>view</tt></i>. The <i class="parameter"><tt>view</tt></i> expects <i class="parameter"><tt>frame_data</tt></i> in the
+range of 0 to 255.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>view</tt></i> :</span></td><td>       a <a href="BViewPixbuf.html" title="BViewPixbuf">BViewPixbuf</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>frame_data</tt></i> :</span></td><td> the frame data to display
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>clip</tt></i> :</span></td><td>       clipping rectangle (or <tt class="literal">NULL</tt>)
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td>      location to store the error occuring, or <tt class="literal">NULL</tt> to ignore
+             errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a reference to a GdkPixbuf with the rendered frame.
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BViewDirectFB.html"><b>&lt;&lt; BViewDirectFB</b></a></td><td align="right"><a accesskey="n" href="BViewGtk.html"><b>BViewGtk &gt;&gt;</b></a></td></tr></table></body></html>

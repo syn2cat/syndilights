@@ -1,0 +1,187 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BViewPixbuf">
+<refmeta>
+<refentrytitle>BViewPixbuf</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BViewPixbuf</refname><refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BViewPixbuf-struct">BViewPixbuf</link>;
+<link linkend="BViewPixbuf">BViewPixbuf</link>* <link linkend="b-view-pixbuf-new">b_view_pixbuf_new</link>              (<link linkend="gint">gint</link> rows,
+                                             <link linkend="gint">gint</link> columns,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="BViewPixbuf">BViewPixbuf</link>* <link linkend="b-view-pixbuf-new-theme">b_view_pixbuf_new_theme</link>        (<link linkend="BTheme">BTheme</link> *theme,
+                                             <link linkend="gboolean">gboolean</link> image_preload,
+                                             <link linkend="GError">GError</link> **error);
+const <link linkend="GdkPixbuf">GdkPixbuf</link>* <link linkend="b-view-pixbuf-load-image">b_view_pixbuf_load_image</link>   (<link linkend="BViewPixbuf">BViewPixbuf</link> *view,
+                                             const <link linkend="gchar">gchar</link> *filename,
+                                             <link linkend="GError">GError</link> **error);
+const <link linkend="GdkPixbuf">GdkPixbuf</link>* <link linkend="b-view-pixbuf-render">b_view_pixbuf_render</link>       (<link linkend="BViewPixbuf">BViewPixbuf</link> *view,
+                                             const <link linkend="guchar">guchar</link> *frame_data,
+                                             const <link linkend="BRectangle">BRectangle</link> *clip,
+                                             <link linkend="GError">GError</link> **error);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BViewPixbuf
+</synopsis>
+
+</refsect1>
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BViewPixbuf-struct"/>struct BViewPixbuf</title>
+<programlisting>struct BViewPixbuf;</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-view-pixbuf-new"/>b_view_pixbuf_new ()</title>
+<programlisting><link linkend="BViewPixbuf">BViewPixbuf</link>* b_view_pixbuf_new              (<link linkend="gint">gint</link> rows,
+                                             <link linkend="gint">gint</link> columns,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a new <link linkend="BViewPixbuf">BViewPixbuf</link> for the given parameters. This is a
+simple version that renders a grayscale pixel for every window.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>rows</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>columns</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>channels</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a new view or <literal>NULL</literal> in case of an error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-view-pixbuf-new-theme"/>b_view_pixbuf_new_theme ()</title>
+<programlisting><link linkend="BViewPixbuf">BViewPixbuf</link>* b_view_pixbuf_new_theme        (<link linkend="BTheme">BTheme</link> *theme,
+                                             <link linkend="gboolean">gboolean</link> image_preload,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a pixbuf renderer for Blinkenlights frames using the
+<parameter>theme</parameter>.  When image_preload is enabled, all images refered to by
+the theme are loaded. If an error occurs loading the images,
+<link linkend="b-view-pixbuf-new">b_view_pixbuf_new</link>() will fail and return <literal>NULL</literal>. If a view is
+created with preloaded images, calling <link linkend="b-view-pixbuf-render">b_view_pixbuf_render</link>() on
+it will always succeed so you can skip error checking later.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>theme</parameter>&nbsp;:</term>
+<listitem><simpara>         a <link linkend="BTheme">BTheme</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>image_preload</parameter>&nbsp;:</term>
+<listitem><simpara> whether to preload all images
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara>         location to store the error occuring,
+                or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a new view or <literal>NULL</literal> in case of an error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-view-pixbuf-load-image"/>b_view_pixbuf_load_image ()</title>
+<programlisting>const <link linkend="GdkPixbuf">GdkPixbuf</link>* b_view_pixbuf_load_image   (<link linkend="BViewPixbuf">BViewPixbuf</link> *view,
+                                             const <link linkend="gchar">gchar</link> *filename,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Renders a frame on the <parameter>view</parameter> and returns a pointer to a <link linkend="GdkPixbuf">GdkPixbuf</link>
+holding the rendered image. The pixbuf is owned by the view, you
+may only read from it.
+</para>
+<para>
+The <parameter>view</parameter> expects <parameter>frame_data</parameter> in the range of 0 to 255.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>view</parameter>&nbsp;:</term>
+<listitem><simpara>     a <link linkend="BViewPixbuf">BViewPixbuf</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>filename</parameter>&nbsp;:</term>
+<listitem><simpara> the filename of the image to load
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara>    location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a pointer to a <link linkend="GdkPixbuf">GdkPixbuf</link> with the rendered frame
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-view-pixbuf-render"/>b_view_pixbuf_render ()</title>
+<programlisting>const <link linkend="GdkPixbuf">GdkPixbuf</link>* b_view_pixbuf_render       (<link linkend="BViewPixbuf">BViewPixbuf</link> *view,
+                                             const <link linkend="guchar">guchar</link> *frame_data,
+                                             const <link linkend="BRectangle">BRectangle</link> *clip,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Renders a frame on the <parameter>view</parameter>. The <parameter>view</parameter> expects <parameter>frame_data</parameter> in the
+range of 0 to 255.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>view</parameter>&nbsp;:</term>
+<listitem><simpara>       a <link linkend="BViewPixbuf">BViewPixbuf</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>frame_data</parameter>&nbsp;:</term>
+<listitem><simpara> the frame data to display
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>clip</parameter>&nbsp;:</term>
+<listitem><simpara>       clipping rectangle (or <literal>NULL</literal>)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara>      location to store the error occuring, or <literal>NULL</literal> to ignore
+             errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a reference to a <link linkend="GdkPixbuf">GdkPixbuf</link> with the rendered frame.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

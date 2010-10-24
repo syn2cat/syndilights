@@ -1,0 +1,182 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BParser</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="blib-BUtils.html" title="BUtils"><link rel="next" href="blib-BWriter.html" title="BWriter"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BUtils.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BWriter.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BParser"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BParser</span></h2><p>BParser &#8212; an XML parser that offers a simplified SAX API</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="blib-BParser.html#BParser">BParser</a>;
+enum        <a href="blib-BParser.html#BParserState">BParserState</a>;
+<a href="blib-BParser.html#BParserState">BParserState</a> (<a href="blib-BParser.html#BParserStartFunc">*BParserStartFunc</a>)            (<a href="blib-BParser.html#BParserState">BParserState</a> state,
+                                             const gchar *element_name,
+                                             const gchar **attribute_names,
+                                             const gchar **attribute_values,
+                                             gpointer user_data,
+                                             GError **error);
+<a href="blib-BParser.html#BParserState">BParserState</a> (<a href="blib-BParser.html#BParserEndFunc">*BParserEndFunc</a>)              (<a href="blib-BParser.html#BParserState">BParserState</a> state,
+                                             const gchar *element_name,
+                                             const gchar *cdata,
+                                             gsize cdata_len,
+                                             gpointer user_data,
+                                             GError **error);
+<a href="blib-BParser.html#BParser">BParser</a>*    <a href="blib-BParser.html#b-parser-new">b_parser_new</a>                    (<a href="blib-BParser.html#BParserStartFunc">BParserStartFunc</a> start_element,
+                                             <a href="blib-BParser.html#BParserEndFunc">BParserEndFunc</a> end_element,
+                                             gpointer user_data);
+void        <a href="blib-BParser.html#b-parser-free">b_parser_free</a>                   (<a href="blib-BParser.html#BParser">BParser</a> *parser);
+gboolean    <a href="blib-BParser.html#b-parser-parse">b_parser_parse</a>                  (<a href="blib-BParser.html#BParser">BParser</a> *parser,
+                                             const gchar *text,
+                                             gssize text_len,
+                                             GError **error);
+gboolean    <a href="blib-BParser.html#b-parser-end-parse">b_parser_end_parse</a>              (<a href="blib-BParser.html#BParser">BParser</a> *parser,
+                                             GError **error);
+gboolean    <a href="blib-BParser.html#b-parser-parse-io-channel">b_parser_parse_io_channel</a>       (<a href="blib-BParser.html#BParser">BParser</a> *parser,
+                                             GIOChannel *io,
+                                             gboolean recode,
+                                             GError **error);
+<a href="blib-BParser.html#BParserState">BParserState</a> <a href="blib-BParser.html#b-parser-get-state">b_parser_get_state</a>             (<a href="blib-BParser.html#BParser">BParser</a> *parser);
+gchar*      <a href="blib-BParser.html#b-parse-encoding">b_parse_encoding</a>                (const gchar *text,
+                                             gint text_len);
+</pre></div><div class="refsect1" lang="en"><a name="id2537314"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2537323"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2537329"></a><h3><a name="BParser"></a>struct BParser</h3><pre class="programlisting">struct BParser;</pre><p>
+The <a href="blib-BParser.html#BParser">BParser</a> struct is private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2558099"></a><h3><a name="BParserState"></a>enum BParserState</h3><pre class="programlisting">typedef enum
+{
+  B_PARSER_STATE_UNKNOWN,
+  B_PARSER_STATE_TOPLEVEL,
+  B_PARSER_STATE_USER = 0x10  /* first user state, use as many as you need */
+} BParserState;
+</pre><p>
+An enumeration used to indicate the state of a <a href="blib-BParser.html#BParser">BParser</a>. Users of
+<a href="blib-BParser.html#BParser">BParser</a> will want to add their own states; they may use any values
+equal or greater than <tt class="literal">B_PARSER_STATE_USER</tt>.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2558133"></a><h3><a name="BParserStartFunc"></a>BParserStartFunc ()</h3><pre class="programlisting"><a href="blib-BParser.html#BParserState">BParserState</a> (*BParserStartFunc)            (<a href="blib-BParser.html#BParserState">BParserState</a> state,
+                                             const gchar *element_name,
+                                             const gchar **attribute_names,
+                                             const gchar **attribute_values,
+                                             gpointer user_data,
+                                             GError **error);</pre><p>
+The function that is called when the parser hits the start of an
+element. Return <tt class="literal">B_PARSER_STATE_UNKNOWN</tt> from this function to indicate
+an error which should cause the parser to abort.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>state</tt></i> :</span></td><td>the current state of the parser
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>element_name</tt></i> :</span></td><td>the name of the element
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>attribute_names</tt></i> :</span></td><td>a <tt class="literal">NULL</tt>-terminated list of attribute names
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>attribute_values</tt></i> :</span></td><td>a <tt class="literal">NULL</tt>-terminated list of attribute values
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td>the data that was passed to <a href="blib-BParser.html#b-parser-new">b_parser_new</a>()
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td>the error pointer that was passed to <a href="blib-BParser.html#b-parser-new">b_parser_new</a>()
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>the new state of the parser
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558289"></a><h3><a name="BParserEndFunc"></a>BParserEndFunc ()</h3><pre class="programlisting"><a href="blib-BParser.html#BParserState">BParserState</a> (*BParserEndFunc)              (<a href="blib-BParser.html#BParserState">BParserState</a> state,
+                                             const gchar *element_name,
+                                             const gchar *cdata,
+                                             gsize cdata_len,
+                                             gpointer user_data,
+                                             GError **error);</pre><p>
+The function that is called when the parser hits the end of an
+element. Return <tt class="literal">B_PARSER_STATE_UNKNOWN</tt> from this function to
+indicate an error which should cause the parser to abort.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>state</tt></i> :</span></td><td>the current state of the parser
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>element_name</tt></i> :</span></td><td>the name of the element
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>cdata</tt></i> :</span></td><td>pointer to character data that occured between the opening
+and closing tags
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>cdata_len</tt></i> :</span></td><td>the length of <i class="parameter"><tt>cdata</tt></i> in bytes
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td>the data that was passed to <a href="blib-BParser.html#b-parser-new">b_parser_new</a>()
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td>the error pointer that was passed to <a href="blib-BParser.html#b-parser-new">b_parser_new</a>()
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>the new state of the parser
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2533834"></a><h3><a name="b-parser-new"></a>b_parser_new ()</h3><pre class="programlisting"><a href="blib-BParser.html#BParser">BParser</a>*    b_parser_new                    (<a href="blib-BParser.html#BParserStartFunc">BParserStartFunc</a> start_element,
+                                             <a href="blib-BParser.html#BParserEndFunc">BParserEndFunc</a> end_element,
+                                             gpointer user_data);</pre><p>
+Creates a new <a href="blib-BParser.html#BParser">BParser</a> suited to parse XML files. The <a href="blib-BParser.html#BParser">BParser</a>
+should later be freed using <a href="blib-BParser.html#b-parser-free">b_parser_free</a>().</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>start_element</tt></i> :</span></td><td> the function to call when an element is started
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>end_element</tt></i> :</span></td><td> the function to call when an element is closed
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>user_data</tt></i> :</span></td><td> data to pass to the functions above
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated <a href="blib-BParser.html#BParser">BParser</a>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2533944"></a><h3><a name="b-parser-free"></a>b_parser_free ()</h3><pre class="programlisting">void        b_parser_free                   (<a href="blib-BParser.html#BParser">BParser</a> *parser);</pre><p>
+Frees the resources allocated for <i class="parameter"><tt>parser</tt></i>. You must not access
+<i class="parameter"><tt>parser</tt></i> after calling this function.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>parser</tt></i> :</span></td><td> a <a href="blib-BParser.html#BParser">BParser</a>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2533995"></a><h3><a name="b-parser-parse"></a>b_parser_parse ()</h3><pre class="programlisting">gboolean    b_parser_parse                  (<a href="blib-BParser.html#BParser">BParser</a> *parser,
+                                             const gchar *text,
+                                             gssize text_len,
+                                             GError **error);</pre><p>
+Let the <i class="parameter"><tt>parser</tt></i> process a chunk of <i class="parameter"><tt>text</tt></i>. You need to call
+<a href="blib-BParser.html#b-parser-end-parse">b_parser_end_parse</a>() after you passed the last chunk to the <i class="parameter"><tt>parser</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>parser</tt></i> :</span></td><td> a <a href="blib-BParser.html#BParser">BParser</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>text</tt></i> :</span></td><td> pointer to a text buffer to parse
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>text_len</tt></i> :</span></td><td> the number of bytes to parse from <i class="parameter"><tt>text</tt></i>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if parsing was successful, <tt class="literal">FALSE</tt> if an error occured
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2563453"></a><h3><a name="b-parser-end-parse"></a>b_parser_end_parse ()</h3><pre class="programlisting">gboolean    b_parser_end_parse              (<a href="blib-BParser.html#BParser">BParser</a> *parser,
+                                             GError **error);</pre><p>
+Finishes the <i class="parameter"><tt>parser</tt></i>. After calling this function, you must not
+call <a href="blib-BParser.html#b-parser-parse">b_parser_parse</a>() on the parser again.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>parser</tt></i> :</span></td><td> a <a href="blib-BParser.html#BParser">BParser</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if <i class="parameter"><tt>parser</tt></i> was successfully finished, <tt class="literal">FALSE</tt>
+otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2534668"></a><h3><a name="b-parser-parse-io-channel"></a>b_parser_parse_io_channel ()</h3><pre class="programlisting">gboolean    b_parser_parse_io_channel       (<a href="blib-BParser.html#BParser">BParser</a> *parser,
+                                             GIOChannel *io,
+                                             gboolean recode,
+                                             GError **error);</pre><p>
+Reads data from the GIOChannel <i class="parameter"><tt>io</tt></i> and passes it to <i class="parameter"><tt>parser</tt></i>. If
+<i class="parameter"><tt>recode</tt></i> is TRUE, the data should start with an XML header so this
+function can determine the encoding of the XML data and convert it
+to UTF-8 for you.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>parser</tt></i> :</span></td><td> a <a href="blib-BParser.html#BParser">BParser</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>io</tt></i> :</span></td><td> a GIOChannel to read the text to parse from
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>recode</tt></i> :</span></td><td> <tt class="literal">TRUE</tt> if you want the parser to do automatic encoding conversion
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if parsing was successful, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2563639"></a><h3><a name="b-parser-get-state"></a>b_parser_get_state ()</h3><pre class="programlisting"><a href="blib-BParser.html#BParserState">BParserState</a> b_parser_get_state             (<a href="blib-BParser.html#BParser">BParser</a> *parser);</pre><p>
+Retrieves the current state of <i class="parameter"><tt>parser</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>parser</tt></i> :</span></td><td> a <a href="blib-BParser.html#BParser">BParser</a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the state of <i class="parameter"><tt>parser</tt></i>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2563698"></a><h3><a name="b-parse-encoding"></a>b_parse_encoding ()</h3><pre class="programlisting">gchar*      b_parse_encoding                (const gchar *text,
+                                             gint text_len);</pre><p>
+Scans the <i class="parameter"><tt>text</tt></i> for an XML header with encoding specification.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>text</tt></i> :</span></td><td> a string to parse, must be at least 20 bytes
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>text_len</tt></i> :</span></td><td> the maximum number of bytes to parse from <i class="parameter"><tt>text</tt></i>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a copy of the encoding string or <tt class="literal">NULL</tt> if none was
+found
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2563773"></a><h2>See Also</h2><p>
+GMarkupParser
+</p></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BUtils.html"><b>&lt;&lt; BUtils</b></a></td><td align="right"><a accesskey="n" href="blib-BWriter.html"><b>BWriter &gt;&gt;</b></a></td></tr></table></body></html>

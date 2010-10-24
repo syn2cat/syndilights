@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BTypes">
+<refmeta>
+<refentrytitle>BTypes</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BTypes</refname><refpurpose>Additional GTypes registered by BLib</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+#define     <link linkend="B-TYPE-FILENAME-CAPS">B_TYPE_FILENAME</link>
+#define     <link linkend="B-VALUE-HOLDS-FILENAME-CAPS">B_VALUE_HOLDS_FILENAME</link>          (value)
+
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="B-TYPE-FILENAME-CAPS"/>B_TYPE_FILENAME</title>
+<programlisting>#define B_TYPE_FILENAME               (b_filename_get_type ())
+</programlisting>
+<para>
+The filename type is derived from <literal>G_TYPE_STRING</literal> and is used to
+indicate that a string should be interpreted as a filename. This
+macro returns the <link linkend="GType">GType</link> for this type.
+</para></refsect2>
+<refsect2>
+<title><anchor id="B-VALUE-HOLDS-FILENAME-CAPS"/>B_VALUE_HOLDS_FILENAME()</title>
+<programlisting>#define B_VALUE_HOLDS_FILENAME(value) (G_TYPE_CHECK_VALUE_TYPE ((value), B_TYPE_FILENAME))
+</programlisting>
+<para>
+Return whether the given <link linkend="GValue">GValue</link> can hold values of type <literal>B_TYPE_FILENAME</literal>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara>a <link linkend="GValue">GValue</link>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

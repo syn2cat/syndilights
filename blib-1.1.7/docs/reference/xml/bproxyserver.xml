@@ -1,0 +1,179 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BProxyServer">
+<refmeta>
+<refentrytitle>BProxyServer</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BProxyServer</refname><refpurpose></refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BProxyServer-struct">BProxyServer</link>;
+<link linkend="BProxyServer">BProxyServer</link>* <link linkend="b-proxy-server-new">b_proxy_server_new</link>            (<link linkend="gint">gint</link> port,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-proxy-server-send-packet">b_proxy_server_send_packet</link>      (<link linkend="BProxyServer">BProxyServer</link> *server,
+                                             <link linkend="BPacket">BPacket</link> *packet);
+<link linkend="gint">gint</link>        <link linkend="b-proxy-server-num-clients">b_proxy_server_num_clients</link>      (<link linkend="BProxyServer">BProxyServer</link> *server);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="BReceiver">BReceiver</link>
+         +----BProxyServer
+</synopsis>
+
+</refsect1>
+
+
+
+
+<refsect1>
+<title>Signal Prototypes</title>
+<synopsis>
+
+&quot;<link linkend="BProxyServer-client-added">client-added</link>&quot;
+            void        user_function      (<link linkend="BProxyServer">BProxyServer</link> *bproxyserver,
+                                            <link linkend="gchar">gchar</link> *arg1,
+                                            <link linkend="gint">gint</link> arg2,
+                                            <link linkend="gpointer">gpointer</link> user_data);
+&quot;<link linkend="BProxyServer-client-removed">client-removed</link>&quot;
+            void        user_function      (<link linkend="BProxyServer">BProxyServer</link> *bproxyserver,
+                                            <link linkend="gchar">gchar</link> *arg1,
+                                            <link linkend="gint">gint</link> arg2,
+                                            <link linkend="gpointer">gpointer</link> user_data);
+</synopsis>
+</refsect1>
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BProxyServer-struct"/>struct BProxyServer</title>
+<programlisting>struct BProxyServer;</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-proxy-server-new"/>b_proxy_server_new ()</title>
+<programlisting><link linkend="BProxyServer">BProxyServer</link>* b_proxy_server_new            (<link linkend="gint">gint</link> port,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a new <link linkend="BProxyServer">BProxyServer</link> object, ready to use.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>port</parameter>&nbsp;:</term>
+<listitem><simpara>  the local port to listen to for heartbeat packages
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> return location for a possible error
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocate <link linkend="BProxyServer">BProxyServer</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-proxy-server-send-packet"/>b_proxy_server_send_packet ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_proxy_server_send_packet      (<link linkend="BProxyServer">BProxyServer</link> *server,
+                                             <link linkend="BPacket">BPacket</link> *packet);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-proxy-server-num-clients"/>b_proxy_server_num_clients ()</title>
+<programlisting><link linkend="gint">gint</link>        b_proxy_server_num_clients      (<link linkend="BProxyServer">BProxyServer</link> *server);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>server</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+<refsect1>
+<title>Signals</title>
+<refsect2><title><anchor id="BProxyServer-client-added"/>The &quot;client-added&quot; signal</title>
+<programlisting>void        user_function                  (<link linkend="BProxyServer">BProxyServer</link> *bproxyserver,
+                                            <link linkend="gchar">gchar</link> *arg1,
+                                            <link linkend="gint">gint</link> arg2,
+                                            <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>bproxyserver</parameter>&nbsp;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg2</parameter>&nbsp;:</term>
+<listitem><simpara>
+
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2><title><anchor id="BProxyServer-client-removed"/>The &quot;client-removed&quot; signal</title>
+<programlisting>void        user_function                  (<link linkend="BProxyServer">BProxyServer</link> *bproxyserver,
+                                            <link linkend="gchar">gchar</link> *arg1,
+                                            <link linkend="gint">gint</link> arg2,
+                                            <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>bproxyserver</parameter>&nbsp;:</term>
+<listitem><simpara>the object which received the signal.
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg1</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>arg2</parameter>&nbsp;:</term>
+<listitem><simpara>
+
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

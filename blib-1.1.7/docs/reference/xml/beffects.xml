@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BEffects">
+<refmeta>
+<refentrytitle>BEffects</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BEffects</refname><refpurpose>simple effects on a single movie frame</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BEffects-struct">BEffects</link>;
+enum        <link linkend="BEffectScope">BEffectScope</link>;
+<link linkend="BEffects">BEffects</link>*   <link linkend="b-effects-new">b_effects_new</link>                   (void);
+void        <link linkend="b-effects-apply">b_effects_apply</link>                 (<link linkend="BEffects">BEffects</link> *effects,
+                                             <link linkend="guchar">guchar</link> *frame_data,
+                                             <link linkend="gint">gint</link> width,
+                                             <link linkend="gint">gint</link> height,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="gint">gint</link> maxval);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BEffects
+</synopsis>
+
+</refsect1>
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BEffects-struct"/>struct BEffects</title>
+<programlisting>struct BEffects;</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="BEffectScope"/>enum BEffectScope</title>
+<programlisting>typedef enum
+{
+  B_EFFECT_SCOPE_NONE  = 0,
+  B_EFFECT_SCOPE_LEFT  = 1 &lt;&lt; 0,
+  B_EFFECT_SCOPE_RIGHT = 1 &lt;&lt; 1,
+  B_EFFECT_SCOPE_ALL   = B_EFFECT_SCOPE_LEFT | B_EFFECT_SCOPE_RIGHT
+} BEffectScope;
+</programlisting>
+<para>
+
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-effects-new"/>b_effects_new ()</title>
+<programlisting><link linkend="BEffects">BEffects</link>*   b_effects_new                   (void);</programlisting>
+<para>
+Creates a new <link linkend="BEffects">BEffects</link> object with default values.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the newly allocate <link linkend="BEffects">BEffects</link> object.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-effects-apply"/>b_effects_apply ()</title>
+<programlisting>void        b_effects_apply                 (<link linkend="BEffects">BEffects</link> *effects,
+                                             <link linkend="guchar">guchar</link> *frame_data,
+                                             <link linkend="gint">gint</link> width,
+                                             <link linkend="gint">gint</link> height,
+                                             <link linkend="gint">gint</link> channels,
+                                             <link linkend="gint">gint</link> maxval);</programlisting>
+<para>
+This function applies the effects described in the <parameter>effects</parameter> object
+to a single frame.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>effects</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BEffects">BEffects</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>frame_data</parameter>&nbsp;:</term>
+<listitem><simpara> data to apply the effects on
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>width</parameter>&nbsp;:</term>
+<listitem><simpara> width of the <parameter>frame_data</parameter> buffer
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>height</parameter>&nbsp;:</term>
+<listitem><simpara> height of the <parameter>frame_data</parameter> buffer
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>channels</parameter>&nbsp;:</term>
+<listitem><simpara> number of channels in the <parameter>frame_data</parameter> buffer
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>maxval</parameter>&nbsp;:</term>
+<listitem><simpara> the maximum value for the <parameter>frame_data</parameter> buffer
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

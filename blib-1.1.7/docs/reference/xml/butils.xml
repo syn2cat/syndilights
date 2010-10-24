@@ -1,0 +1,342 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BUtils">
+<refmeta>
+<refentrytitle>BUtils</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BUtils</refname><refpurpose>a collection of utility functions, mainly used from parsers</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+<link linkend="gchar">gchar</link>*      <link linkend="b-filename-from-utf8">b_filename_from_utf8</link>            (const <link linkend="gchar">gchar</link> *name,
+                                             const <link linkend="gchar">gchar</link> *root,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-int">b_parse_int</link>                     (const <link linkend="gchar">gchar</link> *str,
+                                             <link linkend="gint">gint</link> *value);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-boolean">b_parse_boolean</link>                 (const <link linkend="gchar">gchar</link> *str,
+                                             <link linkend="gboolean">gboolean</link> *value);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-double">b_parse_double</link>                  (const <link linkend="gchar">gchar</link> *str,
+                                             <link linkend="gdouble">gdouble</link> *value);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-coordinates">b_parse_coordinates</link>             (const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="gint">gint</link> *x,
+                                             <link linkend="gint">gint</link> *y);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-rectangle">b_parse_rectangle</link>               (const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="BRectangle">BRectangle</link> *rect);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-color">b_parse_color</link>                   (const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="BColor">BColor</link> *color);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parse-param">b_parse_param</link>                   (<link linkend="GObject">GObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *root,
+                                             const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-object-set-property">b_object_set_property</link>           (<link linkend="GObject">GObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *key,
+                                             const <link linkend="gchar">gchar</link> *value,
+                                             const <link linkend="gchar">gchar</link> *root,
+                                             <link linkend="GError">GError</link> **error);
+void        <link linkend="b-rectangle-union">b_rectangle_union</link>               (const <link linkend="BRectangle">BRectangle</link> *src1,
+                                             const <link linkend="BRectangle">BRectangle</link> *src2,
+                                             <link linkend="BRectangle">BRectangle</link> *dest);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-rectangle-intersect">b_rectangle_intersect</link>           (const <link linkend="BRectangle">BRectangle</link> *src1,
+                                             const <link linkend="BRectangle">BRectangle</link> *src2,
+                                             <link linkend="BRectangle">BRectangle</link> *dest);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="b-filename-from-utf8"/>b_filename_from_utf8 ()</title>
+<programlisting><link linkend="gchar">gchar</link>*      b_filename_from_utf8            (const <link linkend="gchar">gchar</link> *name,
+                                             const <link linkend="gchar">gchar</link> *root,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Convert <parameter>name</parameter> in UTF-8 encoding to a filename in the filesystem's
+encoding. If <parameter>root</parameter> is non-<literal>NULL</literal> and <parameter>name</parameter> is not an absolute
+filename, the returned filename is built using <parameter>root</parameter> as a prefix.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>name</parameter>&nbsp;:</term>
+<listitem><simpara> the filename in UTF-8 encoding
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>root</parameter>&nbsp;:</term>
+<listitem><simpara> an optional path to use
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a pointer to the newly allocated filename or <literal>NULL</literal> in
+case of an error. This value must be freed with <link linkend="g-free">g_free</link>().
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-int"/>b_parse_int ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_int                     (const <link linkend="gchar">gchar</link> *str,
+                                             <link linkend="gint">gint</link> *value);</programlisting>
+<para>
+Parse an integer value from a string.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&nbsp;:</term>
+<listitem><simpara> the string to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the integer value
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the string could be parsed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-boolean"/>b_parse_boolean ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_boolean                 (const <link linkend="gchar">gchar</link> *str,
+                                             <link linkend="gboolean">gboolean</link> *value);</programlisting>
+<para>
+Parse a boolean value from a string.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&nbsp;:</term>
+<listitem><simpara> the string to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the boolean value
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the string could be parsed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-double"/>b_parse_double ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_double                  (const <link linkend="gchar">gchar</link> *str,
+                                             <link linkend="gdouble">gdouble</link> *value);</programlisting>
+<para>
+Parse a double (floating-point) value from a string.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>str</parameter>&nbsp;:</term>
+<listitem><simpara> the string to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the double value
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the string could be parsed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-coordinates"/>b_parse_coordinates ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_coordinates             (const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="gint">gint</link> *x,
+                                             <link linkend="gint">gint</link> *y);</programlisting>
+<para>
+Parses a pair of name/value arrays looking for the names "x" and "y"
+and tries to parse the associated values into integer values.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>names</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of names
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>values</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of values
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>x</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the value of the x coordinate
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>y</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the value of the y coordinate
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if both coordinates could be parsed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-rectangle"/>b_parse_rectangle ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_rectangle               (const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="BRectangle">BRectangle</link> *rect);</programlisting>
+<para>
+Parses a pair of name/value arrays looking for the names "x", "y",
+"width" and "heigth" and tries to parse the associated values into
+a <link linkend="BRectangle">BRectangle</link>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>names</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of names
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>values</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of values
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>rect</parameter>&nbsp;:</term>
+<listitem><simpara> pointer to a <link linkend="BRectangle">BRectangle</link> to store the result
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the rectangle could be parsed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-color"/>b_parse_color ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_color                   (const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="BColor">BColor</link> *color);</programlisting>
+<para>
+Parses a pair of name/value arrays looking for the name "color" and
+tries to convert the associated value to a <link linkend="BColor">BColor</link>. The color value
+is expected to be in hexadecimal notation as in HTML.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>names</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of names
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>values</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of values
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>color</parameter>&nbsp;:</term>
+<listitem><simpara> pointer to a <link linkend="BColor">BColor</link> to store the result
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the color could be parsed, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-param"/>b_parse_param ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parse_param                   (<link linkend="GObject">GObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *root,
+                                             const <link linkend="gchar">gchar</link> **names,
+                                             const <link linkend="gchar">gchar</link> **values,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Parses a pair of name/value arrays looking for the names "key" and
+"value". The key/value pair is then used to set the respective object
+property by calling <link linkend="b-object-set-property">b_object_set_property</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="GObject">GObject</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>root</parameter>&nbsp;:</term>
+<listitem><simpara> an optional string to use as root if a filename is set
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>names</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of names
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>values</parameter>&nbsp;:</term>
+<listitem><simpara> a <literal>NULL</literal>-terminated array of values
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if parsing was successful, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-object-set-property"/>b_object_set_property ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_object_set_property           (<link linkend="GObject">GObject</link> *object,
+                                             const <link linkend="gchar">gchar</link> *key,
+                                             const <link linkend="gchar">gchar</link> *value,
+                                             const <link linkend="gchar">gchar</link> *root,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Sets the object property <literal>key</literal> by interpreting the string
+<parameter>value</parameter>. This function takes care of converting the string to the
+proper type. If the property is a <literal>B_TYPE_FILENAME</literal> the filename is
+build using the <parameter>root</parameter> parameter.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>object</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="GObject">GObject</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>key</parameter>&nbsp;:</term>
+<listitem><simpara> the name of the property
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>value</parameter>&nbsp;:</term>
+<listitem><simpara> the property value as a string
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>root</parameter>&nbsp;:</term>
+<listitem><simpara> an optional string to use as root if a filename property is set
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> on success, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-rectangle-union"/>b_rectangle_union ()</title>
+<programlisting>void        b_rectangle_union               (const <link linkend="BRectangle">BRectangle</link> *src1,
+                                             const <link linkend="BRectangle">BRectangle</link> *src2,
+                                             <link linkend="BRectangle">BRectangle</link> *dest);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>src1</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest</parameter>&nbsp;:</term>
+<listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-rectangle-intersect"/>b_rectangle_intersect ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_rectangle_intersect           (const <link linkend="BRectangle">BRectangle</link> *src1,
+                                             const <link linkend="BRectangle">BRectangle</link> *src2,
+                                             <link linkend="BRectangle">BRectangle</link> *dest);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>src1</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>src2</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

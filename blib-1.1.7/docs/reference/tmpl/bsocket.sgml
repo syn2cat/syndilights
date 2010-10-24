@@ -1,0 +1,44 @@
+<!-- ##### SECTION Title ##### -->
+bsocket
+
+<!-- ##### SECTION Short_Description ##### -->
+
+
+<!-- ##### SECTION Long_Description ##### -->
+<para>
+
+</para>
+
+<!-- ##### SECTION See_Also ##### -->
+<para>
+
+</para>
+
+<!-- ##### ENUM BSocketOptions ##### -->
+<para>
+
+</para>
+
+@B_SO_NONE:      no options
+@B_SO_BROADCAST: send and receive broadcast packages
+@B_SO_REUSEADDR: allow the address and port to be reused
+
+<!-- ##### FUNCTION b_socket_init ##### -->
+<para>
+
+</para>
+
+@error: 
+@Returns: 
+
+
+<!-- ##### FUNCTION b_socket_udp_new ##### -->
+<para>
+
+</para>
+
+@options: 
+@error: 
+@Returns: 
+
+

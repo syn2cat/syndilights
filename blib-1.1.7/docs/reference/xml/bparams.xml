@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BParams">
+<refmeta>
+<refentrytitle>BParams</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BParams</refname><refpurpose>Additional Parameter types introduced by BLib</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+#define     <link linkend="B-TYPE-PARAM-FILENAME-CAPS">B_TYPE_PARAM_FILENAME</link>
+<link linkend="GParamSpec">GParamSpec</link>* <link linkend="b-param-spec-filename">b_param_spec_filename</link>           (const <link linkend="gchar">gchar</link> *name,
+                                             const <link linkend="gchar">gchar</link> *nick,
+                                             const <link linkend="gchar">gchar</link> *blurb,
+                                             <link linkend="gchar">gchar</link> *default_value,
+                                             <link linkend="GParamFlags">GParamFlags</link> flags);
+
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="B-TYPE-PARAM-FILENAME-CAPS"/>B_TYPE_PARAM_FILENAME</title>
+<programlisting>#define B_TYPE_PARAM_FILENAME           (b_param_filename_get_type ())
+</programlisting>
+<para>
+The <link linkend="GType">GType</link> of the param spec for a <literal>B_TYPE_FILENAME</literal> property.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-param-spec-filename"/>b_param_spec_filename ()</title>
+<programlisting><link linkend="GParamSpec">GParamSpec</link>* b_param_spec_filename           (const <link linkend="gchar">gchar</link> *name,
+                                             const <link linkend="gchar">gchar</link> *nick,
+                                             const <link linkend="gchar">gchar</link> *blurb,
+                                             <link linkend="gchar">gchar</link> *default_value,
+                                             <link linkend="GParamFlags">GParamFlags</link> flags);</programlisting>
+<para>
+Creates a new <link linkend="GParamSpec">GParamSpec</link> for a <link linkend="B-TYPE-FILENAME-CAPS">B_TYPE_FILENAME</link> property.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>name</parameter>&nbsp;:</term>
+<listitem><simpara> the property name
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>nick</parameter>&nbsp;:</term>
+<listitem><simpara> an optional short version of the name
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>blurb</parameter>&nbsp;:</term>
+<listitem><simpara> an optional description
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>default_value</parameter>&nbsp;:</term>
+<listitem><simpara> the default value (may be <literal>NULL</literal>)
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>flags</parameter>&nbsp;:</term>
+<listitem><simpara> the <link linkend="GParamFlags">GParamFlags</link> for this param_spec
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the newly allocate <link linkend="GParamSpec">GParamSpec</link>.
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

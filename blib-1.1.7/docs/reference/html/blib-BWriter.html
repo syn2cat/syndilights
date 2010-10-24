@@ -1,0 +1,104 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BWriter</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="blib-BParser.html" title="BParser"><link rel="next" href="blib-movies.html" title="Blinkenlights Movies"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BParser.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-movies.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BWriter"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BWriter</span></h2><p>BWriter &#8212; writes XML files</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="blib-BWriter.html#BWriter">BWriter</a>;
+<a href="blib-BWriter.html#BWriter">BWriter</a>*    <a href="blib-BWriter.html#b-writer-new">b_writer_new</a>                    (FILE *stream,
+                                             gint indent);
+void        <a href="blib-BWriter.html#b-writer-free">b_writer_free</a>                   (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer);
+void        <a href="blib-BWriter.html#b-write-header">b_write_header</a>                  (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *encoding);
+void        <a href="blib-BWriter.html#b-write-open-tag">b_write_open_tag</a>                (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *tag,
+                                             ...);
+void        <a href="blib-BWriter.html#b-write-close-tag">b_write_close_tag</a>               (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *tag);
+void        <a href="blib-BWriter.html#b-write-element">b_write_element</a>                 (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *tag,
+                                             const gchar *value,
+                                             ...);
+</pre></div><div class="refsect1" lang="en"><a name="id2563276"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2563285"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2563291"></a><h3><a name="BWriter"></a>struct BWriter</h3><pre class="programlisting">struct BWriter;</pre><p>
+The <a href="blib-BWriter.html#BWriter">BWriter</a> struct is private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2559892"></a><h3><a name="b-writer-new"></a>b_writer_new ()</h3><pre class="programlisting"><a href="blib-BWriter.html#BWriter">BWriter</a>*    b_writer_new                    (FILE *stream,
+                                             gint indent);</pre><p>
+Creates a new <a href="blib-BWriter.html#BWriter">BWriter</a> which gives a convenient interface to write
+XML data to <i class="parameter"><tt>stream</tt></i>. The writer should later be freed using
+<a href="blib-BWriter.html#b-writer-free">b_writer_free</a>().</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>stream</tt></i> :</span></td><td> a FILE stream prepared for writing
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>indent</tt></i> :</span></td><td> how many characters to indent per nesting level
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocate <a href="blib-BWriter.html#BWriter">BWriter</a> 
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2559982"></a><h3><a name="b-writer-free"></a>b_writer_free ()</h3><pre class="programlisting">void        b_writer_free                   (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer);</pre><p>
+Frees the resources allocated for <i class="parameter"><tt>writer</tt></i>. You must not access
+<i class="parameter"><tt>writer</tt></i> after calling this function.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>writer</tt></i> :</span></td><td> a <a href="blib-BWriter.html#BWriter">BWriter</a>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547066"></a><h3><a name="b-write-header"></a>b_write_header ()</h3><pre class="programlisting">void        b_write_header                  (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *encoding);</pre><p>
+Writes an XML header to the stream associated with <i class="parameter"><tt>writer</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>writer</tt></i> :</span></td><td> a <a href="blib-BWriter.html#BWriter">BWriter</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>encoding</tt></i> :</span></td><td> an optional encoding string or <tt class="literal">NULL</tt>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547134"></a><h3><a name="b-write-open-tag"></a>b_write_open_tag ()</h3><pre class="programlisting">void        b_write_open_tag                (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *tag,
+                                             ...);</pre><p>
+Writes an opening XML tag with the element name <i class="parameter"><tt>tag</tt></i> to the stream
+associated with <i class="parameter"><tt>writer</tt></i>.  You can pass a <tt class="literal">NULL</tt>-terminated list of
+key/value pairs that are written out as attributes.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>writer</tt></i> :</span></td><td> a <a href="blib-BWriter.html#BWriter">BWriter</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>tag</tt></i> :</span></td><td> the name of the element to open
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>...</tt></i> :</span></td><td> an optional key/value pairs interpreted as attributes
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2562426"></a><h3><a name="b-write-close-tag"></a>b_write_close_tag ()</h3><pre class="programlisting">void        b_write_close_tag               (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *tag);</pre><p>
+Writes a closing XML tag with the element name <i class="parameter"><tt>tag</tt></i> to the stream
+associated with <i class="parameter"><tt>writer</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>writer</tt></i> :</span></td><td> a <a href="blib-BWriter.html#BWriter">BWriter</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>tag</tt></i> :</span></td><td> the name of the element to close
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2562496"></a><h3><a name="b-write-element"></a>b_write_element ()</h3><pre class="programlisting">void        b_write_element                 (<a href="blib-BWriter.html#BWriter">BWriter</a> *writer,
+                                             const gchar *tag,
+                                             const gchar *value,
+                                             ...);</pre><p>
+Writes an XML element with the name <i class="parameter"><tt>tag</tt></i> and the value <i class="parameter"><tt>value</tt></i> to
+the stream associated with <i class="parameter"><tt>writer</tt></i>. If <i class="parameter"><tt>value</tt></i> is <tt class="literal">NULL</tt>, an empty
+element is written. You can pass a <tt class="literal">NULL</tt>-terminated list of
+key/value pairs that are written out as attributes.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>writer</tt></i> :</span></td><td> a <a href="blib-BWriter.html#BWriter">BWriter</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>tag</tt></i> :</span></td><td> the element name
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> the element value
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>...</tt></i> :</span></td><td> an optional key/value pairs interpreted as attributes
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BParser.html"><b>&lt;&lt; BParser</b></a></td><td align="right"><a accesskey="n" href="blib-movies.html"><b>Blinkenlights Movies &gt;&gt;</b></a></td></tr></table></body></html>

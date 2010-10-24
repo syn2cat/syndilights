@@ -1,0 +1,194 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BMovie</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-movies.html" title="Blinkenlights Movies"><link rel="previous" href="blib-movies.html" title="Blinkenlights Movies"><link rel="next" href="blib-BMovieEffects.html" title="BMovieEffects"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-movies.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-movies.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BMovieEffects.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BMovie"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BMovie</span></h2><p>BMovie &#8212; base class for Blinkenlights movies</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+#define     <a href="BMovie.html#B-MOVIE-MIN-DELAY-CAPS">B_MOVIE_MIN_DELAY</a>
+#define     <a href="BMovie.html#B-MOVIE-DEFAULT-DELAY-CAPS">B_MOVIE_DEFAULT_DELAY</a>
+struct      <a href="BMovie.html#BMovie-struct">BMovie</a>;
+struct      <a href="BMovie.html#BMovieFrame">BMovieFrame</a>;
+#define     <a href="BMovie.html#B-TYPE-MOVIE-BML-CAPS">B_TYPE_MOVIE_BML</a>
+#define     <a href="BMovie.html#B-TYPE-MOVIE-BLM-CAPS">B_TYPE_MOVIE_BLM</a>
+#define     <a href="BMovie.html#B-TYPE-MOVIE-GIF-CAPS">B_TYPE_MOVIE_GIF</a>
+<a href="BMovie.html" title="BMovie">BMovie</a>*     <a href="BMovie.html#b-movie-new-from-file">b_movie_new_from_file</a>           (const gchar *filename,
+                                             gboolean lazy_load,
+                                             GError **error);
+<a href="BMovie.html" title="BMovie">BMovie</a>*     <a href="BMovie.html#b-movie-new-from-fd">b_movie_new_from_fd</a>             (gint fd,
+                                             GError **error);
+gboolean    <a href="BMovie.html#b-movie-load">b_movie_load</a>                    (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             GError **error);
+void        <a href="BMovie.html#b-movie-unload">b_movie_unload</a>                  (<a href="BMovie.html" title="BMovie">BMovie</a> *movie);
+gboolean    <a href="BMovie.html#b-movie-save">b_movie_save</a>                    (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             FILE *stream,
+                                             GError **error);
+gboolean    <a href="BMovie.html#b-movie-save-as">b_movie_save_as</a>                 (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             GType movie_type,
+                                             FILE *stream,
+                                             GError **error);
+GList*      <a href="BMovie.html#b-movie-get-frame-at-time">b_movie_get_frame_at_time</a>       (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             GList *seed,
+                                             gint time);
+void        <a href="BMovie.html#b-movie-prepend-frame">b_movie_prepend_frame</a>           (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             gint duration,
+                                             const guchar *data);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2558466"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----<a href="BObject.html" title="BObject">BObject</a>
+         +----BMovie
+</pre></div><div class="refsect1" lang="en"><a name="id2558486"></a><h2>Description</h2><p>
+The <a href="BMovie.html" title="BMovie">BMovie</a> class defines a common interface to a Blinkenlights
+movie. BLib comes with a couple of implementations that correspond to
+the different file formats. They are referred to by their GType:
+<a href="BMovie.html#B-TYPE-MOVIE-BML-CAPS">B_TYPE_MOVIE_BML</a>, <a href="BMovie.html#B-TYPE-MOVIE-BLM-CAPS">B_TYPE_MOVIE_BLM</a> and <a href="BMovie.html#B-TYPE-MOVIE-GIF-CAPS">B_TYPE_MOVIE_GIF</a>.
+</p></div><div class="refsect1" lang="en"><a name="id2558524"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2558530"></a><h3><a name="B-MOVIE-MIN-DELAY-CAPS"></a>B_MOVIE_MIN_DELAY</h3><pre class="programlisting">#define B_MOVIE_MIN_DELAY      20
+</pre><p>
+The minimum time for a frame in milliseconds. Shorter frame delays
+will be set to this value.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2547850"></a><h3><a name="B-MOVIE-DEFAULT-DELAY-CAPS"></a>B_MOVIE_DEFAULT_DELAY</h3><pre class="programlisting">#define B_MOVIE_DEFAULT_DELAY  100
+</pre><p>
+The default time for a frame in milliseconds. Frames with no specified
+delay will be set to this value.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2547866"></a><h3><a name="BMovie-struct"></a>struct BMovie</h3><pre class="programlisting">struct BMovie;</pre><p>
+The <a href="BMovie.html" title="BMovie">BMovie</a> struct has various members that may be read directly since
+not all of them has accessor functions. You must however not change
+any of the fields.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2547889"></a><h3><a name="BMovieFrame"></a>struct BMovieFrame</h3><pre class="programlisting">struct BMovieFrame {
+
+  gint          start;
+  gint          duration;
+  guchar       *data;
+};
+</pre><p>
+The <a href="BMovie.html#BMovieFrame">BMovieFrame</a> struct defines a single movie frame.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">gint <i class="structfield"><tt>start</tt></i></span></td><td>the start time of the frame in milliseconds
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>duration</tt></i></span></td><td>the duration of the frame in milliseconds
+</td></tr><tr><td><span class="term">guchar *<i class="structfield"><tt>data</tt></i></span></td><td>frame data according to the values in the <a href="BMovie.html" title="BMovie">BMovie</a> that owns this frame
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2547972"></a><h3><a name="B-TYPE-MOVIE-BML-CAPS"></a>B_TYPE_MOVIE_BML</h3><pre class="programlisting">#define B_TYPE_MOVIE_BML            (b_movie_bml_get_type ())
+</pre><p>
+Type derived from <a href="BMovie.html" title="BMovie">BMovie</a> that handles movies in the Blinkenlights Markup
+Language (BML).
+</p></div><hr><div class="refsect2" lang="en"><a name="id2547994"></a><h3><a name="B-TYPE-MOVIE-BLM-CAPS"></a>B_TYPE_MOVIE_BLM</h3><pre class="programlisting">#define B_TYPE_MOVIE_BLM            (b_movie_blm_get_type ())
+</pre><p>
+Type derived from <a href="BMovie.html" title="BMovie">BMovie</a> that handles movies in old-fashioned BLM format.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2548016"></a><h3><a name="B-TYPE-MOVIE-GIF-CAPS"></a>B_TYPE_MOVIE_GIF</h3><pre class="programlisting">#define B_TYPE_MOVIE_GIF            (b_movie_gif_get_type ())
+</pre><p>
+Type derived from <a href="BMovie.html" title="BMovie">BMovie</a> that handles movies in the GIF format.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2548038"></a><h3><a name="b-movie-new-from-file"></a>b_movie_new_from_file ()</h3><pre class="programlisting"><a href="BMovie.html" title="BMovie">BMovie</a>*     b_movie_new_from_file           (const gchar *filename,
+                                             gboolean lazy_load,
+                                             GError **error);</pre><p>
+Tries to load a <a href="BMovie.html" title="BMovie">BMovie</a> from the file pointed to by <i class="parameter"><tt>filename</tt></i>. If
+<i class="parameter"><tt>lazy_load</tt></i> is <tt class="literal">TRUE</tt>, only the header is loaded and no frames are stored.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>filename</tt></i> :</span></td><td> the name of the file to load
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>lazy_load</tt></i> :</span></td><td> whether to do lazy-loading, i.e. only load the header
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated <a href="BMovie.html" title="BMovie">BMovie</a> object or <tt class="literal">NULL</tt> if the load
+failed
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2557878"></a><h3><a name="b-movie-new-from-fd"></a>b_movie_new_from_fd ()</h3><pre class="programlisting"><a href="BMovie.html" title="BMovie">BMovie</a>*     b_movie_new_from_fd             (gint fd,
+                                             GError **error);</pre><p>
+Tries to load a <a href="BMovie.html" title="BMovie">BMovie</a> from the UNIX file descriptor <i class="parameter"><tt>fd</tt></i>. Lazy
+loading from file descriptors is not implemented since it doesn't
+seem to make much sense.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>fd</tt></i> :</span></td><td> a UNIX file descriptor
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated <a href="BMovie.html" title="BMovie">BMovie</a> object or <tt class="literal">NULL</tt> if the load
+failed
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2557970"></a><h3><a name="b-movie-load"></a>b_movie_load ()</h3><pre class="programlisting">gboolean    b_movie_load                    (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             GError **error);</pre><p>
+Assures that the frames of the <i class="parameter"><tt>movie</tt></i> are loaded.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the movie was loaded successfully.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2558057"></a><h3><a name="b-movie-unload"></a>b_movie_unload ()</h3><pre class="programlisting">void        b_movie_unload                  (<a href="BMovie.html" title="BMovie">BMovie</a> *movie);</pre><p>
+Unloads the frames of a movie.
+</p><p>
+The movie object counts how many times you call <a href="BMovie.html#b-movie-load">b_movie_load</a>() and
+<a href="BMovie.html#b-movie-unload">b_movie_unload</a>() and only really unloads the frames if
+<a href="BMovie.html#b-movie-unload">b_movie_unload</a>() was called as often as <a href="BMovie.html#b-movie-load">b_movie_load</a>(). Note that
+<a href="BMovie.html#b-movie-new-from-file">b_movie_new_from_file</a>() and <a href="BMovie.html#b-movie-new-from-fd">b_movie_new_from_fd</a>() call
+<a href="BMovie.html#b-movie-load">b_movie_load</a>() unless lazy-loading was requested.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2565996"></a><h3><a name="b-movie-save"></a>b_movie_save ()</h3><pre class="programlisting">gboolean    b_movie_save                    (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             FILE *stream,
+                                             GError **error);</pre><p>
+Saves a <a href="BMovie.html" title="BMovie">BMovie</a> object to a <i class="parameter"><tt>stream</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>stream</tt></i> :</span></td><td> a FILE stream ready for writing
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> on success or <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2566107"></a><h3><a name="b-movie-save-as"></a>b_movie_save_as ()</h3><pre class="programlisting">gboolean    b_movie_save_as                 (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             GType movie_type,
+                                             FILE *stream,
+                                             GError **error);</pre><p>
+Saves a <a href="BMovie.html" title="BMovie">BMovie</a> object to a <i class="parameter"><tt>stream</tt></i> and allows to specify the file
+format to use.
+</p><p>
+The format is specified by passing a type derived from
+B_TYPE_MOVIE as <i class="parameter"><tt>movie_type</tt></i>. At the moment B_TYPE_MOVIE_BML,
+B_TYPE_MOVIE_BLM and B_TYPE_MOVIE_GIF are supported types.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>movie_type</tt></i> :</span></td><td> the movie type to use for saving
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>stream</tt></i> :</span></td><td> a FILE stream ready for writing
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> on success or <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2566251"></a><h3><a name="b-movie-get-frame-at-time"></a>b_movie_get_frame_at_time ()</h3><pre class="programlisting">GList*      b_movie_get_frame_at_time       (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             GList *seed,
+                                             gint time);</pre><p>
+Looks for the frame active after <i class="parameter"><tt>time</tt></i> milliseconds.
+</p><p>
+If you are calling this function subsequentially with increasing
+time values, you can speed up the search by passing the last return
+value as the <i class="parameter"><tt>seed</tt></i> parameter.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a loaded <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>seed</tt></i> :</span></td><td> an optional GList pointer that can speed up the search
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>time</tt></i> :</span></td><td> the time in milliseconds
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a GList pointer that has the frame as data or <tt class="literal">NULL</tt>
+if the time was out of the <i class="parameter"><tt>movie</tt></i>'s range.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2566366"></a><h3><a name="b-movie-prepend-frame"></a>b_movie_prepend_frame ()</h3><pre class="programlisting">void        b_movie_prepend_frame           (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             gint duration,
+                                             const guchar *data);</pre><p>
+This is an internal function used by the movie loaders. It should
+never be called from anywhere else.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>duration</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>data</tt></i> :</span></td><td>
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-movies.html"><b>&lt;&lt; Blinkenlights Movies</b></a></td><td align="right"><a accesskey="n" href="blib-BMovieEffects.html"><b>BMovieEffects &gt;&gt;</b></a></td></tr></table></body></html>

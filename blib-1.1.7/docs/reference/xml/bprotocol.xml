@@ -1,0 +1,161 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BProtocol">
+<refmeta>
+<refentrytitle>BProtocol</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BProtocol</refname><refpurpose>definiton of the Blinkenlights Network Protocol</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+#define     <link linkend="MAGIC-MCU-SETUP-CAPS">MAGIC_MCU_SETUP</link>
+#define     <link linkend="MAGIC-MCU-FRAME-CAPS">MAGIC_MCU_FRAME</link>
+#define     <link linkend="MAGIC-MCU-DEVCTRL-CAPS">MAGIC_MCU_DEVCTRL</link>
+#define     <link linkend="MAGIC-BLFRAME-CAPS">MAGIC_BLFRAME</link>
+#define     <link linkend="MAGIC-BLFRAME-256-CAPS">MAGIC_BLFRAME_256</link>
+#define     <link linkend="MAGIC-HEARTBEAT-CAPS">MAGIC_HEARTBEAT</link>
+#define     <link linkend="MCU-LISTENER-PORT-CAPS">MCU_LISTENER_PORT</link>
+#define     <link linkend="MCU-ID-ANY-CAPS">MCU_ID_ANY</link>
+#define     <link linkend="MCU-DEVCTRL-OFF-CAPS">MCU_DEVCTRL_OFF</link>
+#define     <link linkend="MCU-DEVCTRL-ON-CAPS">MCU_DEVCTRL_ON</link>
+#define     <link linkend="B-HEARTBEAT-PORT-CAPS">B_HEARTBEAT_PORT</link>
+#define     <link linkend="B-HEARTBEAT-INTERVAL-CAPS">B_HEARTBEAT_INTERVAL</link>
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+The bprotocol.h header file defines the Blinkenlights Network
+Protocol. It contains structure definitions for the different network
+packets as well as defines for magic numbers.
+</para>
+
+<para>
+This header file doesn't use any GLib types to make it possible to
+include it from applications that can not or don't want to use BLib.
+As a user of BLib you don't need to care about the details of the
+protocol described here. Use the <link linkend="BSender">BSender</link> and <link linkend="BReceiver">BReceiver</link> instead.
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="MAGIC-MCU-SETUP-CAPS"/>MAGIC_MCU_SETUP</title>
+<programlisting>#define MAGIC_MCU_SETUP     0x2342FEED  /* MCU Configuration packet              */
+</programlisting>
+<para>
+The magic number that identifies a setup packet.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MAGIC-MCU-FRAME-CAPS"/>MAGIC_MCU_FRAME</title>
+<programlisting>#define MAGIC_MCU_FRAME     0x23542666  /* MCU Frame packet                      */
+</programlisting>
+<para>
+The magic number that identifies a frame packet.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MAGIC-MCU-DEVCTRL-CAPS"/>MAGIC_MCU_DEVCTRL</title>
+<programlisting>#define MAGIC_MCU_DEVCTRL   0x23542667  /* MCU Device Control packet             */
+</programlisting>
+<para>
+The magic number that identifies a device control packet.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MAGIC-BLFRAME-CAPS"/>MAGIC_BLFRAME</title>
+<programlisting>#define MAGIC_BLFRAME       0xDEADBEEF  /* Original BL Frame Packet              */
+</programlisting>
+<para>
+The magic number that identifies a frame packet in the old
+Blinkenlights protocol. BLib doesn't support this old version.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MAGIC-BLFRAME-256-CAPS"/>MAGIC_BLFRAME_256</title>
+<programlisting>#define MAGIC_BLFRAME_256   0xFEEDBEEF  /* Extendend BL Frame Packet (Greyscale) */
+</programlisting>
+<para>
+The magic number that identifies a frame packet in an extension to the
+old Blinkenlights protocol. BLib doesn't support this old version.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MAGIC-HEARTBEAT-CAPS"/>MAGIC_HEARTBEAT</title>
+<programlisting>#define MAGIC_HEARTBEAT     0x42424242  /* Heartbeat packet                      */
+</programlisting>
+<para>
+The magic number that identifies a heartbeat package as used with
+the BlinkenProxy protocol.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MCU-LISTENER-PORT-CAPS"/>MCU_LISTENER_PORT</title>
+<programlisting>#define MCU_LISTENER_PORT    2323
+</programlisting>
+<para>
+The default port a matrox control unit listens too.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MCU-ID-ANY-CAPS"/>MCU_ID_ANY</title>
+<programlisting>#define MCU_ID_ANY           -1
+</programlisting>
+<para>
+Use this value in a setup packet to address all listening matrix
+control units.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MCU-DEVCTRL-OFF-CAPS"/>MCU_DEVCTRL_OFF</title>
+<programlisting>#define MCU_DEVCTRL_OFF  0    /* switch device off */
+</programlisting>
+<para>
+Use this value in a device control packet to switch a device off.
+</para></refsect2>
+<refsect2>
+<title><anchor id="MCU-DEVCTRL-ON-CAPS"/>MCU_DEVCTRL_ON</title>
+<programlisting>#define MCU_DEVCTRL_ON   1    /* switch device on  */
+</programlisting>
+<para>
+Use this value in a device control packet to switch a device on.
+</para></refsect2>
+<refsect2>
+<title><anchor id="B-HEARTBEAT-PORT-CAPS"/>B_HEARTBEAT_PORT</title>
+<programlisting>#define B_HEARTBEAT_PORT       4242
+</programlisting>
+<para>
+The default port number for BlinkenProxy heartbeat packets.
+</para></refsect2>
+<refsect2>
+<title><anchor id="B-HEARTBEAT-INTERVAL-CAPS"/>B_HEARTBEAT_INTERVAL</title>
+<programlisting>#define B_HEARTBEAT_INTERVAL   5000     /* Heartbeat interval in ms    */
+</programlisting>
+<para>
+The default timeout in milliseconds between BlinkenProxy heartbeat packets.
+</para></refsect2>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>See Also</title>
+<para>
+<link linkend="BPacket">BPacket</link>, <link linkend="BSender">BSender</link>, <link linkend="BReceiver">BReceiver</link>
+</para>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,321 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="blib-BParser">
+<refmeta>
+<refentrytitle>BParser</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BParser</refname><refpurpose>an XML parser that offers a simplified SAX API</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BParser">BParser</link>;
+enum        <link linkend="BParserState">BParserState</link>;
+<link linkend="BParserState">BParserState</link> (<link linkend="BParserStartFunc">*BParserStartFunc</link>)            (<link linkend="BParserState">BParserState</link> state,
+                                             const <link linkend="gchar">gchar</link> *element_name,
+                                             const <link linkend="gchar">gchar</link> **attribute_names,
+                                             const <link linkend="gchar">gchar</link> **attribute_values,
+                                             <link linkend="gpointer">gpointer</link> user_data,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="BParserState">BParserState</link> (<link linkend="BParserEndFunc">*BParserEndFunc</link>)              (<link linkend="BParserState">BParserState</link> state,
+                                             const <link linkend="gchar">gchar</link> *element_name,
+                                             const <link linkend="gchar">gchar</link> *cdata,
+                                             <link linkend="gsize">gsize</link> cdata_len,
+                                             <link linkend="gpointer">gpointer</link> user_data,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="BParser">BParser</link>*    <link linkend="b-parser-new">b_parser_new</link>                    (<link linkend="BParserStartFunc">BParserStartFunc</link> start_element,
+                                             <link linkend="BParserEndFunc">BParserEndFunc</link> end_element,
+                                             <link linkend="gpointer">gpointer</link> user_data);
+void        <link linkend="b-parser-free">b_parser_free</link>                   (<link linkend="BParser">BParser</link> *parser);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parser-parse">b_parser_parse</link>                  (<link linkend="BParser">BParser</link> *parser,
+                                             const <link linkend="gchar">gchar</link> *text,
+                                             <link linkend="gssize">gssize</link> text_len,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parser-end-parse">b_parser_end_parse</link>              (<link linkend="BParser">BParser</link> *parser,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-parser-parse-io-channel">b_parser_parse_io_channel</link>       (<link linkend="BParser">BParser</link> *parser,
+                                             <link linkend="GIOChannel">GIOChannel</link> *io,
+                                             <link linkend="gboolean">gboolean</link> recode,
+                                             <link linkend="GError">GError</link> **error);
+<link linkend="BParserState">BParserState</link> <link linkend="b-parser-get-state">b_parser_get_state</link>             (<link linkend="BParser">BParser</link> *parser);
+<link linkend="gchar">gchar</link>*      <link linkend="b-parse-encoding">b_parse_encoding</link>                (const <link linkend="gchar">gchar</link> *text,
+                                             <link linkend="gint">gint</link> text_len);
+</synopsis>
+</refsynopsisdiv>
+
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BParser"/>struct BParser</title>
+<programlisting>struct BParser;</programlisting>
+<para>
+The <link linkend="BParser">BParser</link> struct is private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="BParserState"/>enum BParserState</title>
+<programlisting>typedef enum
+{
+  B_PARSER_STATE_UNKNOWN,
+  B_PARSER_STATE_TOPLEVEL,
+  B_PARSER_STATE_USER = 0x10  /* first user state, use as many as you need */
+} BParserState;
+</programlisting>
+<para>
+An enumeration used to indicate the state of a <link linkend="BParser">BParser</link>. Users of
+<link linkend="BParser">BParser</link> will want to add their own states; they may use any values
+equal or greater than <literal>B_PARSER_STATE_USER</literal>.
+</para></refsect2>
+<refsect2>
+<title><anchor id="BParserStartFunc"/>BParserStartFunc ()</title>
+<programlisting><link linkend="BParserState">BParserState</link> (*BParserStartFunc)            (<link linkend="BParserState">BParserState</link> state,
+                                             const <link linkend="gchar">gchar</link> *element_name,
+                                             const <link linkend="gchar">gchar</link> **attribute_names,
+                                             const <link linkend="gchar">gchar</link> **attribute_values,
+                                             <link linkend="gpointer">gpointer</link> user_data,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+The function that is called when the parser hits the start of an
+element. Return <literal>B_PARSER_STATE_UNKNOWN</literal> from this function to indicate
+an error which should cause the parser to abort.
+</para><variablelist role="params">
+<varlistentry><term><parameter>state</parameter>&nbsp;:</term>
+<listitem><simpara>the current state of the parser
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>element_name</parameter>&nbsp;:</term>
+<listitem><simpara>the name of the element
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>attribute_names</parameter>&nbsp;:</term>
+<listitem><simpara>a <literal>NULL</literal>-terminated list of attribute names
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>attribute_values</parameter>&nbsp;:</term>
+<listitem><simpara>a <literal>NULL</literal>-terminated list of attribute values
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>the data that was passed to <link linkend="b-parser-new">b_parser_new</link>()
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara>the error pointer that was passed to <link linkend="b-parser-new">b_parser_new</link>()
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>the new state of the parser
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="BParserEndFunc"/>BParserEndFunc ()</title>
+<programlisting><link linkend="BParserState">BParserState</link> (*BParserEndFunc)              (<link linkend="BParserState">BParserState</link> state,
+                                             const <link linkend="gchar">gchar</link> *element_name,
+                                             const <link linkend="gchar">gchar</link> *cdata,
+                                             <link linkend="gsize">gsize</link> cdata_len,
+                                             <link linkend="gpointer">gpointer</link> user_data,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+The function that is called when the parser hits the end of an
+element. Return <literal>B_PARSER_STATE_UNKNOWN</literal> from this function to
+indicate an error which should cause the parser to abort.
+</para><variablelist role="params">
+<varlistentry><term><parameter>state</parameter>&nbsp;:</term>
+<listitem><simpara>the current state of the parser
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>element_name</parameter>&nbsp;:</term>
+<listitem><simpara>the name of the element
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cdata</parameter>&nbsp;:</term>
+<listitem><simpara>pointer to character data that occured between the opening
+and closing tags
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>cdata_len</parameter>&nbsp;:</term>
+<listitem><simpara>the length of <parameter>cdata</parameter> in bytes
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>the data that was passed to <link linkend="b-parser-new">b_parser_new</link>()
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara>the error pointer that was passed to <link linkend="b-parser-new">b_parser_new</link>()
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>the new state of the parser
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parser-new"/>b_parser_new ()</title>
+<programlisting><link linkend="BParser">BParser</link>*    b_parser_new                    (<link linkend="BParserStartFunc">BParserStartFunc</link> start_element,
+                                             <link linkend="BParserEndFunc">BParserEndFunc</link> end_element,
+                                             <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+Creates a new <link linkend="BParser">BParser</link> suited to parse XML files. The <link linkend="BParser">BParser</link>
+should later be freed using <link linkend="b-parser-free">b_parser_free</link>().</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>start_element</parameter>&nbsp;:</term>
+<listitem><simpara> the function to call when an element is started
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>end_element</parameter>&nbsp;:</term>
+<listitem><simpara> the function to call when an element is closed
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara> data to pass to the functions above
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocated <link linkend="BParser">BParser</link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parser-free"/>b_parser_free ()</title>
+<programlisting>void        b_parser_free                   (<link linkend="BParser">BParser</link> *parser);</programlisting>
+<para>
+Frees the resources allocated for <parameter>parser</parameter>. You must not access
+<parameter>parser</parameter> after calling this function.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BParser">BParser</link>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parser-parse"/>b_parser_parse ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parser_parse                  (<link linkend="BParser">BParser</link> *parser,
+                                             const <link linkend="gchar">gchar</link> *text,
+                                             <link linkend="gssize">gssize</link> text_len,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Let the <parameter>parser</parameter> process a chunk of <parameter>text</parameter>. You need to call
+<link linkend="b-parser-end-parse">b_parser_end_parse</link>() after you passed the last chunk to the <parameter>parser</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BParser">BParser</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text</parameter>&nbsp;:</term>
+<listitem><simpara> pointer to a text buffer to parse
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text_len</parameter>&nbsp;:</term>
+<listitem><simpara> the number of bytes to parse from <parameter>text</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if parsing was successful, <literal>FALSE</literal> if an error occured
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parser-end-parse"/>b_parser_end_parse ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parser_end_parse              (<link linkend="BParser">BParser</link> *parser,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Finishes the <parameter>parser</parameter>. After calling this function, you must not
+call <link linkend="b-parser-parse">b_parser_parse</link>() on the parser again.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BParser">BParser</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if <parameter>parser</parameter> was successfully finished, <literal>FALSE</literal>
+otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parser-parse-io-channel"/>b_parser_parse_io_channel ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_parser_parse_io_channel       (<link linkend="BParser">BParser</link> *parser,
+                                             <link linkend="GIOChannel">GIOChannel</link> *io,
+                                             <link linkend="gboolean">gboolean</link> recode,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Reads data from the <link linkend="GIOChannel">GIOChannel</link> <parameter>io</parameter> and passes it to <parameter>parser</parameter>. If
+<parameter>recode</parameter> is TRUE, the data should start with an XML header so this
+function can determine the encoding of the XML data and convert it
+to UTF-8 for you.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BParser">BParser</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>io</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="GIOChannel">GIOChannel</link> to read the text to parse from
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>recode</parameter>&nbsp;:</term>
+<listitem><simpara> <literal>TRUE</literal> if you want the parser to do automatic encoding conversion
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if parsing was successful, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parser-get-state"/>b_parser_get_state ()</title>
+<programlisting><link linkend="BParserState">BParserState</link> b_parser_get_state             (<link linkend="BParser">BParser</link> *parser);</programlisting>
+<para>
+Retrieves the current state of <parameter>parser</parameter>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>parser</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BParser">BParser</link>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the state of <parameter>parser</parameter>
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-parse-encoding"/>b_parse_encoding ()</title>
+<programlisting><link linkend="gchar">gchar</link>*      b_parse_encoding                (const <link linkend="gchar">gchar</link> *text,
+                                             <link linkend="gint">gint</link> text_len);</programlisting>
+<para>
+Scans the <parameter>text</parameter> for an XML header with encoding specification.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>text</parameter>&nbsp;:</term>
+<listitem><simpara> a string to parse, must be at least 20 bytes
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>text_len</parameter>&nbsp;:</term>
+<listitem><simpara> the maximum number of bytes to parse from <parameter>text</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a copy of the encoding string or <literal>NULL</literal> if none was
+found
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>See Also</title>
+<para>
+<link linkend="GMarkupParser">GMarkupParser</link>
+</para>
+</refsect1>
+
+</refentry>

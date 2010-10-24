@@ -1,0 +1,102 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BModuleInfo">
+<refmeta>
+<refentrytitle>BModuleInfo</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BModuleInfo</refname><refpurpose>handling of loadable modules</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BModuleInfo-struct">BModuleInfo</link>;
+<link linkend="BModuleInfo">BModuleInfo</link>* <link linkend="b-module-info-new">b_module_info_new</link>              (const <link linkend="gchar">gchar</link> *filename);
+<link linkend="gint">gint</link>        <link linkend="b-module-infos-scan-dir">b_module_infos_scan_dir</link>         (const <link linkend="gchar">gchar</link> *dirname);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----<link linkend="GTypeModule">GTypeModule</link>
+         +----BModuleInfo
+</synopsis>
+
+</refsect1>
+
+<refsect1>
+<title>Implemented Interfaces</title>
+<para>
+BModuleInfo implements <link linkend="GTypePlugin">GTypePlugin</link>.
+</para>
+</refsect1>
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BModuleInfo-struct"/>struct BModuleInfo</title>
+<programlisting>struct BModuleInfo;</programlisting>
+<para>
+The <link linkend="BModuleInfo">BModuleInfo</link> struct is considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-module-info-new"/>b_module_info_new ()</title>
+<programlisting><link linkend="BModuleInfo">BModuleInfo</link>* b_module_info_new              (const <link linkend="gchar">gchar</link> *filename);</programlisting>
+<para>
+Creates a new <link linkend="BModuleInfo">BModuleInfo</link> object a loadable module.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>filename</parameter>&nbsp;:</term>
+<listitem><simpara> the filename of the loadable module
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocated <link linkend="BModuleInfo">BModuleInfo</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-infos-scan-dir"/>b_module_infos_scan_dir ()</title>
+<programlisting><link linkend="gint">gint</link>        b_module_infos_scan_dir         (const <link linkend="gchar">gchar</link> *dirname);</programlisting>
+<para>
+Scans the given directory for loadable modules and registers the
+types implemented by the found modules.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>dirname</parameter>&nbsp;:</term>
+<listitem><simpara> the name of the directory to scan or <literal>NULL</literal> to use the
+default directory
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> the number of successfully registered modules
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+
+</refentry>

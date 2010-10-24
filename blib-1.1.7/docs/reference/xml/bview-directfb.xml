@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BViewDirectFB">
+<refmeta>
+<refentrytitle>BViewDirectFB</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BViewDirectFB</refname><refpurpose>a DirectFB widget to display Blinkenlights</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BViewDirectFB-struct">BViewDirectFB</link>;
+<link linkend="BViewDirectFB">BViewDirectFB</link>* <link linkend="b-view-directfb-new">b_view_directfb_new</link>          (<link linkend="BTheme">BTheme</link> *theme,
+                                             <link linkend="IDirectFB">IDirectFB</link> *dfb,
+                                             <link linkend="IDirectFBSurface">IDirectFBSurface</link> *dest,
+                                             <link linkend="GError">GError</link> **error);
+void        <link linkend="b-view-directfb-update">b_view_directfb_update</link>          (<link linkend="BViewDirectFB">BViewDirectFB</link> *view,
+                                             const <link linkend="guchar">guchar</link> *frame_data);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BViewDirectFB
+</synopsis>
+
+</refsect1>
+
+
+
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BViewDirectFB-struct"/>struct BViewDirectFB</title>
+<programlisting>struct BViewDirectFB;</programlisting>
+<para>
+The <link linkend="BViewDirectFB">BViewDirectFB</link> struct shouldn't be accessed directly. Its members
+are considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="b-view-directfb-new"/>b_view_directfb_new ()</title>
+<programlisting><link linkend="BViewDirectFB">BViewDirectFB</link>* b_view_directfb_new          (<link linkend="BTheme">BTheme</link> *theme,
+                                             <link linkend="IDirectFB">IDirectFB</link> *dfb,
+                                             <link linkend="IDirectFBSurface">IDirectFBSurface</link> *dest,
+                                             <link linkend="GError">GError</link> **error);</programlisting>
+<para>
+Creates a new <link linkend="BViewDirectFB">BViewDirectFB</link> object suitable to display
+Blinkenlights movies that fit the <parameter>theme</parameter>. The view will render to
+the <parameter>dest</parameter> surface. If its size doesn't fit the screen size
+specified in the theme, the view is drawn centered on the <parameter>dest</parameter>
+surface.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>theme</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BTheme">BTheme</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dfb</parameter>&nbsp;:</term>
+<listitem><simpara> the DirectFB super interface
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>dest</parameter>&nbsp;:</term>
+<listitem><simpara> the destination surface
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>error</parameter>&nbsp;:</term>
+<listitem><simpara> location to store the error occuring, or <literal>NULL</literal> to ignore errors
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a new <link linkend="BViewDirectFB">BViewDirectFB</link> or <literal>NULL</literal> in case of an error
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-view-directfb-update"/>b_view_directfb_update ()</title>
+<programlisting>void        b_view_directfb_update          (<link linkend="BViewDirectFB">BViewDirectFB</link> *view,
+                                             const <link linkend="guchar">guchar</link> *frame_data);</programlisting>
+<para>
+Displays a new frame on the <parameter>view</parameter>. The <parameter>view</parameter> expects <parameter>frame_data</parameter>
+in the range of 0 to 255.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>view</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BViewDirectFB">BViewDirectFB</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>frame_data</parameter>&nbsp;:</term>
+<listitem><simpara> the frame data to display
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>See Also</title>
+<para>
+BViewGtk
+</para>
+</refsect1>
+
+</refentry>

@@ -1,0 +1,82 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BModule Utilities</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-modules.html" title="Blinkenlights Modules"><link rel="previous" href="BModule.html" title="BModule"><link rel="next" href="BModuleInfo.html" title="BModuleInfo"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BModule.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-modules.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BModuleInfo.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BModule-Utilities"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BModule Utilities</span></h2><p>BModule Utilities &#8212; utility functions for <a href="BModule.html" title="BModule">BModule</a> implementations</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+void        <a href="blib-BModule-Utilities.html#b-module-draw-point">b_module_draw_point</a>             (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gint x,
+                                             gint y,
+                                             guchar value);
+void        <a href="blib-BModule-Utilities.html#b-module-draw-line">b_module_draw_line</a>              (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gint x1,
+                                             gint y1,
+                                             gint x2,
+                                             gint y2,
+                                             guchar value);
+void        <a href="blib-BModule-Utilities.html#b-module-fill">b_module_fill</a>                   (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             guchar value);
+</pre></div><div class="refsect1" lang="en"><a name="id2571150"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2571160"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2571165"></a><h3><a name="b-module-draw-point"></a>b_module_draw_point ()</h3><pre class="programlisting">void        b_module_draw_point             (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gint x,
+                                             gint y,
+                                             guchar value);</pre><p>
+Draws a point to the <i class="parameter"><tt>module</tt></i>'s frame buffer. It is safe to specify
+coordinates outside the buffer.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>x</tt></i> :</span></td><td> x coordinate
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>y</tt></i> :</span></td><td> y coordinate
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> the color to draw with
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2564330"></a><h3><a name="b-module-draw-line"></a>b_module_draw_line ()</h3><pre class="programlisting">void        b_module_draw_line              (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             gint x1,
+                                             gint y1,
+                                             gint x2,
+                                             gint y2,
+                                             guchar value);</pre><p>
+Draws a one-pixel wide line between two points to the module's
+frame buffer. The endpoints are included in the line. If the line
+exceeds the buffer, it is properly clipped.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>x1</tt></i> :</span></td><td> x coordinate of the start point
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>y1</tt></i> :</span></td><td> y coordinate of the start point
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>x2</tt></i> :</span></td><td> x coordinate of the end point
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>y2</tt></i> :</span></td><td> y coordinate of the end point
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> the color to draw with
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2572349"></a><h3><a name="b-module-fill"></a>b_module_fill ()</h3><pre class="programlisting">void        b_module_fill                   (<a href="BModule.html" title="BModule">BModule</a> *module,
+                                             guchar value);</pre><p>
+Fills the module's framebuffer with <i class="parameter"><tt>value</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>module</tt></i> :</span></td><td> a <a href="BModule.html" title="BModule">BModule</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> the color to draw with
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BModule.html"><b>&lt;&lt; BModule</b></a></td><td align="right"><a accesskey="n" href="BModuleInfo.html"><b>BModuleInfo &gt;&gt;</b></a></td></tr></table></body></html>

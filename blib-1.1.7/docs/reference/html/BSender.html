@@ -1,0 +1,145 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BSender</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="BReceiver.html" title="BReceiver"><link rel="next" href="blib-bsocket.html" title="bsocket"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BReceiver.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-bsocket.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BSender"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BSender</span></h2><p>BSender &#8212; sends Blinkenlights packets</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BSender.html#BSender-struct">BSender</a>;
+<a href="BSender.html" title="BSender">BSender</a>*    <a href="BSender.html#b-sender-new">b_sender_new</a>                    (void);
+gboolean    <a href="BSender.html#b-sender-add-recipient">b_sender_add_recipient</a>          (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             gint src_port,
+                                             const gchar *dest_host,
+                                             gint dest_port,
+                                             GError **error);
+gboolean    <a href="BSender.html#b-sender-remove-recipient">b_sender_remove_recipient</a>       (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             const gchar *dest_host,
+                                             gint dest_port,
+                                             GError **error);
+GList*      <a href="BSender.html#b-sender-list-recipients">b_sender_list_recipients</a>        (<a href="BSender.html" title="BSender">BSender</a> *sender);
+gboolean    <a href="BSender.html#b-sender-configure">b_sender_configure</a>              (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             gint width,
+                                             gint height,
+                                             gint channels,
+                                             gint maxval);
+gboolean    <a href="BSender.html#b-sender-send-frame">b_sender_send_frame</a>             (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             const guchar *data);
+gboolean    <a href="BSender.html#b-sender-send-heartbeat">b_sender_send_heartbeat</a>         (<a href="BSender.html" title="BSender">BSender</a> *sender);
+void        <a href="BSender.html#b-sender-set-verbose">b_sender_set_verbose</a>            (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             gboolean verbose);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2567278"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BSender
+</pre></div><div class="refsect1" lang="en"><a name="id2567293"></a><h2>Description</h2><p>
+The <a href="BSender.html" title="BSender">BSender</a> object sends Blinkenlights UDP packets to a number of
+recipients. Recipients can be added and removed at run-time.
+</p></div><div class="refsect1" lang="en"><a name="id2567310"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2567315"></a><h3><a name="BSender-struct"></a>struct BSender</h3><pre class="programlisting">struct BSender;</pre><p>
+The <a href="BSender.html" title="BSender">BSender</a> struct is considered private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2567335"></a><h3><a name="b-sender-new"></a>b_sender_new ()</h3><pre class="programlisting"><a href="BSender.html" title="BSender">BSender</a>*    b_sender_new                    (void);</pre><p>
+Creates a new <a href="BSender.html" title="BSender">BSender</a> object.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated <a href="BSender.html" title="BSender">BSender</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568023"></a><h3><a name="b-sender-add-recipient"></a>b_sender_add_recipient ()</h3><pre class="programlisting">gboolean    b_sender_add_recipient          (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             gint src_port,
+                                             const gchar *dest_host,
+                                             gint dest_port,
+                                             GError **error);</pre><p>
+Tries to resolve <i class="parameter"><tt>host</tt></i> and adds it to the <i class="parameter"><tt>sender</tt></i>'s list of recipients.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a <a href="BSender.html" title="BSender">BSender</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>src_port</tt></i> :</span></td><td>  originating UDP port (-1 to leave unspecified)
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest_host</tt></i> :</span></td><td> destination hostname or IP address
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest_port</tt></i> :</span></td><td> destination UDP port
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the recipient was successfully added, <tt class="literal">FALSE</tt>
+otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568164"></a><h3><a name="b-sender-remove-recipient"></a>b_sender_remove_recipient ()</h3><pre class="programlisting">gboolean    b_sender_remove_recipient       (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             const gchar *dest_host,
+                                             gint dest_port,
+                                             GError **error);</pre><p>
+Removes all recipients with matching host and port from the
+<i class="parameter"><tt>sender</tt></i>'s list of recipients.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a <a href="BSender.html" title="BSender">BSender</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest_host</tt></i> :</span></td><td> destination hostname or IP address
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest_port</tt></i> :</span></td><td> destination UDP port
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if at least one matching recipient was found
+and removed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568652"></a><h3><a name="b-sender-list-recipients"></a>b_sender_list_recipients ()</h3><pre class="programlisting">GList*      b_sender_list_recipients        (<a href="BSender.html" title="BSender">BSender</a> *sender);</pre><p>
+Creates a list of strings that describe the <i class="parameter"><tt>senders</tt></i>
+recipients. You should free the strings as well as the list when
+it is no longer needed.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a <a href="BSender.html" title="BSender">BSender</a> object
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated GList of newly allocated strings
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568720"></a><h3><a name="b-sender-configure"></a>b_sender_configure ()</h3><pre class="programlisting">gboolean    b_sender_configure              (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             gint width,
+                                             gint height,
+                                             gint channels,
+                                             gint maxval);</pre><p>
+Prepares <i class="parameter"><tt>sender</tt></i> to send Blinkenlights UDP packets with the given
+parameters.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a <a href="BSender.html" title="BSender">BSender</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>width</tt></i> :</span></td><td> number of pixels per row
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>height</tt></i> :</span></td><td> number of pixels per column
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>channels</tt></i> :</span></td><td> number of channels per pixel
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>maxval</tt></i> :</span></td><td> the maximum value
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if <i class="parameter"><tt>sender</tt></i> was successfully reconfigured,
+<tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568860"></a><h3><a name="b-sender-send-frame"></a>b_sender_send_frame ()</h3><pre class="programlisting">gboolean    b_sender_send_frame             (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             const guchar *data);</pre><p>
+Sends Blinkenlights packets to all recipients registered with
+<i class="parameter"><tt>sender</tt></i>. The <i class="parameter"><tt>data</tt></i> should match the values of the last call to
+<a href="BSender.html#b-sender-configure">b_sender_configure</a>() for <i class="parameter"><tt>sender</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a Bsender object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>data</tt></i> :</span></td><td> the frame data to send
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">FALSE</tt> in case of a fatal error, <tt class="literal">TRUE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2551846"></a><h3><a name="b-sender-send-heartbeat"></a>b_sender_send_heartbeat ()</h3><pre class="programlisting">gboolean    b_sender_send_heartbeat         (<a href="BSender.html" title="BSender">BSender</a> *sender);</pre><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p><tt class="literal">b_sender_send_heartbeat</tt> is deprecated and should not be used in newly-written code.</p></div><p>
+This function is deprecated and might be removed in the future.
+If you need the heartbeat functionality, use <a href="BProxyClient.html" title="BProxyClient">BProxyClient</a> instead.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a Bsender object
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> always
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2572204"></a><h3><a name="b-sender-set-verbose"></a>b_sender_set_verbose ()</h3><pre class="programlisting">void        b_sender_set_verbose            (<a href="BSender.html" title="BSender">BSender</a> *sender,
+                                             gboolean verbose);</pre><p>
+In earlier BLib versions <a href="BSender.html" title="BSender">BSender</a> used to print a message to stderr
+when send() failed. This message is now suppressed by default, but
+you can get the old behaviour back using this function.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>sender</tt></i> :</span></td><td> a Bsender object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>verbose</tt></i> :</span></td><td> whether the <i class="parameter"><tt>sender</tt></i> should do verbose error reporting or not
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2572274"></a><h2>See Also</h2><p>
+<a href="BReceiver.html" title="BReceiver">BReceiver</a>, <a href="blib-BPacket.html#BPacket">BPacket</a>
+</p></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BReceiver.html"><b>&lt;&lt; BReceiver</b></a></td><td align="right"><a accesskey="n" href="blib-bsocket.html"><b>bsocket &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BReceiver">
+<refmeta>
+<refentrytitle>BReceiver</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BReceiver</refname><refpurpose>receives Blinkenlights packets</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BReceiver-struct">BReceiver</link>;
+<link linkend="gboolean">gboolean</link>    (<link linkend="BReceiverCallback">*BReceiverCallback</link>)            (<link linkend="BReceiver">BReceiver</link> *receiver,
+                                             <link linkend="BPacket">BPacket</link> *packet,
+                                             <link linkend="gpointer">gpointer</link> callback_data);
+<link linkend="BReceiver">BReceiver</link>*  <link linkend="b-receiver-new">b_receiver_new</link>                  (<link linkend="BReceiverCallback">BReceiverCallback</link> callback,
+                                             <link linkend="gpointer">gpointer</link> callback_data);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-receiver-listen">b_receiver_listen</link>               (<link linkend="BReceiver">BReceiver</link> *receiver,
+                                             <link linkend="gint">gint</link> port);
+<link linkend="gboolean">gboolean</link>    <link linkend="b-receiver-listen-fd">b_receiver_listen_fd</link>            (<link linkend="BReceiver">BReceiver</link> *receiver,
+                                             <link linkend="gint">gint</link> fd);
+void        <link linkend="b-receiver-stop">b_receiver_stop</link>                 (<link linkend="BReceiver">BReceiver</link> *receiver);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BReceiver
+</synopsis>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>Properties</title>
+<synopsis>
+
+  &quot;<link linkend="BReceiver--callback">callback</link>&quot;             <link linkend="gpointer">gpointer</link>             : Write / Construct Only
+  &quot;<link linkend="BReceiver--callback-data">callback-data</link>&quot;        <link linkend="gpointer">gpointer</link>             : Write / Construct Only
+</synopsis>
+</refsect1>
+
+
+
+<refsect1>
+<title>Description</title>
+<para>
+The <link linkend="BReceiver">BReceiver</link> object listens for Blinkenlights UDP packets. For each
+frame that matches the receiver configuration, a user-defined callback
+is called with the received packet.
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BReceiver-struct"/>struct BReceiver</title>
+<programlisting>struct BReceiver;</programlisting>
+<para>
+The <link linkend="BReceiver">BReceiver</link> struct is considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="BReceiverCallback"/>BReceiverCallback ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    (*BReceiverCallback)            (<link linkend="BReceiver">BReceiver</link> *receiver,
+                                             <link linkend="BPacket">BPacket</link> *packet,
+                                             <link linkend="gpointer">gpointer</link> callback_data);</programlisting>
+<para>
+The function that gets called to dispatch incoming packets.
+</para><variablelist role="params">
+<varlistentry><term><parameter>receiver</parameter>&nbsp;:</term>
+<listitem><simpara>the <link linkend="BReceiver">BReceiver</link> object that received the packet
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>packet</parameter>&nbsp;:</term>
+<listitem><simpara>the received <link linkend="BPacket">BPacket</link> converted to host byteorder
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>callback_data</parameter>&nbsp;:</term>
+<listitem><simpara>the data that was passed to <link linkend="b-receiver-new">b_receiver_new</link>()
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara><literal>TRUE</literal> if you want to be called again
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-receiver-new"/>b_receiver_new ()</title>
+<programlisting><link linkend="BReceiver">BReceiver</link>*  b_receiver_new                  (<link linkend="BReceiverCallback">BReceiverCallback</link> callback,
+                                             <link linkend="gpointer">gpointer</link> callback_data);</programlisting>
+<para>
+Creates a new <link linkend="BReceiver">BReceiver</link> object.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>callback</parameter>&nbsp;:</term>
+<listitem><simpara> the function to call when a new frame arrives
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>callback_data</parameter>&nbsp;:</term>
+<listitem><simpara> data to pass to the <parameter>callback</parameter>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> a newly allocate <link linkend="BReceiver">BReceiver</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-receiver-listen"/>b_receiver_listen ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_receiver_listen               (<link linkend="BReceiver">BReceiver</link> *receiver,
+                                             <link linkend="gint">gint</link> port);</programlisting>
+<para>
+Causes the <parameter>receiver</parameter> to start to listen to the specified UDP
+port. For each successfully received Blinkenlights packet, the
+packet will be converted to host byteorder and the callback that
+was specified on <link linkend="b-receiver-new">b_receiver_new</link>() will be called.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>receiver</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BReceiver">BReceiver</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>port</parameter>&nbsp;:</term>
+<listitem><simpara> the UDP port to listen to
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> if the receiver listens to <parameter>port</parameter>, <literal>FALSE</literal> otherwise
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-receiver-listen-fd"/>b_receiver_listen_fd ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    b_receiver_listen_fd            (<link linkend="BReceiver">BReceiver</link> *receiver,
+                                             <link linkend="gint">gint</link> fd);</programlisting>
+<para>
+Causes the <parameter>receiver</parameter> to start to listen to the given file descriptor.
+This function is rarely useful, it is used internally by <link linkend="BProxyClient">BProxyClient</link>.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>receiver</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BReceiver">BReceiver</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>fd</parameter>&nbsp;:</term>
+<listitem><simpara> a file descriptor
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara> <literal>TRUE</literal> on success
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-receiver-stop"/>b_receiver_stop ()</title>
+<programlisting>void        b_receiver_stop                 (<link linkend="BReceiver">BReceiver</link> *receiver);</programlisting>
+<para>
+Makes the <parameter>receiver</parameter> stop listening.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>receiver</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BReceiver">BReceiver</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1>
+<title>Properties</title>
+<variablelist>
+<varlistentry><term><anchor id="BReceiver--callback"/>&quot;<literal>callback</literal>&quot; (<link linkend="gpointer">gpointer</link> : Write / Construct Only)</term>
+<listitem>
+<para></para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BReceiver--callback-data"/>&quot;<literal>callback-data</literal>&quot; (<link linkend="gpointer">gpointer</link> : Write / Construct Only)</term>
+<listitem>
+<para></para>
+</listitem></varlistentry>
+
+</variablelist>
+</refsect1>
+
+
+
+<refsect1>
+<title>See Also</title>
+<para>
+<link linkend="BSender">BSender</link>, <link linkend="BPacket">BPacket</link>
+</para>
+</refsect1>
+
+</refentry>

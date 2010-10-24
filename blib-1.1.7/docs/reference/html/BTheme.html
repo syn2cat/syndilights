@@ -1,0 +1,292 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BTheme</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-sim.html" title="Blinkenlights Simulation"><link rel="previous" href="blib-sim.html" title="Blinkenlights Simulation"><link rel="next" href="BViewAA.html" title="BViewAA"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-sim.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-sim.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BViewAA.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BTheme"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BTheme</span></h2><p>BTheme &#8212; theme support to visualize Blinkenlights</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BTheme.html#BColor">BColor</a>;
+struct      <a href="BTheme.html#BRectangle">BRectangle</a>;
+struct      <a href="BTheme.html#BWindow">BWindow</a>;
+#define     <a href="BTheme.html#B-WINDOW-VALUE-ALL-CAPS">B_WINDOW_VALUE_ALL</a>
+struct      <a href="BTheme.html#BOverlay">BOverlay</a>;
+struct      <a href="BTheme.html#BTheme-struct">BTheme</a>;
+<a href="BTheme.html" title="BTheme">BTheme</a>*     <a href="BTheme.html#b-theme-new-from-file">b_theme_new_from_file</a>           (const gchar *filename,
+                                             gboolean lazy_load,
+                                             GError **error);
+<a href="BTheme.html" title="BTheme">BTheme</a>*     <a href="BTheme.html#b-theme-new-from-scratch">b_theme_new_from_scratch</a>        (const gchar *title,
+                                             const gchar *type,
+                                             gint rows,
+                                             gint columns,
+                                             gint channels,
+                                             gint maxval,
+                                             gint width,
+                                             gint height);
+gboolean    <a href="BTheme.html#b-theme-load">b_theme_load</a>                    (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             GError **error);
+void        <a href="BTheme.html#b-theme-unload">b_theme_unload</a>                  (<a href="BTheme.html" title="BTheme">BTheme</a> *theme);
+struct      <a href="BTheme.html#BThemesQuery">BThemesQuery</a>;
+enum        <a href="BTheme.html#BThemesQueryFlags">BThemesQueryFlags</a>;
+GList*      <a href="BTheme.html#b-themes-query">b_themes_query</a>                  (const gchar *themepath,
+                                             <a href="BTheme.html#BThemesQuery">BThemesQuery</a> *query);
+gboolean    (<a href="BTheme.html#BThemesForeachFunc">*BThemesForeachFunc</a>)           (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             gpointer callback_data);
+void        <a href="BTheme.html#b-themes-foreach">b_themes_foreach</a>                (const gchar *themepath,
+                                             <a href="BTheme.html#BThemesForeachFunc">BThemesForeachFunc</a> callback,
+                                             gpointer callback_data);
+void        <a href="BTheme.html#b-themes-foreach-theme">b_themes_foreach_theme</a>          (const gchar *themepath,
+                                             GHFunc callback,
+                                             gpointer callback_data);
+<a href="BTheme.html" title="BTheme">BTheme</a>*     <a href="BTheme.html#b-themes-lookup-theme">b_themes_lookup_theme</a>           (const gchar *name,
+                                             const gchar *themepath,
+                                             GError **error);
+gboolean    <a href="BTheme.html#b-theme-frame-diff-boundary">b_theme_frame_diff_boundary</a>     (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             const guchar *prev_data,
+                                             const guchar *frame_data,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *bbox);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2574196"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----<a href="BObject.html" title="BObject">BObject</a>
+         +----BTheme
+</pre></div><div class="refsect1" lang="en"><a name="id2574216"></a><h2>Description</h2><p>
+A <a href="BTheme.html" title="BTheme">BTheme</a> object defines the dimensions, features and the look of a
+Blinkenlights installation. It allows to implement a graphical
+simulation. BLib comes with two widgets, <a href="BViewGtk.html" title="BViewGtk">BViewGtk</a> and <a href="BViewDirectFB.html" title="BViewDirectFB">BViewDirectFB</a>
+that hide the ugly details of <a href="BTheme.html" title="BTheme">BTheme</a>.
+</p></div><div class="refsect1" lang="en"><a name="id2574249"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2574255"></a><h3><a name="BColor"></a>struct BColor</h3><pre class="programlisting">struct BColor {
+
+  guchar  a;
+  guchar  r;
+  guchar  g;
+  guchar  b;
+};
+</pre><p>
+The <a href="BTheme.html#BColor">BColor</a> struct is used to store a single color. The color channels
+have values in the range from 0 to 255.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">guchar <i class="structfield"><tt>a</tt></i></span></td><td>alpha channel value (opacity)
+</td></tr><tr><td><span class="term">guchar <i class="structfield"><tt>r</tt></i></span></td><td>red channel value
+</td></tr><tr><td><span class="term">guchar <i class="structfield"><tt>g</tt></i></span></td><td>green channel value
+</td></tr><tr><td><span class="term">guchar <i class="structfield"><tt>b</tt></i></span></td><td>blue channel value
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2574350"></a><h3><a name="BRectangle"></a>struct BRectangle</h3><pre class="programlisting">struct BRectangle {
+
+  gint    x;
+  gint    y;
+  gint    w;
+  gint    h;
+};
+</pre><p>
+The <a href="BTheme.html#BRectangle">BRectangle</a> struct is used to store a rectangle. The coordinates
+are pixel values. The x coordinate advances from left to right, the
+y coordinate from top to bottom.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">gint <i class="structfield"><tt>x</tt></i></span></td><td>horizontal offset from origin
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>y</tt></i></span></td><td>vertical offset from origin
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>w</tt></i></span></td><td>width
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>h</tt></i></span></td><td>height
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2569830"></a><h3><a name="BWindow"></a>struct BWindow</h3><pre class="programlisting">struct BWindow {
+
+  gint        value;
+  gint        row;
+  gint        column;
+  gint        src_x;
+  gint        src_y;
+  BRectangle  rect;
+};
+</pre><p>
+The <a href="BTheme.html#BWindow">BWindow</a> struct defines a single overlay window used in a <a href="BTheme.html" title="BTheme">BTheme</a>.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">gint <i class="structfield"><tt>value</tt></i></span></td><td>the value this window definition applies to
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>row</tt></i></span></td><td>the row index
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>column</tt></i></span></td><td>the column index
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>src_x</tt></i></span></td><td>x coordinate in the upper left corner in the source image
+</td></tr><tr><td><span class="term">gint <i class="structfield"><tt>src_y</tt></i></span></td><td>y coordinate of the upper left corner in the source image
+</td></tr><tr><td><span class="term"><a href="BTheme.html#BRectangle">BRectangle</a> <i class="structfield"><tt>rect</tt></i></span></td><td>the destination rectangle
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2569967"></a><h3><a name="B-WINDOW-VALUE-ALL-CAPS"></a>B_WINDOW_VALUE_ALL</h3><pre class="programlisting">#define B_WINDOW_VALUE_ALL 0
+</pre><p>
+A special value used to indicate that the window definition is valid
+for all possible values.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2569984"></a><h3><a name="BOverlay"></a>struct BOverlay</h3><pre class="programlisting">struct BOverlay {
+
+  gchar       *image;
+  BColor       color;
+
+  GList       *windows;
+};
+</pre><p>
+The <a href="BTheme.html#BOverlay">BOverlay</a> struct defines a set of overlay windows used in a <a href="BTheme.html" title="BTheme">BTheme</a>.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term">gchar *<i class="structfield"><tt>image</tt></i></span></td><td>an optional image to blend over the background
+</td></tr><tr><td><span class="term"><a href="BTheme.html#BColor">BColor</a> <i class="structfield"><tt>color</tt></i></span></td><td>the color is only used when no <i class="parameter"><tt>image</tt></i> is specified
+</td></tr><tr><td><span class="term">GList *<i class="structfield"><tt>windows</tt></i></span></td><td>a GList of <a href="BTheme.html#BWindow">BWindow</a> structs
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2570082"></a><h3><a name="BTheme-struct"></a>struct BTheme</h3><pre class="programlisting">struct BTheme;</pre><p>
+The <a href="BTheme.html" title="BTheme">BTheme</a> object defines the dimensions and the look of a
+Blinkenlights installation.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2578532"></a><h3><a name="b-theme-new-from-file"></a>b_theme_new_from_file ()</h3><pre class="programlisting"><a href="BTheme.html" title="BTheme">BTheme</a>*     b_theme_new_from_file           (const gchar *filename,
+                                             gboolean lazy_load,
+                                             GError **error);</pre><p>
+Tries to load a <a href="BTheme.html" title="BTheme">BTheme</a> from the file pointed to by <i class="parameter"><tt>filename</tt></i>. If
+<i class="parameter"><tt>lazy_load</tt></i> is <tt class="literal">TRUE</tt>, only the header is loaded.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>filename</tt></i> :</span></td><td> the name of the file to load the theme from
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>lazy_load</tt></i> :</span></td><td> whether to do lazy-loading
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated <a href="BTheme.html" title="BTheme">BTheme</a> object or <tt class="literal">NULL</tt> if the load
+failed
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2578648"></a><h3><a name="b-theme-new-from-scratch"></a>b_theme_new_from_scratch ()</h3><pre class="programlisting"><a href="BTheme.html" title="BTheme">BTheme</a>*     b_theme_new_from_scratch        (const gchar *title,
+                                             const gchar *type,
+                                             gint rows,
+                                             gint columns,
+                                             gint channels,
+                                             gint maxval,
+                                             gint width,
+                                             gint height);</pre><p>
+Creates a new <a href="BTheme.html" title="BTheme">BTheme</a> object from scratch. This may be useful if
+you want to quickly test a movie for a layout you don't have a
+theme for. You need to call <a href="BTheme.html#b-theme-load">b_theme_load</a>() before you can use the
+new theme.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>title</tt></i> :</span></td><td> a descriptive title
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>type</tt></i> :</span></td><td> the theme type or <tt class="literal">NULL</tt>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>rows</tt></i> :</span></td><td> the number of rows of windows
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>columns</tt></i> :</span></td><td> the number of columns of windows
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>channels</tt></i> :</span></td><td> the number of channels per window (must be 1)
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>maxval</tt></i> :</span></td><td> the maximum value
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>width</tt></i> :</span></td><td> screen width in pixels
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>height</tt></i> :</span></td><td> screen height in pixels
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocated, lazy-loaded, <a href="BTheme.html" title="BTheme">BTheme</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2578843"></a><h3><a name="b-theme-load"></a>b_theme_load ()</h3><pre class="programlisting">gboolean    b_theme_load                    (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             GError **error);</pre><p>
+Loads all data into the <i class="parameter"><tt>theme</tt></i>. You only need to call this if you
+lazy-loaded the theme or called <a href="BTheme.html#b-theme-unload">b_theme_unload</a>() before.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>theme</tt></i> :</span></td><td> a <a href="BTheme.html" title="BTheme">BTheme</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> on success, FALSE otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2578934"></a><h3><a name="b-theme-unload"></a>b_theme_unload ()</h3><pre class="programlisting">void        b_theme_unload                  (<a href="BTheme.html" title="BTheme">BTheme</a> *theme);</pre><p>
+Frees all data of a BTheme except the meta information stored in
+the header.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>theme</tt></i> :</span></td><td> a <a href="BTheme.html" title="BTheme">BTheme</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2578980"></a><h3><a name="BThemesQuery"></a>struct BThemesQuery</h3><pre class="programlisting">struct BThemesQuery {
+
+  BThemesQueryFlags  flags;
+
+  const gchar       *name;
+  const gchar       *type;
+  gint               rows;
+  gint               columns;
+  gint               width;
+  gint               height;
+};
+</pre><p>
+A structure that defines a query on the installed themes. Used by
+<a href="BTheme.html#b-themes-query">b_themes_query</a>().
+</p></div><hr><div class="refsect2" lang="en"><a name="id2579005"></a><h3><a name="BThemesQueryFlags"></a>enum BThemesQueryFlags</h3><pre class="programlisting">typedef enum
+{
+  B_THEMES_QUERY_NONE    = 0,
+  B_THEMES_QUERY_NAME    = 1 &lt;&lt; 0,
+  B_THEMES_QUERY_TYPE    = 1 &lt;&lt; 1,
+  B_THEMES_QUERY_ROWS    = 1 &lt;&lt; 2,
+  B_THEMES_QUERY_COLUMNS = 1 &lt;&lt; 3,
+  B_THEMES_QUERY_WIDTH   = 1 &lt;&lt; 4,
+  B_THEMES_QUERY_HEIGHT  = 1 &lt;&lt; 5
+} BThemesQueryFlags;
+</pre><p>
+Flags that define which values of a BThemesQuery are valid.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2579026"></a><h3><a name="b-themes-query"></a>b_themes_query ()</h3><pre class="programlisting">GList*      b_themes_query                  (const gchar *themepath,
+                                             <a href="BTheme.html#BThemesQuery">BThemesQuery</a> *query);</pre><p>
+Looks for themes as defined by <i class="parameter"><tt>query</tt></i>. If <i class="parameter"><tt>themepath</tt></i> is not
+specified the default path is used. The default path can be overridden
+by setting the environment variable B_THEME_PATH.
+</p><p>
+Each theme that matches the <i class="parameter"><tt>query</tt></i> is lazy-loaded.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>themepath</tt></i> :</span></td><td> a colon-separated list of directories to search or <tt class="literal">NULL</tt> to
+use the default path
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>query</tt></i> :</span></td><td> pointer to a <a href="BTheme.html#BThemesQuery">BThemesQuery</a>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a GList of newly allocated, lazy-loaded <a href="BTheme.html" title="BTheme">BTheme</a> objects
+or <tt class="literal">NULL</tt> if no matching theme was found
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2579136"></a><h3><a name="BThemesForeachFunc"></a>BThemesForeachFunc ()</h3><pre class="programlisting">gboolean    (*BThemesForeachFunc)           (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             gpointer callback_data);</pre><p>
+This function is called for each theme found by <a href="BTheme.html#b-themes-foreach">b_themes_foreach</a>().
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>theme</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback_data</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2579209"></a><h3><a name="b-themes-foreach"></a>b_themes_foreach ()</h3><pre class="programlisting">void        b_themes_foreach                (const gchar *themepath,
+                                             <a href="BTheme.html#BThemesForeachFunc">BThemesForeachFunc</a> callback,
+                                             gpointer callback_data);</pre><p>
+This function iterates over all themes in the <i class="parameter"><tt>themepath</tt></i>, lazy-loads them,
+runs <i class="parameter"><tt>callback</tt></i> on the theme and unrefs it again.  The iteration is stopped
+if a <i class="parameter"><tt>callback</tt></i> returns <tt class="literal">FALSE</tt>.
+</p><p>
+If <i class="parameter"><tt>themepath</tt></i> is not specified, the default path is used. The
+default path can be overridden by setting the environment variable
+B_THEME_PATH.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>themepath</tt></i> :</span></td><td> a colon-separated list of directories to search or <tt class="literal">NULL</tt> to
+use the default path
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback</tt></i> :</span></td><td> a function to call for each theme
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback_data</tt></i> :</span></td><td> data to pass to the <i class="parameter"><tt>callback</tt></i>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2579313"></a><h3><a name="b-themes-foreach-theme"></a>b_themes_foreach_theme ()</h3><pre class="programlisting">void        b_themes_foreach_theme          (const gchar *themepath,
+                                             GHFunc callback,
+                                             gpointer callback_data);</pre><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p><tt class="literal">b_themes_foreach_theme</tt> is deprecated and should not be used in newly-written code.</p></div><p>
+Shouldn't be used in new code, use <a href="BTheme.html#b-themes-foreach">b_themes_foreach</a>() instead.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>themepath</tt></i> :</span></td><td> 
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback</tt></i> :</span></td><td> 
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback_data</tt></i> :</span></td><td> 
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2579400"></a><h3><a name="b-themes-lookup-theme"></a>b_themes_lookup_theme ()</h3><pre class="programlisting"><a href="BTheme.html" title="BTheme">BTheme</a>*     b_themes_lookup_theme           (const gchar *name,
+                                             const gchar *themepath,
+                                             GError **error);</pre><div class="warning" style="margin-left: 0.5in; margin-right: 0.5in;"><h3 class="title">Warning</h3><p><tt class="literal">b_themes_lookup_theme</tt> is deprecated and should not be used in newly-written code.</p></div><p>
+Shouldn't be used in new code, use <a href="BTheme.html#b-themes-query">b_themes_query</a>() instead.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>name</tt></i> :</span></td><td> 
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>themepath</tt></i> :</span></td><td> 
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> 
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> 
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2579500"></a><h3><a name="b-theme-frame-diff-boundary"></a>b_theme_frame_diff_boundary ()</h3><pre class="programlisting">gboolean    b_theme_frame_diff_boundary     (<a href="BTheme.html" title="BTheme">BTheme</a> *theme,
+                                             const guchar *prev_data,
+                                             const guchar *frame_data,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *bbox);</pre><p>
+Computes the bounding box of the difference image between two frames.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>theme</tt></i> :</span></td><td>       a <a href="BTheme.html" title="BTheme">BTheme</a>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>prev_data</tt></i> :</span></td><td>   data of the previous frame
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>frame_data</tt></i> :</span></td><td>  data of the current frame
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>bbox</tt></i> :</span></td><td>        returns bounding box
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the bounding box is not empty.
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2579617"></a><h2>See Also</h2><p>
+BViewDirectFB, BViewGtk
+</p></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-sim.html"><b>&lt;&lt; Blinkenlights Simulation</b></a></td><td align="right"><a accesskey="n" href="BViewAA.html"><b>BViewAA &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,0 +1,310 @@
+<?xml version="1.0"?>
+<!DOCTYPE refentry PUBLIC "-//OASIS//DTD DocBook XML V4.1.2//EN" 
+               "http://www.oasis-open.org/docbook/xml/4.1.2/docbookx.dtd">
+
+<refentry id="BModule">
+<refmeta>
+<refentrytitle>BModule</refentrytitle>
+<manvolnum>3</manvolnum>
+<refmiscinfo>BLIB Library</refmiscinfo>
+</refmeta>
+
+<refnamediv>
+<refname>BModule</refname><refpurpose>definition of the Blinkenlights Game API</refpurpose>
+</refnamediv>
+
+<refsynopsisdiv><title>Synopsis</title>
+
+<synopsis>
+
+
+
+struct      <link linkend="BModule-struct">BModule</link>;
+struct      <link linkend="BModuleEvent">BModuleEvent</link>;
+enum        <link linkend="BModuleEventType">BModuleEventType</link>;
+enum        <link linkend="BModuleKey">BModuleKey</link>;
+<link linkend="gboolean">gboolean</link>    (<link linkend="BModulePaintCallback">*BModulePaintCallback</link>)         (<link linkend="BModule">BModule</link> *bmodule,
+                                             <link linkend="guchar">guchar</link> *buffer,
+                                             <link linkend="gpointer">gpointer</link> data);
+void        <link linkend="b-module-ticker-start">b_module_ticker_start</link>           (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="gint">gint</link> timeout);
+void        <link linkend="b-module-ticker-stop">b_module_ticker_stop</link>            (<link linkend="BModule">BModule</link> *module);
+void        <link linkend="b-module-request-stop">b_module_request_stop</link>           (<link linkend="BModule">BModule</link> *module);
+void        <link linkend="b-module-paint">b_module_paint</link>                  (<link linkend="BModule">BModule</link> *module);
+
+</synopsis>
+</refsynopsisdiv>
+
+<refsect1>
+<title>Object Hierarchy</title>
+<synopsis>
+
+  <link linkend="GObject">GObject</link>
+   +----BModule
+</synopsis>
+
+</refsect1>
+
+
+
+<refsect1>
+<title>Properties</title>
+<synopsis>
+
+  &quot;<link linkend="BModule--lifetime">lifetime</link>&quot;             <link linkend="gint">gint</link>                 : Write / Construct
+  &quot;<link linkend="BModule--speed">speed</link>&quot;                <link linkend="gdouble">gdouble</link>              : Write / Construct
+</synopsis>
+</refsect1>
+
+<refsect1>
+<title>Signal Prototypes</title>
+<synopsis>
+
+&quot;<link linkend="BModule-start">start</link>&quot;     void        user_function      (<link linkend="BModule">BModule</link> *bmodule,
+                                            <link linkend="gpointer">gpointer</link> user_data);
+&quot;<link linkend="BModule-stop">stop</link>&quot;      void        user_function      (<link linkend="BModule">BModule</link> *bmodule,
+                                            <link linkend="gpointer">gpointer</link> user_data);
+</synopsis>
+</refsect1>
+
+
+<refsect1>
+<title>Description</title>
+<para>
+
+</para>
+</refsect1>
+
+<refsect1>
+<title>Details</title>
+<refsect2>
+<title><anchor id="BModule-struct"/>struct BModule</title>
+<programlisting>struct BModule;</programlisting>
+<para>
+The <link linkend="BModule">BModule</link> struct has a couple of fields that may be read directly
+from a <link linkend="BModule">BModule</link> implementation. You must however not change any
+members directly. Usually a <link linkend="BModule">BModule</link> uses the
+<structfield>width</structfield>, <structfield>height</structfield>,
+<structfield>channels</structfield>,
+<structfield>maxval</structfield>, <structfield>aspect</structfield>
+and <structfield>num_players</structfield> fields.
+</para>
+<para>
+The <structfield>buffer</structfield> variable is the only one a
+<link linkend="BModule">BModule</link> may write to. It does so when it needs to update the frame
+buffer. It is however recommened to use utility functions like
+<link linkend="b-module-fill">b_module_fill</link>() instead of writing into the
+<structfield>buffer</structfield>. All other fields of <link linkend="BModule">BModule</link> are
+considered private.
+</para></refsect2>
+<refsect2>
+<title><anchor id="BModuleEvent"/>struct BModuleEvent</title>
+<programlisting>struct BModuleEvent {
+
+  gint             device_id;
+  BModuleEventType type;
+  BModuleKey       key;
+};
+</programlisting>
+<para>
+The <link linkend="BModuleEvent">BModuleEvent</link> struct defines an event delivered to a <link linkend="BModule">BModule</link>.
+The <structfield>key</structfield> field is only valid if the type
+is <literal>B_EVENT_TYPE_KEY</literal>. More field may be added when new event types
+are added.
+</para><variablelist role="struct">
+<varlistentry>
+<term><link linkend="gint">gint</link> <structfield>device_id</structfield></term>
+<listitem><simpara>the event source
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="BModuleEventType">BModuleEventType</link> <structfield>type</structfield></term>
+<listitem><simpara>the type of event
+</simpara></listitem>
+</varlistentry>
+<varlistentry>
+<term><link linkend="BModuleKey">BModuleKey</link> <structfield>key</structfield></term>
+<listitem><simpara>the key
+
+</simpara></listitem>
+</varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="BModuleEventType"/>enum BModuleEventType</title>
+<programlisting>typedef enum
+{
+  B_EVENT_TYPE_UNKNOWN = 0,
+  B_EVENT_TYPE_KEY,
+  B_EVENT_TYPE_PLAYER_ENTERED,
+  B_EVENT_TYPE_PLAYER_LEFT
+} BModuleEventType;
+</programlisting>
+<para>
+This enumeration classifies an event into a number of types.
+</para></refsect2>
+<refsect2>
+<title><anchor id="BModuleKey"/>enum BModuleKey</title>
+<programlisting>typedef enum
+{
+  B_KEY_0,
+  B_KEY_1,
+  B_KEY_2,
+  B_KEY_3,
+  B_KEY_4,
+  B_KEY_5,
+  B_KEY_6,
+  B_KEY_7,
+  B_KEY_8,
+  B_KEY_9,
+  B_KEY_HASH,
+  B_KEY_ASTERISK
+} BModuleKey;
+</programlisting>
+<para>
+Enumeration of the possible key values in an event of type
+<literal>B_EVENT_TYPE_KEY</literal>.
+</para></refsect2>
+<refsect2>
+<title><anchor id="BModulePaintCallback"/>BModulePaintCallback ()</title>
+<programlisting><link linkend="gboolean">gboolean</link>    (*BModulePaintCallback)         (<link linkend="BModule">BModule</link> *bmodule,
+                                             <link linkend="guchar">guchar</link> *buffer,
+                                             <link linkend="gpointer">gpointer</link> data);</programlisting>
+<para>
+A callback that is registered when a <link linkend="BModule">BModule</link> is created using
+<link linkend="b-module-new">b_module_new</link>(). It is called from <link linkend="b-module-paint">b_module_paint</link>() and typically
+causes a Blinkenlights frame packet to be emitted. You don't need
+to care about this if you are implementing a <link linkend="BModule">BModule</link>.
+</para><variablelist role="params">
+<varlistentry><term><parameter>bmodule</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>buffer</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>data</parameter>&nbsp;:</term>
+<listitem><simpara>
+</simpara></listitem></varlistentry>
+<varlistentry><term><emphasis>Returns</emphasis> :</term><listitem><simpara>
+
+
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-ticker-start"/>b_module_ticker_start ()</title>
+<programlisting>void        b_module_ticker_start           (<link linkend="BModule">BModule</link> *module,
+                                             <link linkend="gint">gint</link> timeout);</programlisting>
+<para>
+Starts a timeout for <parameter>module</parameter> that will call cause its <link linkend="tick">tick</link>() method
+to be called in <parameter>timeout</parameter> milliseconds. The return value of the
+<link linkend="tick">tick</link>() method is then used to install a new timeout for <parameter>module</parameter>.
+This proceeds until the <link linkend="tick">tick</link>() method returns -1,
+<link linkend="b-module-ticker-stop">b_module_ticker_stop</link>() is called or the module is stopped.
+</para>
+<para>
+You may only call this function for a <link linkend="BModule">BModule</link> that is currently
+running.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>timeout</parameter>&nbsp;:</term>
+<listitem><simpara> the timeout interval in milliseconds 
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-ticker-stop"/>b_module_ticker_stop ()</title>
+<programlisting>void        b_module_ticker_stop            (<link linkend="BModule">BModule</link> *module);</programlisting>
+<para>
+Stops the ticker for <parameter>module</parameter>. If there is a pending timeout for
+<parameter>module</parameter>, it is removed.
+</para>
+<para>
+You may only call this function for a <link linkend="BModule">BModule</link> that is currently
+running.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-request-stop"/>b_module_request_stop ()</title>
+<programlisting>void        b_module_request_stop           (<link linkend="BModule">BModule</link> *module);</programlisting>
+<para>
+This function causes the module to be stopped. This is for example
+used when a game module decides that the game is over.
+</para>
+<para>
+You may only call this function for a <link linkend="BModule">BModule</link> that is currently
+running.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+<refsect2>
+<title><anchor id="b-module-paint"/>b_module_paint ()</title>
+<programlisting>void        b_module_paint                  (<link linkend="BModule">BModule</link> *module);</programlisting>
+<para>
+This function causes a repaint of the screen.</para>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>module</parameter>&nbsp;:</term>
+<listitem><simpara> a <link linkend="BModule">BModule</link> object
+</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+
+</refsect1>
+<refsect1>
+<title>Properties</title>
+<variablelist>
+<varlistentry><term><anchor id="BModule--lifetime"/>&quot;<literal>lifetime</literal>&quot; (<link linkend="gint">gint</link> : Write / Construct)</term>
+<listitem>
+<para>Maximum time a module is allowed to run (in milliseconds).</para>
+</listitem></varlistentry>
+<varlistentry><term><anchor id="BModule--speed"/>&quot;<literal>speed</literal>&quot; (<link linkend="gdouble">gdouble</link> : Write / Construct)</term>
+<listitem>
+<para>Allows to tune the playback speed.</para>
+</listitem></varlistentry>
+
+</variablelist>
+</refsect1>
+
+<refsect1>
+<title>Signals</title>
+<refsect2><title><anchor id="BModule-start"/>The &quot;start&quot; signal</title>
+<programlisting>void        user_function                  (<link linkend="BModule">BModule</link> *bmodule,
+                                            <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>bmodule</parameter>&nbsp;:</term>
+<listitem><simpara>the object which received the signal.
+
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2><refsect2><title><anchor id="BModule-stop"/>The &quot;stop&quot; signal</title>
+<programlisting>void        user_function                  (<link linkend="BModule">BModule</link> *bmodule,
+                                            <link linkend="gpointer">gpointer</link> user_data);</programlisting>
+<para>
+
+</para><variablelist role="params">
+<varlistentry><term><parameter>bmodule</parameter>&nbsp;:</term>
+<listitem><simpara>the object which received the signal.
+
+</simpara></listitem></varlistentry>
+<varlistentry><term><parameter>user_data</parameter>&nbsp;:</term>
+<listitem><simpara>user data set when the signal handler was connected.</simpara></listitem></varlistentry>
+</variablelist></refsect2>
+</refsect1>
+
+
+
+</refentry>

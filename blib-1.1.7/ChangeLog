@@ -1,0 +1,3429 @@
+2004-04-22 22:24  neo
+
+	* ChangeLog: Made 1.1.7 release.
+
+2004-04-22 22:08  neo
+
+	* NEWS, README: updated for 1.1.7 release
+
+2004-04-14 18:58  neo
+
+	* blib/.cvsignore, blib/Makefile.am, blib/blib.h,
+	  blib/bmarshal.list, blib/bpacket.c, blib/bpacket.h,
+	  blib/bproxyserver.c, blib/bproxyserver.h, blib/btypes.h,
+	  docs/reference/Makefile.am, docs/reference/blib-docs.sgml,
+	  docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bpacket.sgml,
+	  docs/reference/tmpl/bproxyserver.sgml: Added BProxyServer.
+	  Contains most of the code that used to live in blinkenproxy.c but
+	  uses the same file descriptor for listening to the heartbeat and
+	  for sending blinkenlights frames.
+
+2004-04-09 02:11  neo
+
+	* blib/btheme.c, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/btheme.sgml,
+	  docs/reference/tmpl/bview-pixbuf.sgml, gfx/bview-pixbuf.c,
+	  gfx/bview-pixbuf.h: documentation
+
+2004-04-09 01:45  neo
+
+	* gfx/: bview-directfb.c, bview-directfb.h: Changed return value of
+	  b_view_directfb_new() to match what the other views do.
+
+2004-04-09 00:55  neo
+
+	* gfx/bview-pixbuf.c: fixed bugs in the new code
+
+2004-04-09 00:34  neo
+
+	* gfx/: bview-aa.c, bview-aa.h, bview-gtk.c, bview-pixbuf.c,
+	  bview-pixbuf.h: Added a theme-less mode for BViewPixbuf. Some
+	  minor cleanups in other views.
+
+2004-04-08 23:53  neo
+
+	* gfx/bview-pixbuf.c: actually skip image preloading if
+	  b_view_pixbuf() is called with image_preload == FALSE
+
+2004-04-08 04:35  neo
+
+	* blib/bmovie.c: minor cleanups
+
+2004-04-07 16:46  neo
+
+	* gfx/bview-pixbuf.c: use a pixbuf w/o alpha channel
+
+2004-04-07 15:52  neo
+
+	* blib/butils.c, gfx/bview-gtk.c, gfx/bview-gtk.h,
+	  gfx/bview-pixbuf.c: numerous fixes
+
+2004-04-07 14:25  neo
+
+	* blib-gtk.pc.in, blib/btheme-parser.c, blib/btheme.c,
+	  blib/btheme.h, blib/butils.c, blib/butils.h,
+	  data/blinkentheme.dtd, gfx/blib-gtk.h, gfx/bview-directfb.c,
+	  gfx/bview-gtk.c, gfx/bview-gtk.h, gfx/bview-pixbuf.c,
+	  gfx/bview-pixbuf.h: Added the possibility to specify an offset
+	  for the background image in a blinkentheme.  Added
+	  b_theme_frame_diff_boundary(), used to live in bmovie-mng.c.
+	  Added a clip rectangle to b_view_pixbuf_render().  Let BViewGtk
+	  use BViewPixbuf for the unoptimized case.
+
+2004-04-07 01:28  neo
+
+	* gfx/: bview-pixbuf.c, bview-pixbuf.h: added a GError parameter to
+	  b_view_pixbuf_render()
+
+2004-04-07 00:16  neo
+
+	* blib/butils.c: allow the dest rectangle to be NULL in
+	  b_rectangle_intersect
+
+2004-04-07 00:02  neo
+
+	* blib-pixbuf.pc.in: fixed typo
+
+2004-04-07 00:01  neo
+
+	* Makefile.am: install the blib-pixbuf.pc file
+
+2004-04-06 23:35  neo
+
+	* configure.in: bumped version number to 1.1.7, binary age 0,
+	  interface age 0
+
+2004-04-06 23:07  neo
+
+	* .cvsignore, ChangeLog, blib-pixbuf.pc.in, configure.in,
+	  blib/butils.c, blib/butils.h, docs/reference/Makefile.am,
+	  docs/reference/blib-docs.sgml, docs/reference/blib-sections.txt,
+	  docs/reference/blib.types.in, docs/reference/tmpl/butils.sgml,
+	  docs/reference/tmpl/bview-pixbuf.sgml, gfx/.cvsignore,
+	  gfx/Makefile.am, gfx/blib-pixbuf.h, gfx/bview-pixbuf.c,
+	  gfx/bview-pixbuf.h: Added b_rectangle_union and
+	  b_rectangle_intersect to butils.[ch].  Added BViewPixbuf, a new
+	  view using gdk-pixbuf to render single frames.  Duplicates quite
+	  some code from BViewGtk but I will make the latter use the new
+	  view later.
+
+2004-03-09 23:57  neo
+
+	* ChangeLog, NEWS: Made 1.1.6 release.
+
+2004-03-09 20:14  neo
+
+	* modules/: bretris.c, bsnake.c: applied modified versions of
+	  patches from 1Stein to make snake and bretris multi-player aware.
+
+2004-02-24 22:15  neo
+
+	* docs/reference/tmpl/bprotocol.sgml: documented defines that were
+	  introduced for the blinkenproxy protocol
+
+2004-02-17 08:55  tim
+
+	* .cvsignore: ignore mac stuff
+
+2004-02-16 15:50  neo
+
+	* gfx/bview-gtk.c: oops, looks as if I accidentally committed some
+	  broken code yesterday
+
+2004-02-16 15:47  neo
+
+	* blib/bparser.c: Set the GIOChannel encoding to NULL before
+	  attempting to locate the XML header. Fixes endless looping on
+	  some binary files.
+
+2004-02-16 00:01  neo
+
+	* gfx/bview-gtk.c: fixed color handling in gdk_pixbuf_fill_rect()
+
+2004-02-14 23:05  neo
+
+	* NEWS, README, configure.in: Bumped version number to 1.1.6,
+	  binary age 0, interface ago 0.
+
+2004-02-14 21:40  neo
+
+	* blib/bsender.c, blib/bsender.h, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bsender.sgml: Suppress the error messages
+	  when sending a packet fails. Added new function
+	  b_sender_set_verbose() that allows to get the old behaviour back.
+
+2004-02-14 21:23  neo
+
+	* gfx/: bview-directfb.c, bview-gtk.c, bview-gtk.h: Only do the
+	  optimization if none of the loaded images has an alpha channel.
+
+2004-02-14 20:10  neo
+
+	* blib/btheme-parser.c, blib/btheme.c, blib/btheme.h,
+	  gfx/bview-directfb.c, gfx/bview-gtk.c, gfx/bview-gtk.h: Added a
+	  boolean parameter "needs_blending" to the BTheme struct.  Did
+	  some improvements to the GTK+ view. Only minor speedup when the
+	  theme needs blending but dramatically faster otherwise.
+
+2004-01-20 01:53  neo
+
+	* AUTHORS, ChangeLog: Made 1.1.5 (development) release.
+
+2004-01-20 01:42  neo
+
+	* ChangeLog, NEWS, README: Updates for the 1.1.5 release.
+
+2004-01-19 17:33  neo
+
+	* blib/bmovieplayer.c: better error message when loading a movie
+	  fails
+
+2004-01-07 20:27  neo
+
+	* blib/bpacket.c: Removed overly picky assertions.
+
+2004-01-07 19:41  neo
+
+	* configure.in: fixed check for win32
+
+2004-01-07 00:39  neo
+
+	* docs/reference/tmpl/bsocket.sgml: Added new template file.
+
+2004-01-07 00:29  neo
+
+	* blib/bsocket.c, docs/reference/blib-docs.sgml,
+	  docs/reference/blib-sections.txt: Documented the new functions.
+
+2004-01-07 00:07  neo
+
+	* README, blib/bproxyclient.c, blib/bsender.c, blib/bsocket.c,
+	  blib/bsocket.h: Added b_socket_init(), a function that
+	  initializes the Winsock DLL on Win32 and does nothing on Unixes.
+	  Call it before calling any network related functions like
+	  gethostbyname().
+
+2004-01-06 23:44  neo
+
+	* blib/Makefile.am: fixed a typo
+
+2004-01-06 23:23  neo
+
+	* blib.pc.in, configure.in, blib/Makefile.am, blib/breceiver.c,
+	  gfx/Makefile.am, test/Makefile.am: Add -lwsock32 to the linker
+	  flags on win32.  Promote the win32 specific compiler and linker
+	  flags to blib applications by putting them into the pkg-config
+	  file.
+
+2004-01-06 22:58  neo
+
+	* configure.in: check for win32 and modify CFLAGS to get struct
+	  packing right
+
+2004-01-06 22:33  neo
+
+	* blib/: bproxyclient.c, breceiver.c, bsender.c, bsocket.c: First
+	  attempt at a win32 port using the winsock DLL. Thanks to Michael
+	  Schumacher for his suggestions.
+
+2004-01-06 21:57  neo
+
+	* blib/: Makefile.am, blib.h, bproxyclient.c, breceiver.c,
+	  bsender.c, bsocket.c, bsocket.h: Factored out socket creation and
+	  setup.
+
+2004-01-06 21:00  neo
+
+	* blib/butils.h: cosmetics
+
+2004-01-04 22:24  neo
+
+	* configure.in, docs/reference/tmpl/bview-aa.sgml: Fixed configure
+	  output for the case aalib is not available.  Updated docs.
+
+2004-01-04 13:30  neo
+
+	* blib/bmovieplayer.c: Reverted the last change. The library should
+	  never print any error messages (yes I know there are a few places
+	  that still do). It's up to the caller to do that.
+
+2004-01-03 23:11  blccc
+
+	* blib/bmovieplayer.c: print file name when unable to load movie
+	  from playlist
+
+2004-01-03 21:38  tim
+
+	* modules/digits.h: 3x5 digit font streamlined
+
+2003-12-31 18:55  daniel
+
+	* modules/: bcountdown.c, bdebug.c: some smaller cosmetic changes
+
+2003-12-31 04:05  neo
+
+	* ChangeLog: Made 1.1.4 (development) release.
+
+2003-12-31 04:04  neo
+
+	* ChangeLog, NEWS: Updates for the 1.1.4 release.
+
+2003-12-31 02:32  neo
+
+	* gfx/: bview-aa.c, bview-aa.h: Simplified the API of the aalib
+	  view.
+
+2003-12-30 23:57  neo
+
+	* blib/bmovie-gif-parser.c: Fixed combine mode that broke with my
+	  latest GIF loading "fix".
+
+2003-12-30 23:22  neo
+
+	* blib/bmovie.c: Fixed check for GIF header. Now reads GIF87a as
+	  well.
+
+2003-12-30 22:12  neo
+
+	* blib/bsender.c: fixed use of send()
+
+2003-12-30 22:11  neo
+
+	* blib/: bproxyclient.c, bsender.c: Replaced write() with the more
+	  portable send().
+
+2003-12-30 21:46  neo
+
+	* blib-aa.pc.in, configure.in, docs/reference/Makefile.am,
+	  docs/reference/blib-docs.sgml, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bview-aa.sgml, gfx/Makefile.am: Added docs
+	  for BViewAA.
+
+2003-12-30 21:40  daniel
+
+	* modules/: bclock.c, bcountdown.c, bdebug.c, bpong.c, digits.h: -
+	  changed the whole digits scheme to get rid of LARGE_DIGITS and to
+	  make an application decide which font to use at runtime.  Changed
+	  all text-related modules accordingly.  - Fixed a ":" spacing
+	  issue in BClock - Improved the BCountdown-module a lot. It
+	  scrolls down the old digits	now and makes use of greyscales. It
+	  also uses different fonts depending	on the number of digits to
+	  display.
+
+2003-12-30 21:37  neo
+
+	* .cvsignore, AUTHORS, ChangeLog, Makefile.am, README,
+	  blib-aa.pc.in, configure.in, docs/reference/blib.types.in,
+	  gfx/.cvsignore, gfx/Makefile.am, gfx/blib-aa.h, gfx/bview-aa.c,
+	  gfx/bview-aa.h: Added an aalib-based BView contributed by pix.
+
+2003-12-29 22:16  neo
+
+	* configure.in: Bumped version number to 1.1.4.
+
+2003-12-29 21:58  neo
+
+	* blib/: bprotocol.h, bproxyclient.c: Don't bind the local port
+	  explicitely when b_proxy_client_new() is called with listen_port
+	  < 0.
+
+	  For portability, use GLib types in bprotocol.h.
+
+2003-12-29 20:37  neo
+
+	* modules/: bclock.c, bpong.c: increase the speedup when the
+	  computer looses
+
+2003-12-29 05:03  neo
+
+	* modules/bsnake.c: Updated version from 1stein.
+
+2003-12-28 18:09  neo
+
+	* ChangeLog: Made 1.1.3 release.
+
+2003-12-28 18:07  neo
+
+	* blib/bpacket.c: Always convert the magic between host and network
+	  byteorder, not only for matching magics.
+
+2003-12-28 17:59  neo
+
+	* ChangeLog, NEWS, README: Updates for the 1.1.3 release.
+
+2003-12-28 15:35  neo
+
+	* configure.in, gfx/bview-directfb.c, gfx/bview-gtk.c: Bumped
+	  version number to 1.1.3.  Some minor optimizations in the GTK+
+	  widget.
+
+2003-12-28 15:34  neo
+
+	* docs/reference/blib.types.in: Added BProxyClient.
+
+2003-12-28 05:31  neo
+
+	* blib/bmovie-gif-parser.c: Made the GIF parser quiet again.
+
+2003-12-28 05:19  neo
+
+	* blib/: bmovie-gif-parser.c, gif-load.c, gif-save.c: Made the GIF
+	  parser more forgiving and fixed handling of local colormaps.
+
+2003-12-27 16:14  neo
+
+	* gfx/bview-gtk.c: Removed trailing whitespace.
+
+2003-12-25 20:48  neo
+
+	* ChangeLog: Made 1.1.2 (development) release.
+
+2003-12-25 20:47  neo
+
+	* AUTHORS, ChangeLog, NEWS, README: Updates for the 1.1.2 release.
+
+2003-12-25 19:36  neo
+
+	* blib/bproxyclient.c, blib/breceiver.c, blib/bsender.c,
+	  blib/bsender.h, docs/reference/blib-docs.sgml,
+	  docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bproxyclient.sgml,
+	  docs/reference/tmpl/breceiver.sgml: Updated API documentation.
+
+2003-12-25 19:10  neo
+
+	* blib/bproxyclient.c: Fixed usage of bind() and connect().
+
+2003-12-25 18:58  neo
+
+	* blib/bproxyclient.c: Fixed BProxyClient implementation.
+
+2003-12-25 16:52  neo
+
+	* configure.in, blib/Makefile.am, blib/blib.h, blib/bproxyclient.c,
+	  blib/bproxyclient.h, blib/breceiver.c, blib/breceiver.h,
+	  blib/btypes.h, docs/reference/tmpl/breceiver.sgml: Added
+	  BProxyClient, derived from BReceiver.
+
+2003-12-24 22:11  tim
+
+	* autogen.sh: check for glibtool alternatively for Mac OS X support
+
+2003-12-24 02:18  neo
+
+	* ChangeLog: Made 1.1.1 (development) release.
+
+2003-12-24 02:16  neo
+
+	* ChangeLog, Makefile.am, NEWS: Updates for the 1.1.1 release.
+
+2003-12-24 02:00  neo
+
+	* blib/: breceiver.c, bsender.c: Set the SO_REUSEPORT socket option
+	  where available.
+
+2003-12-24 01:22  neo
+
+	* blib/: breceiver.c, bsender.c: Check if setsockopt() succeeds.
+	  More verbose error reporting.
+
+2003-12-24 01:12  neo
+
+	* blib/breceiver.c: Readded a line I accidentally deleted.
+
+2003-12-24 00:50  neo
+
+	* blib/breceiver.c: Check the size of the received packets.
+
+2003-12-24 00:29  neo
+
+	* configure.in, blib/bpacket.c, blib/bprotocol.h, blib/breceiver.c,
+	  debian/rules: Bumped version to 1.1.1.  Added a protocol version
+	  number to the heartbeat packet header.  Check the size of the
+	  received packet before dispatching it.
+
+2003-12-23 05:01  neo
+
+	* debian/: .cvsignore, libblib-dev.files,
+	  libblib-directfb-dev.files, libblib-directfb.files,
+	  libblib-gtk-dev.files, libblib-gtk.dirs, libblib-gtk.files,
+	  libblib.files: A bunch of fixes for the debian files.
+
+2003-12-22 21:20  neo
+
+	* debian/: .cvsignore, changelog, control, copyright, dirs, docs,
+	  files, libblib-dev.dirs, libblib-dev.files, libblib-gtk.dirs,
+	  libblib-gtk.files, libblib.dirs, libblib.files, rules: Debianized
+	  the package.
+
+2003-12-21 21:29  neo
+
+	* ChangeLog: Made 1.1.0 (development) release.
+
+2003-12-21 21:00  neo
+
+	* blib/bsender.c: use memset to zero out the heartbeat packet
+
+2003-12-21 20:53  neo
+
+	* ChangeLog, NEWS, README: Updated for development release.
+
+2003-12-21 18:00  neo
+
+	* autogen.sh, blib/bsender.c: Nullify the hearbeat package.  Added
+	  a missing linefeed in autogen.sh.
+
+2003-12-21 17:23  neo
+
+	* modules/: bbreakout.c, bclock.c, bpacman.c, bretris.c, bsnake.c,
+	  bxxo.c: Fixed portability issues with the new modules: Use glib
+	  for memory allocation; fixed include order; include config.h.
+
+2003-12-21 14:44  neo
+
+	* blib/bsender.c, blib/bsender.h, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/blib-unused.sgml,
+	  docs/reference/tmpl/bprotocol.sgml,
+	  docs/reference/tmpl/bsender.sgml: Removed the conceptually broken
+	  function b_sender_check_recipients().
+
+2003-12-21 13:41  neo
+
+	* blib/: bprotocol.h, breceiver.c, breceiver.h: Removed port and
+	  padding from heartbeat header.
+
+	  Removed host member from BReceiver struct.
+
+	  Added addr and port members to BReceiver. These are in network
+	  byte order and are only valid while the BReceiverCallback runs.
+	  Most users of BReceiver can safely ignore these values.
+
+2003-12-21 12:08  neo
+
+	* blib/bsender.c, blib/bsender.h, test/test-module.c,
+	  test/test-movie-player.c, test/test-sender.c: Added a source port
+	  parameter to b_sender_add_recipients(). We will need this to
+	  implement blinkenproxy so that it works thru (some) firewalls.
+
+2003-12-20 01:37  neo
+
+	* blib/bsender.c: hardcode MCU_LISTENER_PORT as originating port
+	  for hearbeat packets
+
+2003-12-20 01:16  neo
+
+	* blib/bsender.c: explicitely bind the socket
+
+2003-12-20 00:30  neo
+
+	* blib/: bpacket.c, breceiver.c, bsender.c, bsender.h: Don't send
+	  the port number in the heartbeat packet.
+
+2003-12-19 23:47  neo
+
+	* blib/bpacket.c, blib/bpacket.h, blib/breceiver.c, blib/bsender.c,
+	  blib/bsender.h, docs/reference/tmpl/blib-unused.sgml,
+	  docs/reference/tmpl/bpacket.sgml,
+	  docs/reference/tmpl/bsender.sgml: Some cleanup to the heartbeat
+	  code.  Made b_packet_ntoh() and b_packet_hton() also work for
+	  hearbeat packages.
+
+2003-12-19 03:25  neo
+
+	* blib/bprotocol.h: Added back HEARTBEAT defines, this time
+	  prefixed with B_.
+
+2003-12-19 03:19  neo
+
+	* blib/bprotocol.h, blib/breceiver.c, blib/bsender.c,
+	  docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bpacket.sgml,
+	  docs/reference/tmpl/bprotocol.sgml,
+	  docs/reference/tmpl/bsender.sgml, test/test-module.c: Some code
+	  cleanup, mainly related to the new hearbeat functionality.
+
+2003-12-19 02:27  neo
+
+	* modules/: Makefile.am, bretris.c, bsnake.c, bxxo.c: Added three
+	  new games for Blinkenlights Reloaded.  These are contributed by
+	  1stein.
+
+2003-12-18 13:41  neo
+
+	* configure.in, docs/reference/.cvsignore,
+	  docs/reference/blib-docs.sgml, docs/reference/version.in,
+	  docs/reference/version.xml.in: Use XInclude for the version
+	  number instead of an entity.
+
+2003-12-05 12:07  neo
+
+	* ChangeLog, NEWS, README, autogen.sh, blib/bparser.c: merged some
+	  minor changes from HEAD, update ChangeLog, NEWS and README
+
+2003-09-15 19:50  neo
+
+	* blib/bparser.c: set the buffer size to 8192 instead of 8196
+
+2003-08-09 16:39  neo
+
+	* blib/: breceiver.c, bsender.c: Some code cleanup, mainly moving
+	  variable declarations to the start of the scope.
+
+2003-08-09 01:30  neo
+
+	* blib/breceiver.c: Merged compat mode from HEAD.
+
+2003-08-09 00:54  neo
+
+	* blib/breceiver.c: Enabled compatibility with the old-style
+	  blinkenlights UDP packets.
+
+2003-06-25 00:17  hannes
+
+	* autogen.sh: compile fix for FreeBSD
+
+2003-05-22 20:01  hannes
+
+	* blib/: bpacket.c, bsender.c, bsender.h: cleanup
+
+2003-05-21 02:55  hannes
+
+	* blib/breceiver.c: fix for compiling on bsd systems (thanks, tim
+	  ;)
+
+2003-05-21 02:02  hannes
+
+	* blib/bpacket.c, blib/bpacket.h, blib/bprotocol.h,
+	  blib/breceiver.c, blib/breceiver.h, blib/bsender.c,
+	  blib/bsender.h, modules/bproxy.c, test/test-receiver.c:
+	  blinkenproxy changes
+
+2003-05-13 16:55  neo
+
+	* README, blib/gif-load.c, blib/gif-load.h, blib/gif-save.c,
+	  blib/gif-save.h: The copyright issues with the GIF code have
+	  finally been sorted out.  Changed the comments accordingly.
+
+2003-05-12 14:24  neo
+
+	* gfx/Makefile.am: Merged fixes for automake-1.7 from stable
+	  branch.
+
+2003-05-12 14:24  neo
+
+	* NEWS, configure.in, gfx/Makefile.am: Bumped version to 1.0.2.
+	  Fixed some Makefile issues to please automake-1.7.
+
+2003-05-11 21:29  neo
+
+	* configure.in, modules/Makefile.am: Merged change from HEAD
+	  branch: Allow to disable build of modules.
+
+2003-05-11 21:24  neo
+
+	* configure.in, modules/Makefile.am: Allow to disable the build of
+	  modules by passing --disable-modules to configure.
+
+2003-05-07 16:31  hannes
+
+	* blib/bprotocol.h: heartbeat stuff
+
+2003-02-09 12:57  neo
+
+	* ChangeLog: updated ChangeLog
+
+2003-02-07 15:40  neo
+
+	* docs/reference/Makefile.am: merged fix from stable branch
+
+2003-02-07 15:29  neo
+
+	* ChangeLog, docs/reference/Makefile.am: Fixed typo in dist-hook.
+
+2003-02-07 15:26  neo
+
+	* NEWS, configure.in, docs/reference/tmpl/bpacket.sgml: Bumped
+	  version number to 1.1.0.  Merged changes to NEWS from blib-1-0
+	  branch.
+
+2003-02-07 15:21  neo
+
+	* ChangeLog: Made 1.0.1 Release.
+
+2003-02-07 15:19  neo
+
+	* ChangeLog, NEWS, configure.in: Bumped version number to 1.0.1
+	  (INTERFACE_AGE 0, BINARY_AGE 1).
+
+2003-02-07 15:14  neo
+
+	* blib/bpacket.c, blib/bpacket.h, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bpacket.sgml: Merged fixes for the broken
+	  inline functions from the HEAD branch.
+
+2003-02-06 16:58  neo
+
+	* blib/bpacket.c, blib/bpacket.h, docs/reference/tmpl/bpacket.sgml:
+	  Converted b_packet_hton() and b_packet_ntoh() to regular
+	  functions.  Trying to write portable inline functions obviously
+	  didn't work and I doubt it will make any noticeable difference
+	  anyway.
+
+2003-02-06 16:47  neo
+
+	* docs/reference/blib-sections.txt: Updates for gtk-doc 1.0.
+
+2003-01-08 19:54  neo
+
+	* blib/: blib.c, bpacket.h: Don't include external header blib.h
+	  from blib itself.  Fixed usage of G_INLINE_FUNC macro.
+
+2003-01-02 15:01  neo
+
+	* modules/bclock.c: Fixed stupid typo in BClock.
+
+2002-12-31 19:32  neo
+
+	* modules/bcountdown.c: Include <sys/time.h> for gettimeofday().
+
+2002-12-31 19:29  neo
+
+	* modules/bcountdown.c: Use gettimeofday() for more accurate
+	  timing.
+
+2002-12-31 19:17  neo
+
+	* modules/bcountdown.c: Don't request stop from
+	  b_countdown_start(). Should work but not even test_module handles
+	  it correctly :-(
+
+2002-12-31 19:08  neo
+
+	* modules/: .cvsignore, Makefile.am, bcountdown.c, digits.h: Added
+	  BCountdown module.
+
+2002-12-31 17:14  neo
+
+	* modules/digits.h: Added a nice large (5x7) digits font.
+
+2002-12-29 00:29  neo
+
+	* test/test-module-scanner.c: Use the local module directory if no
+	  module dir is specified on the command-line.
+
+2002-12-28 23:47  neo
+
+	* test/test-module-scanner.c: register the builtin BMoviePlayer
+	  type explicitely
+
+2002-12-28 20:10  neo
+
+	* modules/: bclock.c, bdebug.c, bpong.c, digits.h: Added defines
+	  for the glyph metrics to digits.h.  Use them from all modules
+	  using digits.h.  Improved how the digital clock adapts to the
+	  screen size.
+
+2002-12-28 14:50  neo
+
+	* ChangeLog: Made 1.0.0 release.
+
+2002-12-28 14:23  neo
+
+	* README, modules/bclock.c: Updated the README for the 1.0.0
+	  release.
+
+2002-12-28 04:30  neo
+
+	* modules/bclock.c: avoid bouncing digital clock
+
+2002-12-28 04:05  neo
+
+	* docs/reference/tmpl/bmovie-effects.sgml,
+	  docs/reference/tmpl/bmovie.sgml, modules/bclock.c,
+	  modules/digits.h: Added a space character to the digits font.
+	  Updated docs.  Improved digital BClock for smaller displays.
+
+2002-12-28 03:22  neo
+
+	* ChangeLog, NEWS: More news for the 1.0.0 release.
+
+2002-12-28 03:18  neo
+
+	* blib/bmovie-effects.c, blib/bmovie-effects.h,
+	  docs/reference/blib-sections.txt: Added new function
+	  b_movie_apply_colormap().
+
+2002-12-28 02:30  neo
+
+	* ChangeLog, docs/reference/Makefile.am, modules/Makefile.am,
+	  modules/bclock.c, modules/bdebug.c, modules/bpong.c,
+	  modules/digits.h: Moved digits font into a separate file and
+	  share it among modules.
+
+2002-12-28 01:44  neo
+
+	* modules/bclock.c: grrr
+
+2002-12-28 01:40  neo
+
+	* modules/bclock.c: oops
+
+2002-12-28 01:35  neo
+
+	* modules/bclock.c: take the aspect ratio into account
+
+2002-12-28 01:22  neo
+
+	* modules/bclock.c: Made the clock adapt better to the screen size.
+
+2002-12-27 22:36  neo
+
+	* blib/btheme.c: Lazy-load scratch themes.
+
+2002-12-27 20:03  neo
+
+	* blib/breceiver.c: If we need to drop frames in BReceiver, drop
+	  all but the last frame instead of the first.
+
+2002-12-27 18:59  neo
+
+	* ChangeLog: Updated ChangeLog for 1.0.0 release.
+
+2002-12-27 18:40  neo
+
+	* docs/reference/: Makefile.am, blib-sections.txt,
+	  tmpl/bmovie.sgml: documented the different BMovie implementations
+
+2002-12-27 18:12  neo
+
+	* blib/bobject.c, docs/reference/blib.types.in,
+	  docs/reference/tmpl/bmovie.sgml,
+	  docs/reference/tmpl/bobject.sgml,
+	  docs/reference/tmpl/bpacket.sgml,
+	  docs/reference/tmpl/bprotocol.sgml,
+	  docs/reference/tmpl/breceiver.sgml,
+	  docs/reference/tmpl/bsender.sgml: Improved docs.
+
+2002-12-27 16:28  neo
+
+	* modules/bpong.c: Fixed bug in Pong initialization.
+
+2002-12-27 16:13  neo
+
+	* test/test-module.c: Ooops, didn't mean to commit that...
+
+2002-12-27 16:12  neo
+
+	* modules/bpong.c, test/test-module.c: Fixed key bindings for Pong.
+
+2002-12-19 12:19  neo
+
+	* blib/Makefile.am, gfx/Makefile.am, modules/Makefile.am: Removed
+	  $(includedir) since it seems wrong.
+
+2002-12-18 23:42  neo
+
+	* blib/bthemes.c: Include string.h for strcmp().
+
+2002-12-18 20:06  neo
+
+	* docs/reference/tmpl/: beffects.sgml, blib.sgml,
+	  bmovie-effects.sgml: added missing short descriptions
+
+2002-12-18 19:17  neo
+
+	* docs/reference/Makefile.am: added a dependency on blib.types
+
+2002-12-18 18:54  mitch
+
+	* configure.in, docs/reference/.cvsignore,
+	  docs/reference/Makefile.am, docs/reference/blib.types,
+	  docs/reference/blib.types.in, gfx/bview-directfb.h,
+	  gfx/bview-gtk.h: - generate the docs for conditionally built
+	  sources conditionally.  - declare object struct members of the
+	  conditionally built object   explicitely as /*< private >*/ so
+	  they don't end up the the docs.
+
+2002-12-18 18:47  mitch
+
+	* blib/bmovieplayer.c: better error reporting in
+	  b_movie_player_prepare().
+
+2002-12-17 15:23  neo
+
+	* blib/btheme-parser.c, blib/btheme.c, blib/btheme.h,
+	  blib/bthemes.c, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/btheme.sgml: Added
+	  b_theme_new_from_scratch(), a function that allows to create a
+	  theme to quickly test a movie format w/o having to create a new
+	  theme XML file.
+
+2002-12-17 11:18  neo
+
+	* blib/bthemes.c, blib/bthemes.h, docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/btheme.sgml: Removed the short_name from the
+	  new themes API and changed the wrappers for the old API so they
+	  provide this functionality.
+
+2002-12-17 02:32  neo
+
+	* blib/bthemes.h, blib/btypes.h, docs/reference/tmpl/btheme.sgml:
+	  Changed structure declaration to more gtk-doc friendly format.
+
+2002-12-17 02:23  neo
+
+	* blib/bthemes.c, data/blinkentheme.dtd: Fixed a possible crash in
+	  b_themes_query().
+
+2002-12-17 02:03  neo
+
+	* data/blinkentheme.dtd: Added an optional type attribute to the
+	  blinkenthemes DTD.
+
+2002-12-17 02:00  neo
+
+	* blib/bthemes.h, docs/reference/Makefile.am: Guard the old themes
+	  API with B_DISABLE_DEPRECATED.
+
+2002-12-17 01:54  neo
+
+	* blib/btheme.h, blib/bthemes.c, blib/bthemes.h,
+	  docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bparser.sgml,
+	  docs/reference/tmpl/breceiver.sgml,
+	  docs/reference/tmpl/btheme.sgml: Polished the new themes API and
+	  added compatibility wrappers for the old API.
+
+2002-12-16 23:17  tim
+
+	* blib/: Makefile.am, blib.h, btheme-parser.c, btheme.c, btheme.h,
+	  bthemes.c, bthemes.h: improved themes handling - changed by neo
+
+2002-12-16 01:09  neo
+
+	* blib.pc.in: need to change the glib version here as well
+
+2002-12-16 00:55  neo
+
+	* configure.in: Lower the required version of glib to 2.0.1 so that
+	  blib can be build on Debian Woody (stable).
+
+2002-12-15 01:42  neo
+
+	* modules/bdebug.c: removed a misleading comment
+
+2002-12-15 00:08  neo
+
+	* modules/bdebug.c: Fixed copy'n'paste bug.  Suppress display of
+	  numbers if the screen is too small.
+
+2002-12-14 18:31  neo
+
+	* modules/bpong.c: finetuned the digits
+
+2002-12-14 17:38  neo
+
+	* configure.in: moved some lines around to please autoconf
+
+2002-12-14 16:51  neo
+
+	* modules/btetris.c: Set bottom offset to 0.
+
+2002-12-10 20:54  neo
+
+	* blib/bmodule.c, docs/reference/tmpl/bmodule.sgml,
+	  docs/reference/tmpl/bmoduleinfo.sgml,
+	  docs/reference/tmpl/bmovie.sgml,
+	  docs/reference/tmpl/bmovieplayer.sgml,
+	  docs/reference/tmpl/bpacket.sgml,
+	  docs/reference/tmpl/bparser.sgml,
+	  docs/reference/tmpl/breceiver.sgml,
+	  docs/reference/tmpl/bsender.sgml,
+	  docs/reference/tmpl/btheme.sgml,
+	  docs/reference/tmpl/bwriter.sgml: More docs, almost there (98%).
+
+2002-12-10 19:15  neo
+
+	* blib/bmodule.h, docs/reference/blib-docs.sgml,
+	  docs/reference/tmpl/bmodule-internal.sgml,
+	  docs/reference/tmpl/bmodule-utils.sgml,
+	  docs/reference/tmpl/bmodule.sgml,
+	  docs/reference/tmpl/bmoduleinfo.sgml,
+	  docs/reference/tmpl/bobject.sgml,
+	  docs/reference/tmpl/bprotocol.sgml,
+	  docs/reference/tmpl/btheme.sgml, docs/reference/tmpl/butils.sgml,
+	  docs/reference/tmpl/bview-directfb.sgml,
+	  docs/reference/tmpl/bview-gtk.sgml: more documentation (85%)
+
+2002-12-10 16:56  neo
+
+	* ChangeLog, blib/bmoduleinfo.c, blib/bmoduleinfo.h,
+	  blib/bsender.c, docs/reference/blib-docs.sgml,
+	  docs/reference/blib-sections.txt,
+	  docs/reference/tmpl/bmoduleinfo.sgml,
+	  docs/reference/tmpl/bmovie.sgml,
+	  docs/reference/tmpl/bprotocol.sgml: Removed
+	  b_module_info_scan_default_dir(). Pass NULL to
+	  b_module_info_dir() to get this behaviour.  Changed
+	  b_sender_remove_recipient() so it only removes recipients with a
+	  matching port number.  Changed b_sender_list_recipients() to
+	  include the port number.  Added more docs (77%).
+
+2002-12-10 15:23  neo
+
+	* blib/bpacket.c, blib/breceiver.c, blib/btheme.c,
+	  docs/reference/blib-docs.sgml, docs/reference/tmpl/bpacket.sgml:
+	  more docs (63%)
+
+2002-12-10 14:15  neo
+
+	* blib/beffects.c, blib/bmovie-effects.c,
+	  docs/reference/tmpl/bmovie.sgml,
+	  docs/reference/tmpl/bparams.sgml,
+	  docs/reference/tmpl/btheme.sgml, docs/reference/tmpl/btypes.sgml:
+	  more docs (59%)
+
+2002-12-10 13:18  neo
+
+	* blib/bmodule-utils.c, blib/bmodule.c, blib/bparser.c,
+	  blib/breceiver.c, blib/breceiver.h,
+	  docs/reference/tmpl/bmovie.sgml,
+	  docs/reference/tmpl/breceiver.sgml: documented more functions
+	  (50% symbol coverage)
+
+2002-12-10 11:47  neo
+
+	* docs/reference/blib-docs.sgml: more updates to the toplevel
+	  document, still not 100% valid
+
+2002-12-10 01:26  neo
+
+	* docs/reference/: Makefile.am, blib-docs.sgml, blib-sections.txt,
+	  tmpl/beffects.sgml, tmpl/blib.sgml, tmpl/bmodule-internal.sgml,
+	  tmpl/bmodule-utils.sgml, tmpl/bmodule.sgml,
+	  tmpl/bmoduleinfo.sgml, tmpl/bmovie-effects.sgml,
+	  tmpl/bmovie.sgml, tmpl/bmovieplayer.sgml, tmpl/bobject.sgml,
+	  tmpl/bpacket.sgml, tmpl/bparams.sgml, tmpl/bparser.sgml,
+	  tmpl/bprotocol.sgml, tmpl/breceiver.sgml, tmpl/bsender.sgml,
+	  tmpl/btheme.sgml, tmpl/btypes.sgml, tmpl/butils.sgml,
+	  tmpl/bview-directfb.sgml, tmpl/bview-gtk.sgml, tmpl/bwriter.sgml,
+	  tmpl/gif-load.sgml, tmpl/gif-save.sgml, tmpl/gif-types.sgml:
+	  Decided that I don't want to document the GIF API. It's merely
+	  for internal use and I don't want to encourage people to use this
+	  format.  Updated the template files.
+
+2002-12-09 18:58  neo
+
+	* NEWS, docs/reference/blib-docs.sgml: Fixed a couple of docbook
+	  errors and added more info.
+
+2002-12-09 18:26  neo
+
+	* docs/reference/blib-docs.sgml: some introductory words
+
+2002-12-09 17:47  neo
+
+	* configure.in: Added a micro number to the version so the next
+	  release should become 1.0.0.
+
+2002-12-09 17:38  neo
+
+	* configure.in, docs/reference/.cvsignore,
+	  docs/reference/blib-docs.sgml, docs/reference/version.xml.in:
+	  Added version information to the API reference. Started to write
+	  a short introduction.
+
+2002-12-09 16:57  neo
+
+	* blib/: bparser.c, bwriter.c: Documented BParser and BWriter (31%
+	  docs coverage)
+
+2002-12-09 16:04  neo
+
+	* blib/btheme.c, docs/reference/blib-sections.txt,
+	  gfx/bview-directfb.c, gfx/bview-gtk.c: more documentation (22%)
+
+2002-12-09 15:30  neo
+
+	* blib/: bmovie.c, bmovie.h, bparams.c, butils.c: up to 17%
+	  documentation coverage
+
+2002-12-09 14:34  neo
+
+	* blib/: blib.c, bobject.c, butils.c: Added documentation for a
+	  couple of functions.
+
+2002-12-09 01:46  neo
+
+	* docs/reference/: blib-docs.sgml, blib-sections.txt,
+	  tmpl/beffects.sgml, tmpl/blib.sgml, tmpl/bmodule-internal.sgml,
+	  tmpl/bmodule-utils.sgml, tmpl/bmodule.sgml,
+	  tmpl/bmoduleinfo.sgml, tmpl/bmovie-effects.sgml,
+	  tmpl/bmovie.sgml, tmpl/bmovieplayer.sgml, tmpl/bobject.sgml,
+	  tmpl/bpacket.sgml, tmpl/bparams.sgml, tmpl/bparser.sgml,
+	  tmpl/bprotocol.sgml, tmpl/breceiver.sgml, tmpl/bsender.sgml,
+	  tmpl/btheme.sgml, tmpl/btypes.sgml, tmpl/butils.sgml,
+	  tmpl/bview-directfb.sgml, tmpl/bview-gtk.sgml, tmpl/bwriter.sgml,
+	  tmpl/gif-load.sgml, tmpl/gif-save.sgml, tmpl/gif-types.sgml:
+	  unified titles
+
+2002-12-08 19:30  neo
+
+	* Makefile.am, configure.in, docs/.cvsignore, docs/Makefile.am,
+	  docs/reference/.cvsignore, docs/reference/Makefile.am,
+	  docs/reference/blib-docs.sgml, docs/reference/blib-overrides.txt,
+	  docs/reference/blib-sections.txt, docs/reference/blib.types,
+	  docs/reference/tmpl/beffects.sgml,
+	  docs/reference/tmpl/blib-unused.sgml,
+	  docs/reference/tmpl/blib.sgml,
+	  docs/reference/tmpl/bmodule-internal.sgml,
+	  docs/reference/tmpl/bmodule-utils.sgml,
+	  docs/reference/tmpl/bmodule.sgml,
+	  docs/reference/tmpl/bmoduleinfo.sgml,
+	  docs/reference/tmpl/bmovie-effects.sgml,
+	  docs/reference/tmpl/bmovie.sgml,
+	  docs/reference/tmpl/bmovieplayer.sgml,
+	  docs/reference/tmpl/bobject.sgml,
+	  docs/reference/tmpl/bpacket.sgml,
+	  docs/reference/tmpl/bparams.sgml,
+	  docs/reference/tmpl/bparser.sgml,
+	  docs/reference/tmpl/bprotocol.sgml,
+	  docs/reference/tmpl/breceiver.sgml,
+	  docs/reference/tmpl/bsender.sgml,
+	  docs/reference/tmpl/btheme.sgml, docs/reference/tmpl/btypes.sgml,
+	  docs/reference/tmpl/butils.sgml,
+	  docs/reference/tmpl/bview-directfb.sgml,
+	  docs/reference/tmpl/bview-gtk.sgml,
+	  docs/reference/tmpl/bwriter.sgml,
+	  docs/reference/tmpl/gif-load.sgml,
+	  docs/reference/tmpl/gif-save.sgml,
+	  docs/reference/tmpl/gif-types.sgml: Added framework for a blib
+	  API reference. This uses the very latest version of gtk-doc to
+	  generate DocBook XML from the source files. Chances that are that
+	  it doesn't work on your system. That's why it is disabled by
+	  default.
+
+2002-12-08 18:11  neo
+
+	* blib/: bobject.c, bpacket.h: Added blurbs for BObject properties.
+	  Added prototype for packet byteorder functions.
+
+2002-12-08 16:23  neo
+
+	* .cvsignore, autogen.sh: Call libtoolize explictly, since newer
+	  automakes don't run it for us anymore.
+
+2002-10-21 18:10  neo
+
+	* blib/btheme-parser.c, data/blinkentheme.dtd: Improved DTD,
+	  teached the theme parser how to handle "all" value.
+
+2002-10-21 16:21  neo
+
+	* gfx/bview-gtk.c: fixed safety checks
+
+2002-10-21 11:25  neo
+
+	* NEWS, configure.in: Bumped version number to 1.0.
+
+2002-10-21 11:24  neo
+
+	* blib/btheme-parser.c, blib/btheme.h, data/blinkentheme.dtd,
+	  gfx/bview-directfb.c, gfx/bview-gtk.c: allow to specify overlay
+	  images for the different intensity values
+
+2002-10-21 11:23  neo
+
+	* modules/: bclock.c, bmatrix.c, bpushline.c: code cleanup, renamed
+	  BPushLine to BPushline.
+
+2002-10-11 16:20  neo
+
+	* modules/: Makefile.am, btetris.c: Some code and Makefile cleanup.
+
+2002-10-06 04:33  neo
+
+	* modules/bclock.c: less debug output
+
+2002-10-04 23:08  daniel
+
+	* modules/: bclock.c, bpong.c: sless speedup in pong
+
+2002-10-04 22:43  neo
+
+	* modules/bbreakout.c: slightly faster breakout
+
+2002-10-04 21:03  mitch
+
+	* modules/: .cvsignore, Makefile.am, bclock.c, btext.c: - added
+	  BText module which prints arbitrary ASCII (!!) text in a
+	  teletype style.  - #include <time.h> in bclock.c
+
+2002-10-04 18:05  daniel
+
+	* modules/: Makefile.am, bclock.c, bmatrix.c: +BClock
+
+2002-10-03 02:59  daniel
+
+	* modules/bpong.c: speed up if computer looses
+
+2002-10-03 02:51  daniel
+
+	* modules/btetris.c: yet another rotate bug fixed.
+
+2002-10-01 16:10  neo
+
+	* AUTHORS, README, modules/bmatrix.c: Changes from Simon that
+	  vastly improve the BMatrix module.
+
+2002-10-01 01:58  neo
+
+	* modules/bmatrix.c: Some fixes by Simon.
+
+2002-10-01 00:51  neo
+
+	* modules/: .cvsignore, Makefile.am, bmatrix.c: Added BMatrix.
+
+2002-10-01 00:48  daniel
+
+	* modules/btetris.c: foo
+
+2002-10-01 00:28  daniel
+
+	* modules/: bpushline.c, btetris.c: random feature in pushline,
+	  rotation bug in tetris
+
+2002-09-30 23:35  daniel
+
+	* modules/bpushline.c: foo
+
+2002-09-30 19:50  neo
+
+	* blib/blib.c, modules/bpushline.c: Make it work.
+
+2002-09-30 19:34  neo
+
+	* modules/bpushline.c: Use an enum property for the direction.
+
+2002-09-30 19:21  neo
+
+	* blib/blib.c: Added support for deserialzing enum values.
+
+2002-09-30 19:06  daniel
+
+	* modules/: bpushline.c: fixes
+
+2002-09-30 18:59  daniel
+
+	* modules/bpushline.c: removed hack
+
+2002-09-30 18:57  daniel
+
+	* modules/bpushline.c: added property support to BPushLine
+
+2002-09-30 17:35  neo
+
+	* blib/bmodule.c, modules/.cvsignore, modules/btetris.c: Keep an
+	  additional refcount on the module during the tick callback so
+	  that the module may stop itself w/o the module being destroyed
+	  immidiately.
+
+2002-09-30 17:09  daniel
+
+	* modules/: Makefile.am, bpushline.c, btetris.c: added pushline, a
+	  generic screen cleanup tool
+
+2002-09-29 23:33  neo
+
+	* blib/: bmodule.h, bmovieplayer.c, btheme.c: Added padding to
+	  BModule and BModuleClass.  Plugged a memleak in the BMoviePlayer.
+
+2002-09-29 22:56  neo
+
+	* blib/bmodule.c, modules/bpong.c, modules/btetris.c: Quit Pong if
+	  a player has ten or more points.  Rewrote some code in bmodule.c
+	  that looked suspicious.
+
+2002-09-29 22:29  daniel
+
+	* modules/btetris.c: small fix
+
+2002-09-29 22:27  daniel
+
+	* modules/btetris.c: reset speed
+
+2002-09-29 22:01  daniel
+
+	* modules/btetris.c: foo
+
+2002-09-29 21:54  daniel
+
+	* modules/btetris.c: added foo padding
+
+2002-09-29 19:43  neo
+
+	* blib/bmovieplayer.c: cleanup
+
+2002-09-29 19:39  neo
+
+	* blib/bmovieplayer.c, test/test-module.c: Allow to "Dump Frame" in
+	  test-module.	Small fix in BMoviePlayer.
+
+2002-09-28 22:25  neo
+
+	* modules/bpong.c: Fixed the code that stops the game when a player
+	  has 3 points and if 0'ed it then.
+
+2002-09-28 22:13  neo
+
+	* modules/: bdebug.c, bpong.c: Display scores in Pong.
+
+2002-09-28 20:55  neo
+
+	* modules/btetris.c: removed debug output, seems to work now
+
+2002-09-28 00:44  daniel
+
+	* modules/bdropout.c: clear last ixel
+
+2002-09-28 00:17  daniel
+
+	* modules/btetris.c, test/test-module.c: fixes.
+
+2002-09-28 00:01  daniel
+
+	* test/test-module.c: made test-module usable again
+
+2002-09-27 23:52  daniel
+
+	* modules/btetris.c: tetris service pack
+
+2002-09-27 23:47  neo
+
+	* modules/: bbreakout.c, bpong.c: A fix for Pong and autostart mode
+	  for Breakout.
+
+2002-09-27 22:35  neo
+
+	* modules/bpong.c: adapt paddle size to module->height
+
+2002-09-27 21:35  daniel
+
+	* modules/bdropout.c: foo
+
+2002-09-27 21:17  neo
+
+	* modules/.cvsignore: shut up CVS
+
+2002-09-27 21:16  daniel
+
+	* modules/bdropout.c: foo
+
+2002-09-27 21:02  daniel
+
+	* modules/bdropout.c: foo
+
+2002-09-27 20:46  daniel
+
+	* modules/bdropout.c: foo
+
+2002-09-27 20:24  daniel
+
+	* modules/: Makefile.am, bdropout.c: added bdropout, yet another
+	  effect
+
+2002-09-27 20:19  neo
+
+	* modules/bpong.c: oops
+
+2002-09-27 19:41  neo
+
+	* modules/bfire.c: fire fine tuning
+
+2002-09-27 19:21  neo
+
+	* modules/: bdebug.c, bqix.c: Fine tuning.
+
+2002-09-27 17:54  neo
+
+	* modules/bpong.c: Added scores and continue the game until one of
+	  the players hits 5.
+
+2002-09-26 22:53  neo
+
+	* AUTHORS, blib/bmovieplayer.c: Removed a wrong assertion.
+
+2002-09-26 19:48  neo
+
+	* ChangeLog, NEWS: Made 0.9 release.
+
+2002-09-26 19:35  neo
+
+	* blib/bmovieplayer.c: Always return a title.
+
+2002-09-26 19:32  neo
+
+	* blib/: bmovieplayer.c, bmovieplayer.h: Load the movie in
+	  prepare() and unref() it in relax.
+
+2002-09-26 19:10  neo
+
+	* modules/bfire.c: increased default tick timeout
+
+2002-09-26 17:44  daniel
+
+	* modules/bdebug.c: no comment
+
+2002-09-25 22:54  neo
+
+	* blib/: bmovie-bml-parser.c, bmovie-gif-parser.c, bmovie.h: Use a
+	  default delay of 100ms if the duration is below the minimum of
+	  20ms.
+
+2002-09-25 21:15  daniel
+
+	* modules/bdebug.c: ARGH! belveder is 18th floor, not 3rd!!
+
+2002-09-25 19:41  mitch
+
+	* modules/: bbreakout.c, bpacman.c: - ported BBreakout to the new
+	  PLAYER_ENTERD/LEFT events.  - tiny cleanup in BPacman.
+
+2002-09-25 18:16  mitch
+
+	* blib/bmodule.c, blib/bmodule.h, blib/btypes.h, modules/bpacman.c,
+	  modules/bpong.c, modules/btetris.c: - added
+	  B_EVENT_TYPE_PLAYER_ENTERED and B_EVENT_TYPE_PLAYER_LEFT.  -
+	  added BModuleClass::max_players and BModule::num_players   (they
+	  must be set by the module in class_init and when it handled
+	  the above two events).  - ported all playable modules to the new
+	  event types and remember   the players' device_ids.
+
+2002-09-25 17:14  neo
+
+	* modules/bdebug.c: Made BDebug less verbose.
+
+2002-09-25 16:57  daniel
+
+	* modules/btetris.c: speed fix
+
+2002-09-25 16:52  daniel
+
+	* modules/btetris.c: speed fix
+
+2002-09-25 16:34  daniel
+
+	* modules/btetris.c: tetris rotate bug fixed.
+
+2002-09-25 11:04  mitch
+
+	* blib/bmodule.c: Let the module connect to it's own "stop" signal
+	  and set module->running to FALSE in the callback. This way stop()
+	  implementations are called with running == TRUE, whereas for 3rd
+	  party signal handlers it's FALSE.
+
+2002-09-25 07:58  neo
+
+	* blib/bmoduleinfo.c: made b_module_infos_scan_dir() less verbose
+
+2002-09-25 06:37  neo
+
+	* modules/bdebug.c: minor cleanup
+
+2002-09-25 05:42  daniel
+
+	* modules/btetris.c: do not block while dropping tiles.
+
+2002-09-25 05:30  daniel
+
+	* modules/: bdebug.c: better digits
+
+2002-09-25 05:15  daniel
+
+	* modules/bdebug.c: nicer placement of digits
+
+2002-09-25 05:05  daniel
+
+	* test/: test-module.c, modules/test.c: fixed hask->asterisk
+	  swapping in test module
+
+2002-09-25 05:05  daniel
+
+	* modules/bdebug.c: display big letters
+
+2002-09-25 03:26  neo
+
+	* NEWS, blib/blib.c, blib/butils.c, blib/butils.h: added
+	  b_parse_boolean()
+
+2002-09-25 03:18  daniel
+
+	* modules/: .cvsignore, Makefile.am, bdebug.c: added BDebug, our
+	  swissknife for tonight ;-)
+
+2002-09-25 02:54  daniel
+
+	* blib/bsender.c: ARGH! don't stop sending when one host is
+	  unreachable
+
+2002-09-25 01:21  daniel
+
+	* modules/bbreakout.c: use g_malloc() and g_free() to make it
+	  compile on MacOSX
+
+2002-09-25 00:37  neo
+
+	* blib/bmodule.c, modules/.cvsignore, modules/Makefile.am,
+	  modules/bbreakout.c: Added another module hacked by 1stein:
+	  Breakout!
+
+2002-09-24 22:24  neo
+
+	* blib/: bmovieplayer.c, bmovieplayer.h: Introduced
+	  b_module_player_request_stop(), a dirty hack that allows derived
+	  classes to implement a looping movie player.
+
+2002-09-24 13:30  neo
+
+	* modules/bpacman.c: A patch from 1stein to make pacman less
+	  verbose.
+
+2002-09-24 02:15  neo
+
+	* blib/breceiver.c, modules/bpacman.c: Applied changes from 1stein:
+	  BPacman stops after 3 kills.
+
+2002-09-23 21:09  neo
+
+	* NEWS: oops, how could I forget BPong ?
+
+2002-09-23 20:59  neo
+
+	* ChangeLog, NEWS: Updated NEWS.
+
+2002-09-23 17:38  neo
+
+	* AUTHORS, modules/.cvsignore, modules/Makefile.am,
+	  modules/bpacman.c, modules/bqix.c: Added BPacman contributed by
+	  1stein <1stein@1stein.no-ip.com>.
+
+2002-09-23 15:57  neo
+
+	* test/test-module.c: Set the BNF aspect ration here.
+
+2002-09-23 15:56  neo
+
+	* blib/bmodule-internal.h, blib/bmodule.c, blib/bmodule.h,
+	  modules/bfire.c, modules/bqix.c: Added pixel aspect ratio
+	  information to BModule. Use it from BQix and fixed a minor bug in
+	  BFire.
+
+2002-09-23 15:20  mitch
+
+	* modules/: .cvsignore, Makefile.am, bpong.c: Ported BLPong to
+	  BModule.
+
+2002-09-23 15:17  mitch
+
+	* blib/beffects.c: fixed effect scope bug (will have to change this
+	  anyway...)
+
+2002-09-23 14:02  neo
+
+	* modules/bfire.c: Let the fire module stop itself if it is called
+	  with flames=no and the screen content is blown away completely.
+
+2002-09-23 00:40  neo
+
+	* blib/breceiver.c, blib/breceiver.h, modules/bproxy.c: Added an
+	  API to stop a BReceiver. Finished BProxy.
+
+2002-09-22 23:38  neo
+
+	* ChangeLog, NEWS: updated NEWS
+
+2002-09-22 21:43  neo
+
+	* modules/bfire.c: don't ignore the last pixel
+
+2002-09-22 21:26  neo
+
+	* test/test-module-scanner.c: Let test-module-scanner spit out some
+	  info about the module.
+
+2002-09-22 20:49  neo
+
+	* blib/butils.c, blib/butils.h, test/test-module.c: Export the
+	  functionality we need to set int, double and boolean object
+	  properties from strings. Added that functionality to test-module.
+
+2002-09-22 20:26  neo
+
+	* modules/: bfire.c, bqix.c: Allow to have fire w/o flames, allows
+	  for a nice smoke effect.
+
+2002-09-22 20:06  enno
+
+	* test/test-module.c: -add command line option to pass (string)
+	  properties to BModule Example:    test-module
+	  /usr/local/lib/blib-1.0/modules Blinkenjava localhost
+	  --property:class=de.blinkenlights.examples.BlinkenLife - make
+	  sure type BMoviePlayer is registered, so we can use test-module
+	  also with BMoviePlayer and property "movie"
+
+2002-09-22 19:47  neo
+
+	* blib/bmodule.c, blib/bmovieplayer.c, blib/bmovieplayer.h,
+	  modules/bqix.c: Started to document module parameters.  Teached
+	  the movie player to play movies that are not the size of the
+	  module.
+
+2002-09-22 18:20  neo
+
+	* blib/: beffects.c, beffects.h, bmovie-effects.c, bmovie.h:
+	  Unified order of channels and maxval in our API.
+
+2002-09-22 17:23  neo
+
+	* blib/bmodule-internal.h, blib/bmodule-utils.c, blib/bmodule.c,
+	  blib/bmodule.h, blib/bmovieplayer.c, blib/bpacket.c,
+	  blib/bpacket.h, modules/bfire.c, modules/bproxy.c,
+	  modules/bqix.c, modules/btetris.c, test/test-module.c,
+	  test/test-movie-player.c, test/modules/test.c: Changed the
+	  modules once again. The packet member of the module object has
+	  been replaced by a simple buffer which is width * height bytes.
+	  A module always has channels == 1 and maxval == 255 (for now).
+
+2002-09-22 15:38  neo
+
+	* blib/: Makefile.am, blib.h, bmodule-utils.c, bmodule.c,
+	  bmovieplayer.c, bpacket.c, bpacket.h, breceiver.c, bsender.c,
+	  btypes.h, butils.c: Factored out BPacket code and added
+	  b_packet_new(), b_packet_hton() and b_packet_ntoh().
+
+2002-09-21 22:00  neo
+
+	* blib/butils.c: mini change
+
+2002-09-21 20:25  neo
+
+	* blib/blib.c, blib/butils.c, blib/butils.h, modules/.cvsignore,
+	  modules/Makefile.am: Let's call it libbbproxy.so.  Added
+	  b_parse_double(), a small wrapper around g_strtod().
+
+2002-09-21 20:07  daniel
+
+	* modules/bproxy.c: error handling
+
+2002-09-21 19:59  daniel
+
+	* modules/bproxy.c: foo
+
+2002-09-21 19:40  neo
+
+	* blib/: bparams.h, butils.c, butils.h: Added more parser utility
+	  functions: b_filename_from_utf8() and b_parse_param().
+
+2002-09-21 19:19  daniel
+
+	* blib/bmodule.c, blib/bmodule.h, blib/bmovieplayer.c,
+	  modules/bfire.c, modules/bproxy.c: added b_module_set_maxval()
+	  use it#
+
+2002-09-21 18:52  daniel
+
+	* modules/bproxy.c: only copy data, not the whole packet.
+
+2002-09-21 18:43  daniel
+
+	* modules/: Makefile.am, bproxy.c: added bproxy module
+
+2002-09-21 17:58  neo
+
+	* blib/Makefile.am, blib/blib.h, blib/bmovieplayer.c,
+	  blib/bparams.c, blib/bparams.h, blib/bparser.c, blib/btypes.c,
+	  blib/btypes.h, blib/butils.c, blib/bwriter.c, modules/bfire.c:
+	  Added B_TYPE_FILENAME derived from G_TYPE_STRING and
+	  B_TYPE_PARAM_FILENAME, a ParamSpec derived from
+	  G_TYPE_PARAM_STRING.	Changed the type of the movie property of
+	  the movie player to B_TYPE_FILENAME.
+
+2002-09-21 17:41  daniel
+
+	* modules/btetris.c: tetris stuck bug
+
+2002-09-21 15:45  neo
+
+	* configure.in, blib/bmodule-internal.h, blib/bmodule.c,
+	  blib/bmodule.h, blib/bmovieplayer.c, modules/bqix.c,
+	  modules/btetris.c, test/modules/test.c: Added a relax method to
+	  the module API.
+
+2002-09-21 15:15  daniel
+
+	* modules/btetris.c: ich <- idiot.
+
+2002-09-21 14:48  daniel
+
+	* modules/btetris.c: minor cleanups
+
+2002-09-21 14:26  neo
+
+	* blib/bmodule.c: Actually use the return value of g_timeout_add().
+
+2002-09-21 13:47  neo
+
+	* blib/Makefile.am, blib/blib.c, blib/blib.h, blib/bmodule.c,
+	  test/test-module-scanner.c, test/test-module.c,
+	  test/test-movie-parser.c, test/test-movie-player.c,
+	  test/test-movie-writer.c, test/test-receiver.c,
+	  test/test-sender.c, test/test-theme-parser.c: Added b_init()
+	  which calls g_type_init() and registers some handy value
+	  transform functions.
+
+2002-09-21 11:56  neo
+
+	* blib/: bmodule.c, bmodule.h: Implemented module lifetime: the
+	  module is automatically stopped when it's lifetime expires. Well,
+	  lifetime is not the correct term actually ...
+
+2002-09-20 22:01  neo
+
+	* blib/: bmodule.c, bmodule.h: Added a (yet unused) lifetime
+	  property to BModule.
+
+2002-09-20 20:51  mitch
+
+	* blib/bmodule.c: s/g_value_get_float/g_value_get_double/
+
+2002-09-20 20:34  neo
+
+	* blib/bmodule.c: Added a warning and a fallback if a module didn't
+	  return a title in the describe method.
+
+2002-09-20 20:28  neo
+
+	* blib/bmovie-bml-parser.c: indentation
+
+2002-09-20 19:08  neo
+
+	* blib/: bmodule.c, bmodule.h, bmovieplayer.c, bmovieplayer.h:
+	  Moved the speed parameter from the movie player to BModule and
+	  made it an object property.
+
+2002-09-20 18:43  neo
+
+	* ChangeLog, blib/bmodule.c, blib/bmovieplayer.c: Reverted Mitch's
+	  change and allow modules that don't implement describe since
+	  there's a default implementation that takes care that title is
+	  filled in. Made sure that the BMoviePlayer always sets a title.
+
+2002-09-20 18:11  mitch
+
+	* blib/: bmovieplayer.c, bmovieplayer.h: - added "gboolean reverse"
+	  and "gdouble speed".	- do stuff accordingly in
+	  b_movie_player_next_frame().
+
+2002-09-20 18:04  mitch
+
+	* blib/bmodule.c: made the describe() implementaion mandatory.
+
+2002-09-20 15:36  mitch
+
+	* blib/bsender.h: indentation
+
+2002-09-20 15:36  mitch
+
+	* blib/bmovieplayer.c: set module->maxval in prepare()
+
+2002-09-20 14:52  daniel
+
+	* blib/bsender.c: set braodcast socket option
+
+2002-09-20 14:46  neo
+
+	* test/test-module.c: One About dialog should be sufficient ...
+
+2002-09-20 13:08  neo
+
+	* blib/bmodule-internal.h, blib/bmodule.c, blib/bmovieplayer.c,
+	  modules/bfire.c, modules/bqix.c, modules/btetris.c,
+	  test/test-module.c, test/modules/test.c: Implemented
+	  BModule::describe in all modules.  Added code to test the new
+	  feature to test-module.c.
+
+2002-09-19 22:53  neo
+
+	* blib/bmodule.c, blib/bmodule.h, modules/bqix.c,
+	  test/modules/test.c: Added a new BModule method describe() that
+	  modules can implement to describe themselves. We'll use this for
+	  logging etc.
+
+2002-09-19 20:58  neo
+
+	* test/test-module.c: Added a call to srand().
+
+2002-09-18 19:36  neo
+
+	* ChangeLog: Made 0.8 release.
+
+2002-09-18 14:46  neo
+
+	* README, blib/bmodule-internal.h, blib/bmodule.c, blib/bmodule.h,
+	  blib/bmovieplayer.c, modules/bfire.c, modules/bqix.c,
+	  modules/btetris.c, test/test-module.c, test/test-movie-player.c,
+	  test/modules/test.c: One more module API change: Added a GError
+	  parameter to the prepare() method and to b_module_new() so that
+	  we have a chance to know why a module failed.
+
+2002-09-18 12:14  neo
+
+	* NEWS, blib/blib.h, blib/bmodule-utils.c, blib/bmodule.c,
+	  blib/bmovieplayer.c, blib/breceiver.c, blib/bsender.h,
+	  blib/btypes.h: Moved BPacket declaration into btypes.h so that we
+	  don't need to include bsender.h from all over the place.
+
+2002-09-18 12:03  neo
+
+	* blib/bmodule-internal.h, blib/bmodule.c, test/test-module.c,
+	  test/test-movie-player.c: Removed the var_args from
+	  b_module_new(). It's overly complex and construct_only properties
+	  don't make much sense here anyway.  Made BModule::start() a
+	  signal just like BModule::stop().
+
+2002-09-18 10:37  neo
+
+	* blib/bmovieplayer.c, test/.cvsignore, test/Makefile.am,
+	  test/test-movie-parser.c, test/test-movie-player.c: Added a test
+	  for the BMoviePlayer.
+
+2002-09-18 09:43  neo
+
+	* modules/bfire.c, test/modules/test.c: Made BFire work again and
+	  improved the test module.
+
+2002-09-18 09:15  neo
+
+	* blib/bmovieplayer.c, modules/bqix.c, modules/btetris.c,
+	  test/test-module.c: Actually call b_module_prepare() in
+	  test_module.c.  Added a lines property to BQix.  Ported
+	  BMoviePlayer to the new API.
+
+2002-09-17 20:28  daniel
+
+	* modules/: bfire.c, bqix.c: more adaptions
+
+2002-09-17 20:14  daniel
+
+	* blib/bmodule-utils.c, modules/btetris.c, test/test-module.c: -
+	  adaptions to new module api - #include fixes
+
+2002-09-17 18:29  neo
+
+	* blib/: bmovie.c, bmovieplayer.c: Added a movie property to the
+	  movie player. Not yet ported to the new module API.
+
+2002-09-17 18:27  neo
+
+	* test/modules/test.c: Ported the test module to the new module
+	  API.
+
+2002-09-17 18:21  neo
+
+	* test/test-module.c: Ported the module test app to the new API.
+
+2002-09-17 18:18  neo
+
+	* blib/: Makefile.am, blib.h, bmodule-internal.h, bmodule.c,
+	  bmodule.h: New module API. Completely untested and no modules are
+	  ported yet.  Breaks the build...
+
+2002-09-16 17:40  neo
+
+	* gfx/bview-gtk.c: Unrolled the inner loop even more.
+
+2002-09-16 15:06  neo
+
+	* blib/breceiver.c: Use g_printerr() instead of g_warning() for
+	  run-time errors that are not caused by wrong usage of the
+	  library.
+
+2002-09-16 15:02  neo
+
+	* gfx/: Makefile.am, bview-gtk.c: Replaced deprecated GDK function.
+
+2002-09-16 14:54  neo
+
+	* gfx/bview-gtk.c: Added optimized blending functions for the GTK
+	  view.  Speeds up blinkensim-gtk with the BNF theme quite nicely.
+
+2002-09-13 16:44  neo
+
+	* modules/bqix.c: Added more lines to the BQix module.
+
+2002-09-13 15:20  neo
+
+	* blib/bmodule-utils.c, modules/bfire.c, modules/bqix.c: Removed
+	  debug output in b_module_draw_line(). Some finetuning in BQix.
+
+2002-09-13 15:12  neo
+
+	* test/modules/test.c: Improved test module. Don't paint in start
+	  and stop.
+
+2002-09-13 14:46  daniel
+
+	* modules/btetris.c: moved some code to tick() function to make
+	  this module a bit more asyncronous.
+
+2002-09-13 14:45  daniel
+
+	* modules/bfire.c: #include <string.h>
+
+2002-09-12 20:36  neo
+
+	* blib/Makefile.am, blib/blib.h, blib/bmodule-utils.c,
+	  blib/bmodule-utils.h, modules/.cvsignore, modules/Makefile.am,
+	  modules/bfire.c, modules/bqix.c: Added some simple graphics
+	  funtions to ease module development.	Started to port the Qix
+	  screensaver.
+
+2002-09-12 14:56  neo
+
+	* modules/bfire.c, test/test-module.c: Tweaked fire parameters.
+	  Made test-module less verbose.
+
+2002-09-12 13:56  neo
+
+	* modules/bfire.c: Removed calculations w/o any effect (didn't have
+	  any effect in aafire neither).
+
+2002-09-12 13:37  neo
+
+	* blib/bmodule.c, modules/.cvsignore, modules/bfire.c,
+	  modules/btetris.c: Modules now only need to implement query() and
+	  tick().  Code cleanup in tetris and fire module.
+
+2002-09-12 01:12  neo
+
+	* modules/: Makefile.am, bfire.c: Added BFire, a port of aafire.
+	  Needs some further tweaking...
+
+2002-09-11 20:16  mitch
+
+	* blib/: beffects.c, beffects.h: Made a bitmask out of
+	  BEffectScope.
+
+2002-09-11 04:29  neo
+
+	* configure.in, blib/bmovie-bml-parser.c: Fixed parsing of movies
+	  with maxval > 15 that I broke this afternoon.  Bumped version to
+	  0.8.
+
+2002-09-10 23:15  mitch
+
+	* blib/bprotocol.h: - removed c++ style comments and indented
+	  everything.  - typedef stuff separately from struct definition.
+
+2002-09-10 15:49  neo
+
+	* blib/bsender.c: Include name of failing recipient in error
+	  message.
+
+2002-09-10 15:04  neo
+
+	* blib/bmovie-bml-parser.c, gfx/bview-gtk.c: Added more sanity
+	  checks to gdk_pixbuf_fill_rect().  Made the BML parser complain
+	  if the row data exceeds the movies' maxval.
+
+2002-09-10 13:57  neo
+
+	* configure.in: oops, forgot to remove the themes directories here
+
+2002-09-10 04:18  neo
+
+	* ChangeLog, NEWS: Made 0.7 release.
+
+2002-09-10 03:09  neo
+
+	* README, blib.pc.in, data/Makefile.am, test/run-tests.sh: Finished
+	  themes move.
+
+2002-09-10 01:45  neo
+
+	* gfx/: bview-directfb.h, bview-gtk.h: document the fact that the
+	  view expect data with maxval = 255
+
+2002-09-10 01:36  mitch
+
+	* blib/bmovie-gif-parser.c: Don't refuse to load non-animated GIFs,
+	  just warn and use default values.
+
+2002-09-10 00:58  neo
+
+	* blib/btheme-parser.c: made it less verbose
+
+2002-09-09 23:01  neo
+
+	* blib/btheme-parser.c: Really made the parser imply 0 for
+	  unspecified values.  Added a 800x600 BNF theme.
+
+2002-09-09 22:51  daniel
+
+	* blib/bmovieplayer.c, modules/btetris.c: stuff
+
+2002-09-09 22:33  daniel
+
+	* modules/btetris.c: smoother tetris down blending
+
+2002-09-09 22:18  mitch
+
+	* blib/btypes.h, test/test-module.c:
+	  s/B_KEY_ASKERISK/B_KEY_ASTERISK/
+
+2002-09-09 22:14  mitch
+
+	* blib/: bmodule.h, btypes.h: moved BModule enums to btypes.h
+
+2002-09-09 21:59  mitch
+
+	* blib/blib.h, blib/bmodule.h, blib/bmovieplayer.h, blib/btypes.h,
+	  modules/btetris.c, test/test-module-scanner.c,
+	  test/test-module.c, test/modules/test.c: moved all BModule
+	  includes and types to global places and removed includes which
+	  are no longer needed.
+
+2002-09-09 21:37  daniel
+
+	* blib/bsender.c: foo
+
+2002-09-09 21:13  daniel
+
+	* blib/: bsender.c, bsender.h: GError for _remove_recipient
+
+2002-09-09 21:08  neo
+
+	* data/blinkentheme.dtd: Don't specify values if the implied value
+	  of 0 is fine.  Document the fact that 0 is the implied default
+	  value.
+
+2002-09-09 20:55  neo
+
+	* README, blib/bmoduleinfo.c, blib/btheme.c: plugged a minor
+	  memleak, reindented some code and updated the README
+
+2002-09-09 20:52  daniel
+
+	* blib/bsender.c: foo
+
+2002-09-09 20:52  daniel
+
+	* blib/bsender.c, blib/bsender.h, modules/Makefile.am,
+	  test/modules/Makefile.am: - added b_sender_list_recipients () -
+	  Makefile.am cleanups for MacOSX
+
+2002-09-09 19:09  neo
+
+	* data/blinkentheme.dtd, test/run-tests.sh: Fixed a minor bug in
+	  the hdl-144x108 theme. Minor cleanups in the blinkentheme.dtd.
+	  Validate the theme files when on 'make check'.
+
+2002-09-09 19:02  daniel
+
+	* modules/: Makefile.am, btetris.c: blend down on 'game over'
+
+2002-09-09 18:30  neo
+
+	* modules/btetris.c: Fixed start position.
+
+2002-09-09 18:20  neo
+
+	* blib/: btheme.c, btheme.h: Added a function to iterate over all
+	  themes in the theme path and renamed b_theme_lookup() for
+	  consistency.
+
+2002-09-09 17:26  neo
+
+	* Makefile.am, NEWS, configure.in, modules/.cvsignore,
+	  modules/Makefile.am, modules/btetris.c, test/modules/.cvsignore,
+	  test/modules/Makefile.am, test/modules/test.c,
+	  test/modules/test.h, test/modules/tetris.c,
+	  test/modules/tetris.h: Moved tetris into the modules directory.
+	  Removed module headers since you can't derive from dynamic
+	  modules anyway.
+
+2002-09-09 16:28  neo
+
+	* test/movies/: Makefile.am, alfred-26x20.bml, rain-26x20.bml:
+	  Replaced the master of suspense with a more interesting test
+	  movie.
+
+2002-09-09 16:21  neo
+
+	* gfx/bview-gtk.c: Respect background color. Seems to work fine
+	  again :-)
+
+2002-09-09 16:11  daniel
+
+	* test/modules/tetris.c: collision check on rotate
+
+2002-09-09 15:37  mitch
+
+	* blib/Makefile.am, blib/bmovieplayer.c, blib/bmovieplayer.h,
+	  test/modules/test.c, test/modules/test.h: Added BMoviePlayer, a
+	  built-in BModule subclass which is always available.
+
+2002-09-09 14:57  neo
+
+	* gfx/: bview-directfb.c, bview-gtk.c, bview-gtk.h: Resurrected the
+	  GTK+ view and made it a lot faster.
+
+2002-09-09 13:47  mitch
+
+	* configure.in, blib/Makefile.am: Pass MODULEPATH via -D, not via
+	  config.h
+
+2002-09-09 12:25  mitch
+
+	* configure.in, blib/bmoduleinfo.c, blib/bmoduleinfo.h,
+	  test/modules/Makefile.am: - install the modules to
+	  <prefix>/lib/blib-1.0/modules - added
+	  b_modules_scan_default_dir() to get the built-in modules
+
+2002-09-08 15:36  neo
+
+	* configure.in, blib/btheme-parser.c, blib/btheme.c, blib/btheme.h,
+	  blib/btypes.h, blib/butils.c, data/blinkentheme.dtd,
+	  gfx/bview-directfb.c, gfx/bview-directfb.h, gfx/bview-gtk.c,
+	  gfx/bview-gtk.h: Improved themes a lot. Thanks to the grid and
+	  span elements, standard themes are very small and simple now. The
+	  GTK view has not yet been completely ported to the new themes
+	  API; the DirectFB view already works again. Added a simple
+	  blinkenleds theme.
+
+2002-09-08 14:18  neo
+
+	* configure.in: Allow to disable support for DirectFB and GTK+-2.0.
+
+2002-09-07 21:38  tim
+
+	* blib/bprotocol.h: removed mcud specific defines
+
+2002-09-07 21:14  daniel
+
+	* test/modules/tetris.c: tetris everywhere
+
+2002-09-07 21:01  tim
+
+	* blib/bprotocol.h: remove BLFRAME_MAX_* defines because it does
+	  not belong here
+
+2002-09-07 18:37  daniel
+
+	* test/modules/tetris.c: much more tetris implementation
+
+2002-09-06 21:14  daniel
+
+	* blib/bmodule.c, test/test-module.c, test/modules/tetris.c: stop
+	  the module if return value of tick() was 0
+
+2002-09-06 21:05  daniel
+
+	* test/modules/: tetris.c, tetris.h: game over
+
+2002-09-06 20:57  daniel
+
+	* test/modules/tetris.c: rotate counter clockwise
+
+2002-09-06 20:53  daniel
+
+	* test/modules/tetris.c: lots of work in tetris code. "almost
+	  perfect" ;-)
+
+2002-09-06 19:07  neo
+
+	* test/test-module.c: Use S as the shortcut for Start as well as
+	  for Stop.
+
+2002-09-06 19:03  daniel
+
+	* test/modules/tetris.c: more tetris
+
+2002-09-06 18:52  daniel
+
+	* test/modules/tetris.c: more tetris
+
+2002-09-06 15:40  neo
+
+	* test/test-module.c: GUI cleanup.
+
+2002-09-06 14:58  neo
+
+	* test/modules/tetris.c: Rewrote some parts so that the code is
+	  easier to understand.
+
+2002-09-06 13:48  neo
+
+	* blib/breceiver.c, gfx/bview-gtk.c: Read all pending packets from
+	  the socket and drop all but the first valid packet. This way we
+	  drop packets instead of piling them up in the queue when the
+	  application is too busy to handle them all.
+
+	  Turn off double-buffering for the GTK BView. Our implementation
+	  already does that.
+
+2002-09-06 12:13  neo
+
+	* blib/bmovie-bml-parser.c, test/modules/tetris.c: Correctly fix
+	  the loop handling this time.	Removed some spurious characters
+	  from the the tetris module to make it compile.
+
+2002-09-06 04:16  daniel
+
+	* test/modules/.cvsignore: ignore
+
+2002-09-06 04:14  daniel
+
+	* test/modules/: Makefile.am, tetris.c, tetris.h: first try to
+	  implement tetris[tm]
+
+2002-09-06 03:51  neo
+
+	* configure.in, blib/bmovie-bml-parser.c: Bumped version number to
+	  0.7.	Fixed wrong handling of loop element in BML parser.
+
+2002-09-06 02:58  neo
+
+	* ChangeLog, NEWS, README: Made 0.6 Release.
+
+2002-09-06 02:28  neo
+
+	* gfx/bview-gtk.c: Ughh, gdk-pixbuf seems to have some bad bugs in
+	  the composition code :-( The routines seem to be OK for bilinear
+	  sampling, so use those. Use gdk_pixbuf_copy_area() whenever
+	  possible.
+
+2002-09-06 01:55  neo
+
+	* gfx/bview-directfb.c: Blit overlay with alpha channel blending.
+
+2002-09-06 01:27  neo
+
+	* gfx/bview-gtk.c: Fixed a couple of bugs in the GTK+ view.
+
+2002-09-06 00:02  neo
+
+	* gfx/: bview-directfb.c, bview-directfb.h, bview-gtk.c,
+	  bview-gtk.h: misc minor changes
+
+2002-09-05 23:21  neo
+
+	* gfx/: Makefile.am, blib-directfb.h, blib-gtk.h: Added headers for
+	  the blib gfx libraries.
+
+2002-09-05 22:40  neo
+
+	* .cvsignore, Makefile.am, blib-directfb.pc.in, blib-gtk.pc.in,
+	  configure.in, data/blinkentheme.dtd, gfx/.cvsignore,
+	  gfx/Makefile.am, gfx/bview-directfb.c, gfx/bview-directfb.h,
+	  gfx/bview-gtk.c, gfx/bview-gtk.h: Added graphical views that make
+	  use of the BTheme infrastructure.  Both views are compiled
+	  conditionally if DirectFB and/or GTK+-2.0 are available.
+
+2002-09-05 17:56  neo
+
+	* blib/Makefile.am, blib/btheme-parser.c, blib/btheme.c,
+	  blib/btheme.h, blib/butils.c, data/blinkentheme.dtd: Reworked
+	  BTheme, added a simple Bushfire theme.  Commented the
+	  blinkentheme DTD. Not sure if this is yet the final version but
+	  it's definitely closer.
+
+2002-09-05 15:59  neo
+
+	* data/bml.dtd: Added comments to the BML DTD.
+
+2002-09-05 15:37  mitch
+
+	* blib/bmodule.c: b_module_class_init: ser klass->query to NULL.
+
+2002-09-05 14:41  mitch
+
+	* test/test-module.c: GSource ids are guint, so "no source" is 0,
+	  not -1.
+
+2002-09-05 14:28  neo
+
+	* blib/butils.c: fixed b_parse_int()
+
+2002-09-05 14:20  neo
+
+	* blib/: Makefile.am, bmovie-bml-parser.c, bparser.c, bparser.h,
+	  btheme-parser.c, butils.c, butils.h: Moved parsing utilities into
+	  butils.c and made them check for errors.
+
+2002-09-05 14:11  mitch
+
+	* blib/bmodule.c, blib/bmodule.h, test/test-module.c,
+	  test/modules/Makefile.am, test/modules/test.c,
+	  test/modules/test.h: - fixed the test module's type registration.
+	  - do lots of checking in b_module_new(). All BModules *must* be
+	  created   b_module_new() now because it sets the paint callback
+	  and allocates   the BFrame.  - added BModule->query() which gets
+	  passed the theme parameters and   returns TRUE if it can handle
+	  it.  - stuff...
+
+2002-09-05 00:33  neo
+
+	* blib/bparser.c, blib/bparser.h, blib/btheme-parser.c,
+	  blib/btheme.c, blib/btheme.h, blib/btypes.h,
+	  data/blinkentheme.dtd: Moved some general parsing code from
+	  BTheme to the BParser.  Added an optional color attribute to the
+	  background and overlay elements.  Removed
+	  b_theme_assure_windows() again, instead complete the theme when
+	  it is loaded.
+
+2002-09-04 23:38  neo
+
+	* blib/: Makefile.am, beffects.c, beffects.h, blib.h, bmodule.c,
+	  bmodule.h, bmoduleinfo.c, bmoduleinfo.h, bmovie-blm.c,
+	  bmovie-bml-parser.c, bmovie-bml.c, bmovie-effects.c,
+	  bmovie-gif-parser.c, bmovie-gif.c, bmovie.c, bmovie.h, bobject.c,
+	  bobject.h, bparser.c, bparser.h, breceiver.c, breceiver.h,
+	  bsender.c, bsender.h, btheme-parser.c, btheme.c, btheme.h,
+	  btypes.h, bwriter.c, bwriter.h: Added a header file for typedefs
+	  that is included from all C files before all other blib headers.
+	  This removes dependencies between the headers that forced a
+	  certain order of inclusion.
+
+2002-09-04 07:17  neo
+
+	* blib/bmovie-bml-parser.c: Be more informative about the errors
+	  that make the parser fail.
+
+2002-09-04 06:04  daniel
+
+	* test/modules/test.c: stuff
+
+2002-09-04 05:58  daniel
+
+	* test/modules/test.c: off by one
+
+2002-09-04 05:45  daniel
+
+	* test/modules/test.c: some more comments
+
+2002-09-04 05:31  daniel
+
+	* configure.in: bumped version number to 0.6.0
+
+2002-09-04 05:21  neo
+
+	* ChangeLog, NEWS: Made 0.5 release.
+
+2002-09-04 04:52  daniel
+
+	* test/: test-module.c, modules/test.c: make use of device_id in
+	  test module
+
+2002-09-04 04:48  neo
+
+	* blib/: btheme.c, btheme.h: Added b_theme_assure_windows() which
+	  generates a grid of windows if none are present.  Added a BNF
+	  theme template.
+
+2002-09-04 04:38  daniel
+
+	* blib/bmodule.h: added device_id to BEvent
+
+2002-09-04 04:28  daniel
+
+	* blib/bmodule.h: s/B_MODULE_KEY/B_KEY/
+
+2002-09-04 04:27  daniel
+
+	* test/: test-module.c, modules/test.c, modules/test.h: made the
+	  test module a 'game' ;-)
+
+2002-09-04 03:59  neo
+
+	* blib/: breceiver.c, bsender.c, btheme.c, btheme.h: Set the
+	  BReceivers' io_channel encoding to NULL.  Improved
+	  b_theme_lookup().
+
+2002-09-04 03:57  daniel
+
+	* blib/breceiver.c, test/test-module.c, test/modules/test.c,
+	  test/modules/test.h: made the gtk program fully functional and
+	  improved the test module a lot.
+
+2002-09-04 02:16  neo
+
+	* blib/: breceiver.c, bsender.c: Use htons() / ntohs() where
+	  appropriate.
+
+2002-09-04 01:50  neo
+
+	* blib/bsender.c: Allow to call b_sender_send_frame() with NULL
+	  data.
+
+2002-09-04 01:47  daniel
+
+	* blib/breceiver.c: take care of network and host byte orders
+
+2002-09-04 01:45  neo
+
+	* blib/bsender.c: Do host-to-network byteorder conversion in
+	  BSender.
+
+2002-09-04 01:36  neo
+
+	* test/Makefile.am: this should work with automake-1.4 as well
+
+2002-09-04 01:34  daniel
+
+	* test/: Makefile.am, test-module.c: gtk, gtk, gtk...
+
+2002-09-04 01:24  neo
+
+	* blib/bsender.c, blib/bsender.h, test/test-module.c,
+	  test/test-sender.c: Reworked BSender API.
+
+2002-09-04 00:48  daniel
+
+	* configure.in, test/Makefile.am, test/test-module.c: more gtk+
+	  stuff
+
+2002-09-04 00:26  neo
+
+	* configure.in, blib/Makefile.am, blib/btheme.c: Added support for
+	  the B_THEME_PATH environment variable.
+
+2002-09-03 23:17  daniel
+
+	* test/test-module.c: GIOChannel stuff
+
+2002-09-03 23:16  neo
+
+	* blib/btheme-parser.c, blib/btheme.c, blib/btheme.h,
+	  data/blinkentheme.dtd, test/.cvsignore: Changed depth to channels
+	  in BTheme.
+
+2002-09-03 22:58  daniel
+
+	* test/test-module.c: eeek
+
+2002-09-03 22:40  daniel
+
+	* configure.in, test/Makefile.am, test/test-module.c: added are
+	  more complex test program to test the BModule environment.
+
+2002-09-03 22:39  neo
+
+	* blib/btheme.c, blib/btheme.h, test/test-theme-parser.c: Replaced
+	  b_themes_lookup() with the simpler b_theme_lookup().
+
+2002-09-03 21:38  neo
+
+	* Makefile.am, blib/breceiver.c, blib/breceiver.h,
+	  test/test-receiver.c: Added callback_data to BReceiver. Made the
+	  file descriptor private.
+
+2002-09-03 21:12  neo
+
+	* blib/: bmovie-blm.c, bmovie-bml-parser.c, bmovie-gif-parser.c,
+	  bmovie.h: Assure a minimum frame duration of 20ms.
+
+2002-09-03 19:26  neo
+
+	* blib.pc.in, configure.in, blib/btheme.c, blib/btheme.h,
+	  test/test-theme-parser.c: b_themes_lookup() now returns a list of
+	  suitable themes.
+
+2002-09-03 19:04  daniel
+
+	* blib/bmoduleinfo.c, test/modules/Makefile.am: lib cruft for
+	  MacOSX
+
+2002-09-03 18:18  neo
+
+	* blib.pc.in, configure.in, blib/bmodule.c, blib/bmodule.h,
+	  blib/bmoduleinfo.c, blib/bmoduleinfo.h, blib/breceiver.c,
+	  blib/breceiver.h, blib/bsender.c, blib/bsender.h,
+	  blib/btheme-parser.c, blib/btheme.c, blib/btheme.h: Indentation
+	  and header cleanup.  Added a name to the BTheme struct. Added a
+	  prototype for b_theme_lookup().
+
+2002-09-03 17:25  neo
+
+	* blib/btheme-parser.c: Warn if window coordinates are out of
+	  range.
+
+2002-09-03 17:01  daniel
+
+	* test/modules/: Makefile.am, symbols.txt: lib stuff
+
+2002-09-03 16:52  neo
+
+	* ChangeLog, configure.in, blib/btheme-parser.c, blib/btheme.c,
+	  blib/btheme.h, data/blinkentheme.dtd: Changed themes file format
+	  and moved images to a seperate subdirectory.
+
+2002-09-03 16:41  daniel
+
+	* blib/bmoduleinfo.c: - outcommented filename check for now to test
+	  on MacOSX - one more check for failures on module loading
+
+2002-09-03 16:15  daniel
+
+	* test/modules/Makefile.am: try this
+
+2002-09-03 16:12  daniel
+
+	* test/modules/Makefile.am: try to make it compile on macosX
+
+2002-09-03 15:26  mitch
+
+	* blib/bmoduleinfo.c: Moved g_module_supported() assertion to
+	  b_module_info_new() and b_module_infos_scan_dir() because
+	  checking this in the load() and unload() methods is a bit too
+	  late :-)
+
+2002-09-03 14:39  neo
+
+	* blib/bmovie-bml.c: Write encoding all lower-case.
+
+2002-09-03 14:11  neo
+
+	* configure.in: Bumped version number to 0.5.
+
+2002-09-03 13:30  mitch
+
+	* blib/: bmodule.c, bmodule.h, bmoduleinfo.c: more module stuff...
+
+2002-09-03 13:22  mitch
+
+	* blib/bmodule.c: added g_return_if_fail() to all public BModule
+	  functions.
+
+2002-09-03 13:19  mitch
+
+	* blib/: bmodule.c, bmodule.h: added b_module_new() which creates
+	  BModule subclass instances.
+
+2002-09-03 13:07  mitch
+
+	* test/modules/: Makefile.am, test.c: Register the test module's
+	  virtual functions.
+
+2002-09-03 12:57  mitch
+
+	* blib/bmodule.c, blib/bmodule.h, blib/bmoduleinfo.c,
+	  blib/bmoduleinfo.h, test/test-module-scanner.c,
+	  test/modules/Makefile.am, test/modules/test.c,
+	  test/modules/test.h: - implemented GTypeModule subclass
+	  BModuleInfo which proxied the modules - install the test module
+	  in prefix/lib/blib/test-modules so they   actually become .so
+	  files.  - register the test module with it's GTypeModule.  - load
+	  "lib*.so" files only in the module loader.
+
+2002-09-03 03:44  neo
+
+	* ChangeLog, NEWS: Made 0.4 release.
+
+2002-09-03 03:26  daniel
+
+	* test/modules/test.c: more work on test programm
+
+2002-09-03 02:58  daniel
+
+	* blib/bmodule.c, blib/bmodule.h, test/modules/test.c,
+	  test/modules/test.h: filled the test program with code.
+
+2002-09-03 02:31  neo
+
+	* test/modules/Makefile.am: fixed Makefile.am
+
+2002-09-03 02:26  neo
+
+	* blib/bmovie.h: Removed effects from this header, they are
+	  declared in bmovie-effects.h.
+
+2002-09-03 02:26  daniel
+
+	* test/modules/Makefile.am: ...
+
+2002-09-03 02:22  daniel
+
+	* test/modules/Makefile.am: argh.
+
+2002-09-03 02:20  daniel
+
+	* configure.in, blib/bmodule.c, blib/bmodule.h, blib/bmoduleinfo.c,
+	  test/Makefile.am, test/modules/.cvsignore,
+	  test/modules/Makefile.am, test/modules/test.c,
+	  test/modules/test.h: foo
+
+2002-09-03 02:07  neo
+
+	* blib/bmovie-bml.c, data/bml.dtd, test/run-tests.sh: Changed the
+	  the BML DTD once more.  Adapted the implementation accordingly.
+	  Validate the generated files when running 'make check'.
+
+2002-09-03 01:26  daniel
+
+	* blib/bmodule.c: copyright
+
+2002-09-03 01:24  daniel
+
+	* blib/: bmodule.c, bmodule.h, bmoduleinfo.c: first try to
+	  implement our BModule API
+
+2002-09-03 00:42  neo
+
+	* blib/bmovie-bml-parser.c: For backward compat with arcade-paint,
+	  ignore loop flag if it has a value of "no".
+
+2002-09-03 00:36  neo
+
+	* blib/bmovie-bml.c: Write loop and duration elements.
+
+2002-09-02 23:52  neo
+
+	* blib/: bmovie-blm.c, bmovie-gif-parser.c, bmovie.c: Do the
+	  reversal after loading in the BMovieClass.
+
+2002-09-02 23:20  daniel
+
+	* test/test-module-scanner.c: coding style.
+
+2002-09-02 22:57  mitch
+
+	* blib/Makefile.am, blib/blib.h, blib/bmodule.c, blib/bmodule.h,
+	  blib/bmoduleinfo.c, blib/bmoduleinfo.h, blib/bsender.h,
+	  test/test-module-scanner.c: - moved bmodule.* code to
+	  bmoduleinfo.* - added the parent class of all games, BModule.
+
+2002-09-02 22:52  daniel
+
+	* test/test-receiver.c: output data as %02x
+
+2002-09-02 20:32  neo
+
+	* blib/bmovie-gif-parser.c: Report non-fatal errors to stderr.
+
+2002-09-02 16:49  neo
+
+	* blib/bmovie-gif-parser.c: Set an error if no frames have been
+	  found in the GIF.
+
+2002-08-31 22:51  daniel
+
+	* test/test-receiver.c: use the function itsself as callback, not a
+	  pointer to it.
+
+2002-08-31 22:42  daniel
+
+	* test/test-receiver.c: again
+
+2002-08-31 22:40  daniel
+
+	* test/test-receiver.c: typo
+
+2002-08-31 22:37  daniel
+
+	* test/test-receiver.c: let test-receiver output the data received.
+	  seems to work fine.
+
+2002-08-31 20:30  daniel
+
+	* test/.cvsignore: ignore
+
+2002-08-31 20:29  daniel
+
+	* test/test-receiver.c: "oops".
+
+2002-08-31 20:28  daniel
+
+	* blib/: breceiver.c, breceiver.h: made receiver work.
+
+2002-08-31 17:21  daniel
+
+	* blib/breceiver.c: more work on receiver code, but still not fully
+	  functional.
+
+2002-08-31 16:51  daniel
+
+	* blib/Makefile.am, blib/blib.h, blib/bmodule.c, blib/breceiver.c,
+	  blib/breceiver.h, test/Makefile.am:
+	  started to implement a generic BReceiver object
+
+2002-08-30 18:21  neo
+
+	* configure.in, blib/btheme-parser.c, blib/btheme-parser.h,
+	  blib/btheme.c, blib/btheme.h, test/test-theme-parser.c: Bumped
+	  version number to 0.4.  Changed BTheme API so it's more similar
+	  to the BMovie API.
+
+2002-08-30 16:33  neo
+
+	* ChangeLog, blib/beffects.c: Fixed vertical flip (did only work
+	  for height == 3) and cleaned up effects code.
+
+2002-08-30 15:47  neo
+
+	* blib/bmovie-bml-parser.c: Fixed a bug in the BML parser (and
+	  sneaked the fix into the 0.3 tarball).
+
+2002-08-30 15:06  neo
+
+	* ChangeLog: Made 0.3 release.
+
+2002-08-30 15:05  neo
+
+	* NEWS, blib/Makefile.am, blib/beffects.c, blib/beffects.h,
+	  blib/blib.h, blib/bmovie-effects.c, blib/bmovie-effects.h:
+	  Improved effects ported from blccc.
+
+2002-08-30 13:52  neo
+
+	* configure.in, blib/bmovie-effects.c: Bumped version number to 0.3
+	  and added bmovie-effects.c to CVS.
+
+2002-08-30 01:24  neo
+
+	* blib/: Makefile.am, bmovie-blm.c, bmovie-bml-parser.c,
+	  bmovie-gif-parser.c, bmovie.c, bmovie.h: Added b_movie_invert().
+
+2002-08-30 00:56  neo
+
+	* configure.in, blib/Makefile.am, blib/bmovie.c, blib/bmovie.h:
+	  Added G_DISABLE_DEPRECATED to CFLAGS.  Added b_movie_normalize().
+
+2002-08-29 21:50  daniel
+
+	* blib/bmodule.c, blib/bmodule.h, test/test-module-scanner.c: keep
+	  track of opened modules with a static GSList. This is
+	  intentionally not an GObjects since there must be only one list
+	  of Modules anyway.
+
+2002-08-29 21:08  daniel
+
+	* configure.in, blib/Makefile.am, blib/blib.h, blib/bmodule.c,
+	  blib/bmodule.h, blib/bsender.c, test/.cvsignore,
+	  test/Makefile.am, test/test-module-scanner.c: started framework
+	  for BModules.
+
+2002-08-29 17:10  neo
+
+	* README: fixed some typos
+
+2002-08-29 16:37  neo
+
+	* ChangeLog: Made 0.2 release.
+
+2002-08-29 16:36  neo
+
+	* NEWS, README: more words
+
+2002-08-29 16:23  neo
+
+	* AUTHORS, README: words
+
+2002-08-29 15:49  daniel
+
+	* test/: test-movie-parser.c, test-movie-writer.c: gcc doesn't like
+	  instructions like 'x ?: y'
+
+2002-08-29 15:46  daniel
+
+	* blib/bparser.c, test/test-movie-parser.c: 2 more #include
+	  <string.h> to shut up gcc
+
+2002-08-29 15:29  neo
+
+	* blib/bmovie-bml-parser.c, blib/bmovie-bml.c,
+	  blib/bmovie-gif-parser.c, blib/btheme-parser.c, blib/bwriter.c,
+	  test/test-movie-writer.c: Added missing includes (to please
+	  gcc-3.x)
+
+2002-08-29 15:11  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml.c, blib/bmovie-gif.c,
+	  test/movies/alfred-26x20.bml: show your blib with pride
+
+2002-08-29 14:59  neo
+
+	* test/test-movie-writer.c: foo
+
+2002-08-29 14:58  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-gif-parser.c, blib/bmovie-gif.c,
+	  blib/bmovie.c, blib/bmovie.h, blib/gif-load.c, blib/gif-save.c,
+	  test/run-tests.sh, test/test-movie-parser.c,
+	  test/test-movie-writer.c: Fixed GIF frame delay (the external API
+	  is milliseconds now).  Added test code for b_movie_save_as().
+
+2002-08-29 14:15  neo
+
+	* blib/Makefile.am, blib/blib.h, blib/bmovie-blm.h,
+	  blib/bmovie-bml.h, blib/bmovie-gif.h, test/run-tests.sh,
+	  test/test-movie-parser.c, test/test-movie-writer.c: Added the
+	  movie subclasses to the public header files.	Added
+	  test-movie-writer to the test suite.
+
+2002-08-29 13:58  neo
+
+	* blib/: gif-load.c, gif-save.c: GIF routines use glib for memory
+	  allocation.
+
+2002-08-29 13:54  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml-parser.c,
+	  blib/bmovie-bml-parser.h, blib/bmovie-bml.c,
+	  blib/bmovie-gif-parser.c, blib/bmovie-gif.c, blib/bmovie.c,
+	  blib/bmovie.h, blib/gif-load.c, test/test-movie-parser.c,
+	  test/test-movie-writer.c: Added loop to movie struct.  Added a
+	  lazy_load parameter to b_movie_new_from_file().  Misc fixes.
+
+2002-08-29 02:39  neo
+
+	* blib/: Makefile.am, bmovie-blm.c, butils.c, butils.h: Removed
+	  b_fgets().
+
+2002-08-29 02:31  neo
+
+	* blib/bmovie-gif.c, test/test-movie-writer.c: first draft of
+	  b_movie_gif_save()
+
+2002-08-29 02:03  neo
+
+	* configure.in: Removed micro version number and bumped version to
+	  0.2.	We can always readd the micro version for the 1.0.0
+	  release.
+
+2002-08-29 01:53  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml-parser.c, blib/bmovie-bml.c,
+	  blib/bwriter.c, blib/bwriter.h, test/.cvsignore,
+	  test/Makefile.am, test/test-movie-writer.c: Added simple test for
+	  saving movies.  Finished implementations of b_movie_blm_save()
+	  and b_movie_bml_save().
+
+2002-08-29 01:15  neo
+
+	* blib/: Makefile.am, bmovie-blm.c, bmovie-bml-parser.c,
+	  bmovie-bml-parser.h, bmovie-bml.c, bmovie-gif-parser.c,
+	  bmovie-gif-parser.h, bmovie-gif.c, bmovie.c, bmovie.h: Split some
+	  files that started to grow to large.	Implemented large parts of
+	  b_movie_bml_save().
+
+2002-08-29 00:10  neo
+
+	* blib/: blib.h, bmovie-blm.c, bmovie-bml.c, bmovie-gif.c,
+	  bwriter.c: misc fixes
+
+2002-08-28 21:37  neo
+
+	* blib/Makefile.am, blib/bwriter.c, blib/bwriter.h,
+	  test/test-movie-parser.c, test/test-theme-parser.c: Some utility
+	  functions to write XML files. Yet unused.
+
+2002-08-28 20:42  neo
+
+	* blib/: bmovie-bml.c, bmovie-gif.c: Only allow channels == 1 so
+	  far.
+
+2002-08-28 20:37  neo
+
+	* blib/: bmovie-blm.c, bmovie.c, bmovie.h: Also store frame
+	  duration (not only start time).  Implemented b_movie_blm_save().
+
+2002-08-28 19:56  neo
+
+	* blib/: bmovie-blm.c, bmovie-bml.c, bmovie-gif.c, bmovie.c,
+	  bmovie.h: Set movie->maxval and movie->channels.
+
+2002-08-28 19:38  neo
+
+	* blib/: bmovie-blm.c, bmovie-bml.c, bmovie-gif.c, bmovie.c,
+	  bmovie.h: Added framework for b_movie_save() and
+	  b_movie_save_as().
+
+2002-08-28 19:14  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-gif.c, blib/bmovie.c,
+	  test/test-movie-parser.c: Improved header parsing for BLM files.
+	  Assure that a title is set for all movies.
+
+2002-08-28 18:34  neo
+
+	* test/: run-tests.sh, test-movie-parser.c, test-theme-parser.c:
+	  nicer tests
+
+2002-08-28 18:27  neo
+
+	* blib/: bmovie-blm.c, bmovie-gif.c: Got rid of g_print(), use
+	  GError instead.
+
+2002-08-28 18:14  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml.c, blib/bmovie.c,
+	  blib/bparser.c, blib/bparser.h, blib/btheme-parser.c,
+	  test/Makefile.am, test/run-tests.sh: Added encoding conversion to
+	  b_parser_parse_io_channel() and use it for the BThemeParser.
+	  Added a simple test suite. Some cleanup.
+
+2002-08-28 18:12  daniel
+
+	* blib/bsender.c: removed debug output
+
+2002-08-28 17:12  neo
+
+	* blib/: bmovie-bml.c, bparser.c, bparser.h: Added a convenience
+	  function to parse a GIOChannel.  Improved output on parse errors.
+
+2002-08-28 06:01  mitch
+
+	* test/test-sender.c: send 5 packets.
+
+2002-08-28 05:57  daniel
+
+	* blib/bsender.c: plugged a memleak
+
+2002-08-28 05:56  daniel
+
+	* blib/: bsender.c, bsender.h: allocate the packet in set_size()
+
+2002-08-28 04:57  daniel
+
+	* blib/bsender.c: fixed memory corruption
+
+2002-08-28 04:42  daniel
+
+	* test/test-sender.c: keep test suite in sync
+
+2002-08-28 04:40  neo
+
+	* blib/btheme-parser.c, test/test-theme-parser.c: Encoding
+	  conversion for the theme-parser.
+
+2002-08-28 04:37  daniel
+
+	* blib/: bsender.c, bsender.h: const!
+
+2002-08-28 04:33  daniel
+
+	* blib/: bprotocol.h, bsender.c, bsender.h: bsender takes guchar*
+	  now, not a BMovieFrame*
+
+2002-08-28 04:25  neo
+
+	* data/bml.dtd: Added an optional version parameter with a fixed
+	  value of "1.0".
+
+2002-08-28 04:18  neo
+
+	* blib/bmovie-blm.c: Allocate frame data later so that load_all()
+	  works even if load_info() wasn't called before.
+
+2002-08-28 03:58  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml.c, blib/bmovie-gif.c,
+	  blib/bmovie.c, blib/bmovie.h, blib/gif-load.c, blib/gif-load.h,
+	  test/test-movie-parser.c: Ported everything to GIOChannels.
+
+2002-08-28 02:59  mitch
+
+	* blib/bprotocol.h: - #include <sys/types.h> - copyright header -
+	  changed include guards according to filename change
+
+2002-08-28 02:56  daniel
+
+	* blib/bsender.c: keep in sync with new bprotocol.h
+
+2002-08-28 01:50  daniel
+
+	* blib/bsender.c, test/test-sender.c: use MAGIC_MCU_FRAME as magic
+
+2002-08-28 01:43  daniel
+
+	* blib/blib.h, blib/bsender.c, blib/bsender.h, test/test-sender.c:
+	  more work on sending code
+
+2002-08-28 01:02  daniel
+
+	* blib/: Makefile.am, bsender.c: copied mcuprotocol.h from mcud and
+	  renamed it to bprotocol.h
+
+2002-08-27 23:07  daniel
+
+	* blib/bsender.c, blib/bsender.h, test/test-sender.c: added code
+	  for sending packages added b_sender_set_size()
+
+2002-08-27 22:27  daniel
+
+	* test/.cvsignore: argh.
+
+2002-08-27 22:25  daniel
+
+	* blib/bsender.c: b_sender_remove_recipient
+
+2002-08-27 22:00  daniel
+
+	* test/.cvsignore: ignore.
+
+2002-08-27 21:59  daniel
+
+	* blib/blib.h, blib/bsender.c, blib/bsender.h, test/Makefile.am,
+	  test/test-sender.c:
+	  starting to fill BSender with life.  added a small test programm.
+
+2002-08-27 21:30  neo
+
+	* blib/bmovie.c: Refactoring.
+
+2002-08-27 21:13  neo
+
+	* blib/: bmovie-blm.c, bmovie-bml.c, bmovie-gif.c, bmovie.c,
+	  bmovie.h: Open the file in the BMovie base class.
+
+2002-08-27 21:09  daniel
+
+	* blib/: Makefile.am, bsender.c, bsender.h: added skeleton for
+	  BSender
+
+2002-08-27 20:45  mitch
+
+	* blib/Makefile.am: bobject.h needs to be installed.
+
+2002-08-27 20:40  neo
+
+	* blib/Makefile.am, blib/blib.h, blib/bmovie-blm.c,
+	  blib/bmovie-bml.c, blib/bmovie-gif.c, blib/bmovie.c,
+	  blib/bmovie.h, blib/bobject.c, blib/bobject.h,
+	  blib/btheme-parser.c, blib/btheme.c, blib/btheme.h,
+	  test/test-movie-parser.c, test/test-theme-parser.c: Added BObject
+	  which adds filename and name to GObject.  Derive BMovie and
+	  BTheme from BObject.
+
+2002-08-27 13:32  neo
+
+	* data/bml.dtd: Be less strict about the contents of the header
+	  element.
+
+2002-08-27 01:56  tim
+
+	* blib/bprotocol.h: renamed depth to channels
+
+2002-08-27 01:45  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml.c, blib/bmovie-gif.c,
+	  blib/bmovie.c, blib/bmovie.h, test/test-movie-parser.c: Changed
+	  BMovie API: b_movie_new() takes one filename and generates a name
+	  from it.  movie->name is the printable version and may be altered
+	  using b_movie_set_name(). movie->filename is the filename used to
+	  open the file (and should never be output).
+
+2002-08-27 00:51  neo
+
+	* data/bml.dtd: Fixed a couple of issues with the DTD.	Added
+	  optional loop and duration elements to the header element.
+
+2002-08-27 00:25  neo
+
+	* autogen.sh: Call 'libtoolize --version' instead of libtool.
+
+2002-08-26 21:34  neo
+
+	* blib/: bmovie-blm.c, bmovie-bml.c, bmovie-gif.c, bmovie.c,
+	  bmovie.h: Pass GError to the load functions.
+
+2002-08-26 17:37  neo
+
+	* configure.in: Bumped version number to 0.1.0.  Install into
+	  $prefix/share/blib-1.0 and $prefix/include/blib-1.0.
+
+2002-08-21 18:18  neo
+
+	* data/: Makefile.am, blinkentheme.dtd: Added a DTD for
+	  blinkenthemes; subject to changes.
+
+2002-08-21 18:02  neo
+
+	* data/bml.dtd: Specify default values for the "bits" and
+	  "channels" attributes.
+
+2002-08-21 16:26  neo
+
+	* blib/bmovie-blm.c, blib/bmovie-bml.c, blib/bmovie-gif.c,
+	  blib/bmovie.c, blib/bmovie.h, blib/btheme.h,
+	  test/test-movie-parser.c: Changed BMovie API to load all movies
+	  and to behave similar to BTheme.
+
+2002-08-21 16:11  neo
+
+	* blib/bparser.c: oops
+
+2002-08-21 15:40  neo
+
+	* blib/bmovie.c, blib/btheme-parser.c, blib/btheme.c,
+	  blib/btheme.h, test/test-theme-parser.c: Made BTheme a GObject.
+
+2002-08-21 14:32  neo
+
+	* blib/blib.h, blib/bmovie-blm.c, blib/bmovie-blm.h,
+	  blib/bmovie-bml.c, blib/bmovie-bml.h, blib/bmovie-gif.c,
+	  blib/bmovie-gif.h, blib/bmovie.c, blib/bmovie.h, blib/bparser.c,
+	  blib/bparser.h, blib/btheme-parser.c, blib/btheme-parser.h,
+	  blib/btheme.c, blib/btheme.h, blib/butils.c, blib/butils.h,
+	  blib/gif-load.c, blib/gif-load.h, blib/gif-save.c,
+	  blib/gif-save.h, blib/gif-types.h, test/test-movie-parser.c,
+	  test/test-theme-parser.c: Put everything under a GPL header.
+	  Plugged one or two memleaks.
+
+2002-08-20 23:37  neo
+
+	* blib/: bmovie-bml.c, btheme-parser.c: Ported the BML parser to
+	  BParser.
+
+2002-08-20 23:34  mitch
+
+	* blib/bmovie.c: A forgotten "else" in movie magic detection made
+	  BLM unavailable.
+
+2002-08-20 23:25  neo
+
+	* test/test-movie-parser.c: take width, height and maxval from the
+	  command-line
+
+2002-08-20 23:18  mitch
+
+	* test/Makefile.am: Added movies to SUBDIRS
+
+2002-08-20 23:17  mitch
+
+	* configure.in, test/movies/.cvsignore, test/movies/Makefile.am,
+	  test/movies/alfred-26x20.bml, test/movies/bushfire-test-16x3.gif,
+	  test/movies/camel-18x8.blm: Added a test/movies/ subdirectory
+	  containing a movie of each format we support.
+
+2002-08-20 23:09  neo
+
+	* test/test-movie-parser.c: Call g_type_init().
+
+2002-08-20 23:07  neo
+
+	* test/: .cvsignore, Makefile.am, test-movie-parser.c: Added a very
+	  simple movie test. Needs more work.
+
+2002-08-20 22:10  mitch
+
+	* blib/: Makefile.am, blib.h, bmovie-blm.c, bmovie-blm.h,
+	  bmovie-bml.c, bmovie-bml.h, bmovie-gif.c, bmovie-gif.h, bmovie.c,
+	  bmovie.h: Added movie stuff from blccc with s/bl/b/g
+
+2002-08-20 22:06  neo
+
+	* blib/: Makefile.am, blib.h, blutils.c, blutils.h, bml-parser.c,
+	  bml-parser.h, bparser.c, bparser.h, btheme-parser.c, butils.c,
+	  butils.h: blutils -> butils bml-parser -> bparser
+
+2002-08-20 21:27  neo
+
+	* blib/: btheme-parser.c, btheme.h: Allow to specify offset and
+	  size for images.
+
+2002-08-20 13:47  neo
+
+	* blib/: bml-parser.c, bparser.c, btheme-parser.c, btheme.c:
+	  improved error handling
+
+2002-08-20 13:14  neo
+
+	* blib/blutils.c, blib/blutils.h, blib/bml-parser.c,
+	  blib/bml-parser.h, blib/bparser.c, blib/bparser.h, blib/butils.c,
+	  blib/butils.h, blib/btheme-parser.c, blib/btheme-parser.h,
+	  blib/btheme.c, blib/btheme.h, test/test-theme-parser.c: copyleft
+	  updates
+
+2002-08-20 12:49  neo
+
+	* blib/btheme-parser.c, blib/btheme-parser.h, blib/btheme.c,
+	  blib/btheme.h, test/test-theme-parser.c: Allow only one theme per
+	  file.  Added functionality to parse only the theme header.
+	  Changed the test so it parses in two passes.
+
+2002-08-20 11:56  neo
+
+	* blib/: bml-parser.c, bparser.c: strip trailing spaces from cdata
+
+2002-08-20 11:22  neo
+
+	* blib/bml-parser.c, blib/bparser.c, blib/btheme-parser.c,
+	  blib/btheme.h, test/test-theme-parser.c: Renamed width and height
+	  to columns and rows.	Added width and height attributes that
+	  specify the screen size.  Create absolute filenames.	Strip
+	  spaces from cdata (not yet perfect).
+
+2002-08-20 01:05  neo
+
+	* blib/btheme-parser.c: first working version
+
+2002-08-20 00:56  neo
+
+	* blib/btheme-parser.c, test/test-theme-parser.c: Better error
+	  handling.
+
+2002-08-20 00:39  neo
+
+	* Makefile.am, configure.in, blib/blib.h, blib/bml-parser.c,
+	  blib/bparser.c, blib/btheme-parser.c, test/.cvsignore,
+	  test/Makefile.am, test/test-theme-parser.c: Added a test app for
+	  the theme-parser.
+
+2002-08-19 23:47  neo
+
+	* blib/: btheme-parser.c, btheme.h: Added code to parse windows.
+
+2002-08-19 23:16  neo
+
+	* configure.in, blib/btheme-parser.c, blib/btheme.c, blib/btheme.h,
+	  data/Makefile.am: More work on the theme parser.
+
+2002-08-15 13:19  neo
+
+	* configure.in, blib/Makefile.am, blib/bml-parser.c,
+	  blib/bml-parser.h, blib/bparser.c, blib/bparser.h,
+	  blib/btheme-parser.c, blib/btheme-parser.h, blib/btheme.c,
+	  blib/btheme.h: Some unfinished code that might be useful one
+	  day...
+
+2002-08-13 03:54  mitch
+
+	* blib/bmovie-bml.c: Some minor fixes after testing it the first
+	  time.
+
+2002-08-13 03:28  mitch
+
+	* blib/bmovie-bml.c: Row parsing. ugly, untested, too stoned to
+	  hack loops...
+
+2002-08-13 02:16  mitch
+
+	* blib/bmovie-bml.c: Theoretically, it should now parse correct BML
+	  files into a movie with empty frames of the correct size...
+
+2002-08-13 01:52  neo
+
+	* Makefile.am, configure.in, data/.cvsignore, data/Makefile.am,
+	  data/bml.dtd: Added a first draft of a DTD for BLM files.
+
+2002-08-13 01:49  mitch
+
+	* blib/bmovie-bml.c: Require valid bits="foo" and channels="bar"
+	  attributes to be passed and reject <row>s with wrong lengths
+	  (still untested).
+
+2002-08-13 01:15  mitch
+
+	* blib/bmovie-bml.c: Accept only movies with correct attibute
+	  values.
+
+2002-08-13 00:51  mitch
+
+	* blib/: bmovie-blm.c, bmovie-bml.c, bmovie-bml.h, bmovie-gif.c,
+	  bmovie.c, bmovie.h: Initial BML support:
+
+	  - added all metadata attributes from the BML <header> to BlMovie.
+	   - initial blmovie-bml implementation which is totally untested
+	  but should currectly parse the XML structure and metadata.  -
+	  changed BLM and GIF loaders to use movie->title instead of
+	  movie->name.
+
+2002-08-13 00:50  neo
+
+	* README, autogen.sh, blib.pc.in, configure.in, blib/Makefile.am:
+	  Depend on gobject-2.0.
+
+2002-08-12 21:37  mitch
+
+	* blib/: bmovie-blm.c, bmovie-gif.c, bmovie.c: Removed blutils.[ch]
+	  and use the stuff from blib instead.
+
+2002-08-12 21:37  mitch
+
+	* blib/: Makefile.am, blib.h, blutils.h, butils.h, gif-load.h,
+	  gif-save.h, gif-types.h: - fixed header file installation -
+	  include everything from blib/blib.h - added gif-types.h for the
+	  GIF enums
+
+2002-08-12 21:05  mitch
+
+	* blib/bmovie-gif.c: - depend on blib - removed gif-load.[ch] - use
+	  GIF stuff from blib
+
+2002-08-12 21:04  mitch
+
+	* configure.in: Removed trailing "/blib" from INCLUDEDIR
+
+2002-08-11 19:40  neo
+
+	* blib/: .cvsignore, Makefile.am, blutils.c, blutils.h, butils.c,
+	  butils.h, gif-load.c, gif-load.h, gif-save.c, gif-save.h: Added
+	  GIF loading and saving code.	Added bl_fgets().
+
+2002-08-11 19:38  neo
+
+	* .cvsignore, AUTHORS, ChangeLog, Makefile.am, NEWS, README,
+	  autogen.sh, blib.pc.in, configure.in, blib/.cvsignore,
+	  blib/Makefile.am, blib/blib.h: Added build framework.
+
+2002-07-26 19:12  tim
+
+	* blib/bprotocol.h: moved protocol stuff to mcuprotocol.h
+
+2002-07-12 13:33  mitch
+
+	* blib/: bmovie.c, bmovie.h: - added speed="factor" XML attribute
+	  (0.1 <= value <= 10.0) - set TIME_CORRECTION magic in bltheater.c
+	  to 0
+
+2002-07-12 13:11  mitch
+
+	* blib/bmovie-gif.c: Workaround for Björn's broken GIF writer: Set
+	  frame duration to 100ms if specified as 0ms.
+
+2002-07-11 16:52  mitch
+
+	* blib/bmovie.c: - added BlEffectScope enum which restricts effects
+	  to either   ALL, LEFT or RIGHT (works for all effects except
+	  reverst and mirror).	- changed example playlist accordingly.
+
+2002-07-09 14:50  neo
+
+	* blib/: bmovie-blm.c, bmovie-gif.c, bmovie.c, bmovie.h: Added a
+	  full filename to BlMovie. This is an absolute path build from the
+	  basedir of the playlist and is in the filesystem encoding.
+
+2002-07-08 22:22  mitch
+
+	* blib/: bmovie-blm.c, bmovie.c, bmovie.h: - added "maxval"
+	  parameters / fields all over the place where needed.	- multiply
+	  BLM pixels with maxval on loading.  - take maxval into account
+	  when applying effects.  - added a per BlPlaylistItem effect
+	  object.  - added effect parsing to the XML parser.  - added
+	  "reverse§" effect.  - changed playlist.gondwana.xml to document
+	  the effects' usage.
+
+	  (left the telnet-controllable effects object there because it's
+	  still useful for live performance).
+
+2002-07-03 17:50  mitch
+
+	* blib/bmovie-gif.c: Conditionalized debugging output with #ifdef
+	  DEBUG_GIF
+
+2002-07-03 17:41  mitch
+
+	* blib/: bmovie-blm.c, bmovie-blm.h, bmovie-gif.c, bmovie-gif.h,
+	  bmovie.c, bmovie.h: Added support for loading GIF animations and
+	  extended the protocol.
+
+	  - the default behaviour (without command line options) is exactly
+	  as before.  - added --protocol command line option, where '1' is
+	  the original	 HDL 18x8 monochrome protocol, '2' is graysale with
+	  arbitrary width   and height (--width and --height options).	-
+	  added new magic 0xFEEDBEEF for protocol version 2.  - create the
+	  pong and isdn objects only for 18x8 matrices.  - added
+	  G_CONST_RETURN to all bl_*_get_type() functions.  - made BlMovie
+	  an abstract base class.  - moved BLM code to blmovie-blm.[ch].  -
+	  added blmovie-gif.[ch].  - added automatic file format detection
+	  using magic header values.  - added gif-load.[ch] from
+	  blinkentools.
+
+2002-07-02 22:52  mitch
+
+	* blib/bmovie.c: Chain up unconditionally in all finalize()
+	  implementations.  Removed G_FILE_TEST_EXISTS from all calls to
+	  g_file_test() because G_FILE_TEST_IS_REGULAR already checks for
+	  existance.
+
+2002-04-14 15:39  neo
+
+	* blib/: bmovie.c, bmovie.h: eeek, blinkenlights was spelled wrong
+	  all over the place
+
+2002-04-14 15:17  neo
+
+	* blib/: bmovie.c, bmovie.h: Updated README, updated copyright,
+	  unified spelling of Blinkenlights...
+
+2001-12-30 16:30  neo
+
+	* blib/bmovie.c: Bumped version number to 0.9.	Require latest
+	  GLib. Cleaned up marshallers. Simplified Makefile.
+
+2001-11-05 02:03  neo
+
+	* blib/bmovie.c: Bumped version number to 0.8.	Require
+	  glib-1.3.10.	Added loop feature (indicated in the playlist by a
+	  TAB followed by a number).  Added Freudinnen feature (press *nnn#
+	  while  playing Pong to load movie   on_demand/nnn.blm).  Unload
+	  movies after emitting "movie_finished", so movies aren't reloaded
+	  when they are set again in the signal handler.
+
+2001-09-30 19:55  neo
+
+	* blib/bmovie.c: Hopefully fixed the bug that caused the screen to
+	  sometimes stay blank after Pong finished. Bumped version number
+	  to 0.7.
+
+2001-09-28 20:35  neo
+
+	* blib/bmovie.c: Implemented a bunch of commands, connect via
+	  tcp/2323 and try:
+
+	    bye     - closes the connection
+	    help    - shows a list of supported commands
+	    list    - list current playlist
+	    reload  - reload current playlist
+	    status  - show status info
+
+	  The default playlist is still 'default_pl'. This will change ...
+
+2001-09-26 16:50  neo
+
+	* blib/bmovie.c: various misc fixes and changes
+
+2001-09-26 14:28  neo
+
+	* blib/bmovie.c: it works :-)
+
+	  The old functionality is restored by using a default playlist.
+	  I'll add more controls now.
+
+2001-09-26 00:18  neo
+
+	* blib/bmovie.c: Moved fgets_line() to blutils.c and renamed it to
+	  bl_fgets().  Added implementation for BlPlayList.
+
+2001-09-25 23:39  neo
+
+	* blib/bmovie.c: Added framework of BlPlaylist object.
+
+2001-09-25 23:12  neo
+
+	* blib/: bmovie.c, bmovie.h: changed movie load semantics in
+	  preparaion of the upcoming new BlPlayList.
+
+2001-09-22 22:53  neo
+
+	* blib/bmovie.c: Removed old usage of blccc.h and added framework
+	  for BlCcc object.
+
+2001-09-21 18:47  neo
+
+	* blib/: bmovie.c, bmovie.h: Added blccc2, the beginning of rewrite
+	  of blccc the to the repository.
+

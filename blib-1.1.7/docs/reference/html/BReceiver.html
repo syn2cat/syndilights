@@ -1,0 +1,102 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BReceiver</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="BProxyServer.html" title="BProxyServer"><link rel="next" href="BSender.html" title="BSender"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BProxyServer.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BSender.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BReceiver"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BReceiver</span></h2><p>BReceiver &#8212; receives Blinkenlights packets</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BReceiver.html#BReceiver-struct">BReceiver</a>;
+gboolean    (<a href="BReceiver.html#BReceiverCallback">*BReceiverCallback</a>)            (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver,
+                                             <a href="blib-BPacket.html#BPacket">BPacket</a> *packet,
+                                             gpointer callback_data);
+<a href="BReceiver.html" title="BReceiver">BReceiver</a>*  <a href="BReceiver.html#b-receiver-new">b_receiver_new</a>                  (<a href="BReceiver.html#BReceiverCallback">BReceiverCallback</a> callback,
+                                             gpointer callback_data);
+gboolean    <a href="BReceiver.html#b-receiver-listen">b_receiver_listen</a>               (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver,
+                                             gint port);
+gboolean    <a href="BReceiver.html#b-receiver-listen-fd">b_receiver_listen_fd</a>            (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver,
+                                             gint fd);
+void        <a href="BReceiver.html#b-receiver-stop">b_receiver_stop</a>                 (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2569688"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BReceiver
+</pre></div><div class="refsect1" lang="en"><a name="id2569703"></a><h2>Properties</h2><pre class="synopsis">
+
+  "<a href="BReceiver.html#BReceiver--callback">callback</a>"             gpointer             : Write / Construct Only
+  "<a href="BReceiver.html#BReceiver--callback-data">callback-data</a>"        gpointer             : Write / Construct Only
+</pre></div><div class="refsect1" lang="en"><a name="id2569734"></a><h2>Description</h2><p>
+The <a href="BReceiver.html" title="BReceiver">BReceiver</a> object listens for Blinkenlights UDP packets. For each
+frame that matches the receiver configuration, a user-defined callback
+is called with the received packet.
+</p></div><div class="refsect1" lang="en"><a name="id2569489"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2569494"></a><h3><a name="BReceiver-struct"></a>struct BReceiver</h3><pre class="programlisting">struct BReceiver;</pre><p>
+The <a href="BReceiver.html" title="BReceiver">BReceiver</a> struct is considered private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2569514"></a><h3><a name="BReceiverCallback"></a>BReceiverCallback ()</h3><pre class="programlisting">gboolean    (*BReceiverCallback)            (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver,
+                                             <a href="blib-BPacket.html#BPacket">BPacket</a> *packet,
+                                             gpointer callback_data);</pre><p>
+The function that gets called to dispatch incoming packets.
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>receiver</tt></i> :</span></td><td>the <a href="BReceiver.html" title="BReceiver">BReceiver</a> object that received the packet
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>packet</tt></i> :</span></td><td>the received <a href="blib-BPacket.html#BPacket">BPacket</a> converted to host byteorder
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback_data</tt></i> :</span></td><td>the data that was passed to <a href="BReceiver.html#b-receiver-new">b_receiver_new</a>()
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td><tt class="literal">TRUE</tt> if you want to be called again
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568911"></a><h3><a name="b-receiver-new"></a>b_receiver_new ()</h3><pre class="programlisting"><a href="BReceiver.html" title="BReceiver">BReceiver</a>*  b_receiver_new                  (<a href="BReceiver.html#BReceiverCallback">BReceiverCallback</a> callback,
+                                             gpointer callback_data);</pre><p>
+Creates a new <a href="BReceiver.html" title="BReceiver">BReceiver</a> object.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>callback</tt></i> :</span></td><td> the function to call when a new frame arrives
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>callback_data</tt></i> :</span></td><td> data to pass to the <i class="parameter"><tt>callback</tt></i>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a newly allocate <a href="BReceiver.html" title="BReceiver">BReceiver</a> object
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2568994"></a><h3><a name="b-receiver-listen"></a>b_receiver_listen ()</h3><pre class="programlisting">gboolean    b_receiver_listen               (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver,
+                                             gint port);</pre><p>
+Causes the <i class="parameter"><tt>receiver</tt></i> to start to listen to the specified UDP
+port. For each successfully received Blinkenlights packet, the
+packet will be converted to host byteorder and the callback that
+was specified on <a href="BReceiver.html#b-receiver-new">b_receiver_new</a>() will be called.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>receiver</tt></i> :</span></td><td> a <a href="BReceiver.html" title="BReceiver">BReceiver</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>port</tt></i> :</span></td><td> the UDP port to listen to
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the receiver listens to <i class="parameter"><tt>port</tt></i>, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2569090"></a><h3><a name="b-receiver-listen-fd"></a>b_receiver_listen_fd ()</h3><pre class="programlisting">gboolean    b_receiver_listen_fd            (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver,
+                                             gint fd);</pre><p>
+Causes the <i class="parameter"><tt>receiver</tt></i> to start to listen to the given file descriptor.
+This function is rarely useful, it is used internally by <a href="BProxyClient.html" title="BProxyClient">BProxyClient</a>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>receiver</tt></i> :</span></td><td> a <a href="BReceiver.html" title="BReceiver">BReceiver</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>fd</tt></i> :</span></td><td> a file descriptor
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> on success
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2560429"></a><h3><a name="b-receiver-stop"></a>b_receiver_stop ()</h3><pre class="programlisting">void        b_receiver_stop                 (<a href="BReceiver.html" title="BReceiver">BReceiver</a> *receiver);</pre><p>
+Makes the <i class="parameter"><tt>receiver</tt></i> stop listening.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>receiver</tt></i> :</span></td><td> a <a href="BReceiver.html" title="BReceiver">BReceiver</a> object
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2560478"></a><h2>Properties</h2><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><a name="BReceiver--callback"></a>"<tt class="literal">callback</tt>" (gpointer : Write / Construct Only)</span></td><td><p></p></td></tr><tr><td><span class="term"><a name="BReceiver--callback-data"></a>"<tt class="literal">callback-data</tt>" (gpointer : Write / Construct Only)</span></td><td><p></p></td></tr></tbody></table></div></div><div class="refsect1" lang="en"><a name="id2560530"></a><h2>See Also</h2><p>
+<a href="BSender.html" title="BSender">BSender</a>, <a href="blib-BPacket.html#BPacket">BPacket</a>
+</p></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BProxyServer.html"><b>&lt;&lt; BProxyServer</b></a></td><td align="right"><a accesskey="n" href="BSender.html"><b>BSender &gt;&gt;</b></a></td></tr></table></body></html>

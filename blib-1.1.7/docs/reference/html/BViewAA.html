@@ -1,0 +1,74 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BViewAA</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-sim.html" title="Blinkenlights Simulation"><link rel="previous" href="BTheme.html" title="BTheme"><link rel="next" href="BViewDirectFB.html" title="BViewDirectFB"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BTheme.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-sim.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BViewDirectFB.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BViewAA"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BViewAA</span></h2><p>BViewAA &#8212; </p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BViewAA.html#BViewAA-struct">BViewAA</a>;
+<a href="BViewAA.html" title="BViewAA">BViewAA</a>*    <a href="BViewAA.html#b-view-aa-new">b_view_aa_new</a>                   (aa_context *aac,
+                                             gint rows,
+                                             gint columns,
+                                             gint channels,
+                                             GError **error);
+void        <a href="BViewAA.html#b-view-aa-update">b_view_aa_update</a>                (<a href="BViewAA.html" title="BViewAA">BViewAA</a> *view,
+                                             const guchar *frame_data);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2572968"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BViewAA
+</pre></div><div class="refsect1" lang="en"><a name="id2572983"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2572992"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2572998"></a><h3><a name="BViewAA-struct"></a>struct BViewAA</h3><pre class="programlisting">struct BViewAA;</pre><p>
+
+</p></div><hr><div class="refsect2" lang="en"><a name="id2573012"></a><h3><a name="b-view-aa-new"></a>b_view_aa_new ()</h3><pre class="programlisting"><a href="BViewAA.html" title="BViewAA">BViewAA</a>*    b_view_aa_new                   (aa_context *aac,
+                                             gint rows,
+                                             gint columns,
+                                             gint channels,
+                                             GError **error);</pre><p>
+Creates a new <a href="BViewAA.html" title="BViewAA">BViewAA</a> object suitable to display
+Blinkenlights movies that fit the <i class="parameter"><tt>theme</tt></i>. Most of the information
+from the theme is ignored, except for the placement of the windows.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>aac</tt></i> :</span></td><td> the AALIB context
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>rows</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>columns</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>channels</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a new <a href="BViewAA.html" title="BViewAA">BViewAA</a> or <tt class="literal">NULL</tt> in case of an error
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2573691"></a><h3><a name="b-view-aa-update"></a>b_view_aa_update ()</h3><pre class="programlisting">void        b_view_aa_update                (<a href="BViewAA.html" title="BViewAA">BViewAA</a> *view,
+                                             const guchar *frame_data);</pre><p>
+Displays a new frame on the <i class="parameter"><tt>view</tt></i>. The <i class="parameter"><tt>view</tt></i> expects <i class="parameter"><tt>frame_data</tt></i>
+in the range of 0 to 255.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>view</tt></i> :</span></td><td> a <a href="BViewAA.html" title="BViewAA">BViewAA</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>frame_data</tt></i> :</span></td><td> the frame data to display
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BTheme.html"><b>&lt;&lt; BTheme</b></a></td><td align="right"><a accesskey="n" href="BViewDirectFB.html"><b>BViewDirectFB &gt;&gt;</b></a></td></tr></table></body></html>

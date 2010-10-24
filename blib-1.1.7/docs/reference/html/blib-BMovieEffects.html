@@ -1,0 +1,73 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BMovieEffects</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-movies.html" title="Blinkenlights Movies"><link rel="previous" href="BMovie.html" title="BMovie"><link rel="next" href="BEffects.html" title="BEffects"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="BMovie.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-movies.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BEffects.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BMovieEffects"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BMovieEffects</span></h2><p>BMovieEffects &#8212; simple effects on a movie</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+void        <a href="blib-BMovieEffects.html#b-movie-normalize">b_movie_normalize</a>               (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             gint maxval);
+void        <a href="blib-BMovieEffects.html#b-movie-apply-colormap">b_movie_apply_colormap</a>          (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             guchar *map);
+void        <a href="blib-BMovieEffects.html#b-movie-apply-effects">b_movie_apply_effects</a>           (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             <a href="BEffects.html" title="BEffects">BEffects</a> *effects,
+                                             gboolean reverse,
+                                             gdouble speed);
+</pre></div><div class="refsect1" lang="en"><a name="id2530595"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2530605"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2530610"></a><h3><a name="b-movie-normalize"></a>b_movie_normalize ()</h3><pre class="programlisting">void        b_movie_normalize               (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             gint maxval);</pre><p>
+Changes the maximum value for <i class="parameter"><tt>movie</tt></i>, that is the value that will
+cause the lamp to glow with full intensity. This function iterates
+over all frames of the movie and changes the frame data accordingly.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>maxval</tt></i> :</span></td><td> the new maximum value to apply to <i class="parameter"><tt>movie</tt></i>
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2530680"></a><h3><a name="b-movie-apply-colormap"></a>b_movie_apply_colormap ()</h3><pre class="programlisting">void        b_movie_apply_colormap          (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             guchar *map);</pre><p>
+Applies a mapping defined by <i class="parameter"><tt>map</tt></i> to all frames of the <i class="parameter"><tt>movie</tt></i>. The
+mapping must not exceed the movie's maxval.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>map</tt></i> :</span></td><td> a LUT that remaps each color value
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2552686"></a><h3><a name="b-movie-apply-effects"></a>b_movie_apply_effects ()</h3><pre class="programlisting">void        b_movie_apply_effects           (<a href="BMovie.html" title="BMovie">BMovie</a> *movie,
+                                             <a href="BEffects.html" title="BEffects">BEffects</a> *effects,
+                                             gboolean reverse,
+                                             gdouble speed);</pre><p>
+If <i class="parameter"><tt>effects</tt></i> is non-<tt class="literal">NULL</tt>, the effects described by it are applied
+to <i class="parameter"><tt>movie</tt></i>. If <i class="parameter"><tt>reverse</tt></i> is <tt class="literal">TRUE</tt>, the order of frames is reversed.
+If <i class="parameter"><tt>speed</tt></i> is different from 1.0, the frame timing is adjusted; for
+example a value of 2.0 makes the movie play with double speed.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>movie</tt></i> :</span></td><td> a <a href="BMovie.html" title="BMovie">BMovie</a> object
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>effects</tt></i> :</span></td><td> a <a href="BEffects.html" title="BEffects">BEffects</a> object or <tt class="literal">NULL</tt>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>reverse</tt></i> :</span></td><td> whether to reverse the order of frames in <i class="parameter"><tt>movie</tt></i>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>speed</tt></i> :</span></td><td> an adjustment factor to be applied on the frame timing
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="BMovie.html"><b>&lt;&lt; BMovie</b></a></td><td align="right"><a accesskey="n" href="BEffects.html"><b>BEffects &gt;&gt;</b></a></td></tr></table></body></html>

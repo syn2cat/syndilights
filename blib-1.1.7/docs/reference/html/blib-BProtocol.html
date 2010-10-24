@@ -1,0 +1,98 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BProtocol</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="previous" href="blib-network.html" title="Blinkenlights Network Protocol"><link rel="next" href="blib-BPacket.html" title="BPacket"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-network.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-network.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BPacket.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BProtocol"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BProtocol</span></h2><p>BProtocol &#8212; definiton of the Blinkenlights Network Protocol</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+#define     <a href="blib-BProtocol.html#MAGIC-MCU-SETUP-CAPS">MAGIC_MCU_SETUP</a>
+#define     <a href="blib-BProtocol.html#MAGIC-MCU-FRAME-CAPS">MAGIC_MCU_FRAME</a>
+#define     <a href="blib-BProtocol.html#MAGIC-MCU-DEVCTRL-CAPS">MAGIC_MCU_DEVCTRL</a>
+#define     <a href="blib-BProtocol.html#MAGIC-BLFRAME-CAPS">MAGIC_BLFRAME</a>
+#define     <a href="blib-BProtocol.html#MAGIC-BLFRAME-256-CAPS">MAGIC_BLFRAME_256</a>
+#define     <a href="blib-BProtocol.html#MAGIC-HEARTBEAT-CAPS">MAGIC_HEARTBEAT</a>
+#define     <a href="blib-BProtocol.html#MCU-LISTENER-PORT-CAPS">MCU_LISTENER_PORT</a>
+#define     <a href="blib-BProtocol.html#MCU-ID-ANY-CAPS">MCU_ID_ANY</a>
+#define     <a href="blib-BProtocol.html#MCU-DEVCTRL-OFF-CAPS">MCU_DEVCTRL_OFF</a>
+#define     <a href="blib-BProtocol.html#MCU-DEVCTRL-ON-CAPS">MCU_DEVCTRL_ON</a>
+#define     <a href="blib-BProtocol.html#B-HEARTBEAT-PORT-CAPS">B_HEARTBEAT_PORT</a>
+#define     <a href="blib-BProtocol.html#B-HEARTBEAT-INTERVAL-CAPS">B_HEARTBEAT_INTERVAL</a>
+</pre></div><div class="refsect1" lang="en"><a name="id2567653"></a><h2>Description</h2><p>
+The bprotocol.h header file defines the Blinkenlights Network
+Protocol. It contains structure definitions for the different network
+packets as well as defines for magic numbers.
+</p><p>
+This header file doesn't use any GLib types to make it possible to
+include it from applications that can not or don't want to use BLib.
+As a user of BLib you don't need to care about the details of the
+protocol described here. Use the <a href="BSender.html" title="BSender">BSender</a> and <a href="BReceiver.html" title="BReceiver">BReceiver</a> instead.
+</p></div><div class="refsect1" lang="en"><a name="id2563103"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2563108"></a><h3><a name="MAGIC-MCU-SETUP-CAPS"></a>MAGIC_MCU_SETUP</h3><pre class="programlisting">#define MAGIC_MCU_SETUP     0x2342FEED  /* MCU Configuration packet              */
+</pre><p>
+The magic number that identifies a setup packet.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2563125"></a><h3><a name="MAGIC-MCU-FRAME-CAPS"></a>MAGIC_MCU_FRAME</h3><pre class="programlisting">#define MAGIC_MCU_FRAME     0x23542666  /* MCU Frame packet                      */
+</pre><p>
+The magic number that identifies a frame packet.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2563143"></a><h3><a name="MAGIC-MCU-DEVCTRL-CAPS"></a>MAGIC_MCU_DEVCTRL</h3><pre class="programlisting">#define MAGIC_MCU_DEVCTRL   0x23542667  /* MCU Device Control packet             */
+</pre><p>
+The magic number that identifies a device control packet.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2563160"></a><h3><a name="MAGIC-BLFRAME-CAPS"></a>MAGIC_BLFRAME</h3><pre class="programlisting">#define MAGIC_BLFRAME       0xDEADBEEF  /* Original BL Frame Packet              */
+</pre><p>
+The magic number that identifies a frame packet in the old
+Blinkenlights protocol. BLib doesn't support this old version.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2563179"></a><h3><a name="MAGIC-BLFRAME-256-CAPS"></a>MAGIC_BLFRAME_256</h3><pre class="programlisting">#define MAGIC_BLFRAME_256   0xFEEDBEEF  /* Extendend BL Frame Packet (Greyscale) */
+</pre><p>
+The magic number that identifies a frame packet in an extension to the
+old Blinkenlights protocol. BLib doesn't support this old version.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2567661"></a><h3><a name="MAGIC-HEARTBEAT-CAPS"></a>MAGIC_HEARTBEAT</h3><pre class="programlisting">#define MAGIC_HEARTBEAT     0x42424242  /* Heartbeat packet                      */
+</pre><p>
+The magic number that identifies a heartbeat package as used with
+the BlinkenProxy protocol.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2564642"></a><h3><a name="MCU-LISTENER-PORT-CAPS"></a>MCU_LISTENER_PORT</h3><pre class="programlisting">#define MCU_LISTENER_PORT    2323
+</pre><p>
+The default port a matrox control unit listens too.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2564658"></a><h3><a name="MCU-ID-ANY-CAPS"></a>MCU_ID_ANY</h3><pre class="programlisting">#define MCU_ID_ANY           -1
+</pre><p>
+Use this value in a setup packet to address all listening matrix
+control units.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2564675"></a><h3><a name="MCU-DEVCTRL-OFF-CAPS"></a>MCU_DEVCTRL_OFF</h3><pre class="programlisting">#define MCU_DEVCTRL_OFF  0    /* switch device off */
+</pre><p>
+Use this value in a device control packet to switch a device off.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2564692"></a><h3><a name="MCU-DEVCTRL-ON-CAPS"></a>MCU_DEVCTRL_ON</h3><pre class="programlisting">#define MCU_DEVCTRL_ON   1    /* switch device on  */
+</pre><p>
+Use this value in a device control packet to switch a device on.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2564709"></a><h3><a name="B-HEARTBEAT-PORT-CAPS"></a>B_HEARTBEAT_PORT</h3><pre class="programlisting">#define B_HEARTBEAT_PORT       4242
+</pre><p>
+The default port number for BlinkenProxy heartbeat packets.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2564725"></a><h3><a name="B-HEARTBEAT-INTERVAL-CAPS"></a>B_HEARTBEAT_INTERVAL</h3><pre class="programlisting">#define B_HEARTBEAT_INTERVAL   5000     /* Heartbeat interval in ms    */
+</pre><p>
+The default timeout in milliseconds between BlinkenProxy heartbeat packets.
+</p></div></div><div class="refsect1" lang="en"><a name="id2564743"></a><h2>See Also</h2><p>
+<a href="blib-BPacket.html#BPacket">BPacket</a>, <a href="BSender.html" title="BSender">BSender</a>, <a href="BReceiver.html" title="BReceiver">BReceiver</a>
+</p></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-network.html"><b>&lt;&lt; Blinkenlights Network Protocol</b></a></td><td align="right"><a accesskey="n" href="blib-BPacket.html"><b>BPacket &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,0 +1,46 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BLib</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="next" href="BObject.html" title="BObject"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-utils.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="BObject.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BLib"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BLib</span></h2><p>BLib &#8212; BLib library initialization</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+void        <a href="blib-BLib.html#b-init">b_init</a>                          (void);
+</pre></div><div class="refsect1" lang="en"><a name="id2541576"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2540021"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2474663"></a><h3><a name="b-init"></a>b_init ()</h3><pre class="programlisting">void        b_init                          (void);</pre><p>
+This function initializes the BLib library. It calls g_type_init()
+for you, initializes the random number generator and registers some
+transform functions needed for the deserialization routines.
+</p><p>
+It is safe to call this function multiple times but you should at
+least call it once before you use any other BLib functions.</p><p>
+
+</p></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-utils.html"><b>&lt;&lt; Blinkenlights Utilities</b></a></td><td align="right"><a accesskey="n" href="BObject.html"><b>BObject &gt;&gt;</b></a></td></tr></table></body></html>

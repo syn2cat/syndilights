@@ -1,0 +1,189 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BUtils</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="blib-BParams.html" title="BParams"><link rel="next" href="blib-BParser.html" title="BParser"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BParams.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BParser.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="blib-BUtils"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BUtils</span></h2><p>BUtils &#8212; a collection of utility functions, mainly used from parsers</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+gchar*      <a href="blib-BUtils.html#b-filename-from-utf8">b_filename_from_utf8</a>            (const gchar *name,
+                                             const gchar *root,
+                                             GError **error);
+gboolean    <a href="blib-BUtils.html#b-parse-int">b_parse_int</a>                     (const gchar *str,
+                                             gint *value);
+gboolean    <a href="blib-BUtils.html#b-parse-boolean">b_parse_boolean</a>                 (const gchar *str,
+                                             gboolean *value);
+gboolean    <a href="blib-BUtils.html#b-parse-double">b_parse_double</a>                  (const gchar *str,
+                                             gdouble *value);
+gboolean    <a href="blib-BUtils.html#b-parse-coordinates">b_parse_coordinates</a>             (const gchar **names,
+                                             const gchar **values,
+                                             gint *x,
+                                             gint *y);
+gboolean    <a href="blib-BUtils.html#b-parse-rectangle">b_parse_rectangle</a>               (const gchar **names,
+                                             const gchar **values,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *rect);
+gboolean    <a href="blib-BUtils.html#b-parse-color">b_parse_color</a>                   (const gchar **names,
+                                             const gchar **values,
+                                             <a href="BTheme.html#BColor">BColor</a> *color);
+gboolean    <a href="blib-BUtils.html#b-parse-param">b_parse_param</a>                   (GObject *object,
+                                             const gchar *root,
+                                             const gchar **names,
+                                             const gchar **values,
+                                             GError **error);
+gboolean    <a href="blib-BUtils.html#b-object-set-property">b_object_set_property</a>           (GObject *object,
+                                             const gchar *key,
+                                             const gchar *value,
+                                             const gchar *root,
+                                             GError **error);
+void        <a href="blib-BUtils.html#b-rectangle-union">b_rectangle_union</a>               (const <a href="BTheme.html#BRectangle">BRectangle</a> *src1,
+                                             const <a href="BTheme.html#BRectangle">BRectangle</a> *src2,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *dest);
+gboolean    <a href="blib-BUtils.html#b-rectangle-intersect">b_rectangle_intersect</a>           (const <a href="BTheme.html#BRectangle">BRectangle</a> *src1,
+                                             const <a href="BTheme.html#BRectangle">BRectangle</a> *src2,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *dest);
+</pre></div><div class="refsect1" lang="en"><a name="id2473897"></a><h2>Description</h2><p>
+
+</p></div><div class="refsect1" lang="en"><a name="id2473907"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2473912"></a><h3><a name="b-filename-from-utf8"></a>b_filename_from_utf8 ()</h3><pre class="programlisting">gchar*      b_filename_from_utf8            (const gchar *name,
+                                             const gchar *root,
+                                             GError **error);</pre><p>
+Convert <i class="parameter"><tt>name</tt></i> in UTF-8 encoding to a filename in the filesystem's
+encoding. If <i class="parameter"><tt>root</tt></i> is non-<tt class="literal">NULL</tt> and <i class="parameter"><tt>name</tt></i> is not an absolute
+filename, the returned filename is built using <i class="parameter"><tt>root</tt></i> as a prefix.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>name</tt></i> :</span></td><td> the filename in UTF-8 encoding
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>root</tt></i> :</span></td><td> an optional path to use
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> a pointer to the newly allocated filename or <tt class="literal">NULL</tt> in
+case of an error. This value must be freed with g_free().
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2474031"></a><h3><a name="b-parse-int"></a>b_parse_int ()</h3><pre class="programlisting">gboolean    b_parse_int                     (const gchar *str,
+                                             gint *value);</pre><p>
+Parse an integer value from a string.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>str</tt></i> :</span></td><td> the string to parse
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> location to store the integer value
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the string could be parsed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2474107"></a><h3><a name="b-parse-boolean"></a>b_parse_boolean ()</h3><pre class="programlisting">gboolean    b_parse_boolean                 (const gchar *str,
+                                             gboolean *value);</pre><p>
+Parse a boolean value from a string.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>str</tt></i> :</span></td><td> the string to parse
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> location to store the boolean value
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the string could be parsed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531518"></a><h3><a name="b-parse-double"></a>b_parse_double ()</h3><pre class="programlisting">gboolean    b_parse_double                  (const gchar *str,
+                                             gdouble *value);</pre><p>
+Parse a double (floating-point) value from a string.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>str</tt></i> :</span></td><td> the string to parse
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> location to store the double value
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the string could be parsed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531596"></a><h3><a name="b-parse-coordinates"></a>b_parse_coordinates ()</h3><pre class="programlisting">gboolean    b_parse_coordinates             (const gchar **names,
+                                             const gchar **values,
+                                             gint *x,
+                                             gint *y);</pre><p>
+Parses a pair of name/value arrays looking for the names "x" and "y"
+and tries to parse the associated values into integer values.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>names</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of names
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>values</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of values
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>x</tt></i> :</span></td><td> location to store the value of the x coordinate
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>y</tt></i> :</span></td><td> location to store the value of the y coordinate
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if both coordinates could be parsed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2531718"></a><h3><a name="b-parse-rectangle"></a>b_parse_rectangle ()</h3><pre class="programlisting">gboolean    b_parse_rectangle               (const gchar **names,
+                                             const gchar **values,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *rect);</pre><p>
+Parses a pair of name/value arrays looking for the names "x", "y",
+"width" and "heigth" and tries to parse the associated values into
+a <a href="BTheme.html#BRectangle">BRectangle</a>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>names</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of names
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>values</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of values
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>rect</tt></i> :</span></td><td> pointer to a <a href="BTheme.html#BRectangle">BRectangle</a> to store the result
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the rectangle could be parsed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2561557"></a><h3><a name="b-parse-color"></a>b_parse_color ()</h3><pre class="programlisting">gboolean    b_parse_color                   (const gchar **names,
+                                             const gchar **values,
+                                             <a href="BTheme.html#BColor">BColor</a> *color);</pre><p>
+Parses a pair of name/value arrays looking for the name "color" and
+tries to convert the associated value to a <a href="BTheme.html#BColor">BColor</a>. The color value
+is expected to be in hexadecimal notation as in HTML.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>names</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of names
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>values</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of values
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>color</tt></i> :</span></td><td> pointer to a <a href="BTheme.html#BColor">BColor</a> to store the result
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if the color could be parsed, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2561672"></a><h3><a name="b-parse-param"></a>b_parse_param ()</h3><pre class="programlisting">gboolean    b_parse_param                   (GObject *object,
+                                             const gchar *root,
+                                             const gchar **names,
+                                             const gchar **values,
+                                             GError **error);</pre><p>
+Parses a pair of name/value arrays looking for the names "key" and
+"value". The key/value pair is then used to set the respective object
+property by calling <a href="blib-BUtils.html#b-object-set-property">b_object_set_property</a>().</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>object</tt></i> :</span></td><td> a GObject
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>root</tt></i> :</span></td><td> an optional string to use as root if a filename is set
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>names</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of names
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>values</tt></i> :</span></td><td> a <tt class="literal">NULL</tt>-terminated array of values
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> if parsing was successful, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2561824"></a><h3><a name="b-object-set-property"></a>b_object_set_property ()</h3><pre class="programlisting">gboolean    b_object_set_property           (GObject *object,
+                                             const gchar *key,
+                                             const gchar *value,
+                                             const gchar *root,
+                                             GError **error);</pre><p>
+Sets the object property <tt class="literal">key</tt> by interpreting the string
+<i class="parameter"><tt>value</tt></i>. This function takes care of converting the string to the
+proper type. If the property is a <tt class="literal">B_TYPE_FILENAME</tt> the filename is
+build using the <i class="parameter"><tt>root</tt></i> parameter.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>object</tt></i> :</span></td><td> a GObject
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>key</tt></i> :</span></td><td> the name of the property
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>value</tt></i> :</span></td><td> the property value as a string
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>root</tt></i> :</span></td><td> an optional string to use as root if a filename property is set
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>error</tt></i> :</span></td><td> location to store the error occuring, or <tt class="literal">NULL</tt> to ignore errors
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> <tt class="literal">TRUE</tt> on success, <tt class="literal">FALSE</tt> otherwise
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2561978"></a><h3><a name="b-rectangle-union"></a>b_rectangle_union ()</h3><pre class="programlisting">void        b_rectangle_union               (const <a href="BTheme.html#BRectangle">BRectangle</a> *src1,
+                                             const <a href="BTheme.html#BRectangle">BRectangle</a> *src2,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *dest);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>src1</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>src2</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest</tt></i> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2562048"></a><h3><a name="b-rectangle-intersect"></a>b_rectangle_intersect ()</h3><pre class="programlisting">gboolean    b_rectangle_intersect           (const <a href="BTheme.html#BRectangle">BRectangle</a> *src1,
+                                             const <a href="BTheme.html#BRectangle">BRectangle</a> *src2,
+                                             <a href="BTheme.html#BRectangle">BRectangle</a> *dest);</pre><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>src1</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>src2</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>dest</tt></i> :</span></td><td>
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td>
+
+
+</td></tr></tbody></table></div></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BParams.html"><b>&lt;&lt; BParams</b></a></td><td align="right"><a accesskey="n" href="blib-BParser.html"><b>BParser &gt;&gt;</b></a></td></tr></table></body></html>

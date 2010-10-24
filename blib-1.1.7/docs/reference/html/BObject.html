@@ -1,0 +1,84 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"><title>BObject</title><meta name="generator" content="DocBook XSL Stylesheets V1.64.1"><link rel="home" href="index.html" title="BLib Reference Manual"><link rel="up" href="blib-utils.html" title="Blinkenlights Utilities"><link rel="previous" href="blib-BLib.html" title="BLib"><link rel="next" href="blib-BTypes.html" title="BTypes"><meta name="generator" content="GTK-Doc V1.1 (XML mode)"><style type="text/css">
+        .synopsis, .classsynopsis {
+            background: #eeeeee;
+            border: solid 1px #aaaaaa;
+            padding: 0.5em;
+        }
+        .programlisting {
+            background: #eeeeff;
+            border: solid 1px #aaaaff;
+            padding: 0.5em;
+        }
+        .variablelist {
+            padding: 4px;
+            margin-left: 3em;
+        }
+        .navigation {
+            background: #ffeeee;
+            border: solid 1px #ffaaaa;
+            margin-top: 0.5em;
+            margin-bottom: 0.5em;
+        }
+        .navigation a {
+            color: #770000;
+        }
+        .navigation a:visited {
+            color: #550000;
+        }
+        .navigation .title {
+            font-size: 200%;
+        }
+      </style></head><body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF"><table class="navigation" width="100%" summary="Navigation header" cellpadding="2" cellspacing="2"><tr valign="middle"><td><a accesskey="p" href="blib-BLib.html"><img src="left.png" width="24" height="24" border="0" alt="Prev"></a></td><td><a accesskey="u" href="blib-utils.html"><img src="up.png" width="24" height="24" border="0" alt="Up"></a></td><td><a accesskey="h" href="index.html"><img src="home.png" width="24" height="24" border="0" alt="Home"></a></td><th width="100%" align="center">BLib Reference Manual</th><td><a accesskey="n" href="blib-BTypes.html"><img src="right.png" width="24" height="24" border="0" alt="Next"></a></td></tr></table><div class="refentry" lang="en"><a name="BObject"></a><div class="titlepage"><div></div><div></div></div><div class="refnamediv"><h2><span class="refentrytitle">BObject</span></h2><p>BObject &#8212; an abstract base class derived from GObject</p></div><div class="refsynopsisdiv"><h2>Synopsis</h2><pre class="synopsis">
+
+
+
+struct      <a href="BObject.html#BObject-struct">BObject</a>;
+void        <a href="BObject.html#b-object-set-filename">b_object_set_filename</a>           (<a href="BObject.html" title="BObject">BObject</a> *object,
+                                             const gchar *filename);
+void        <a href="BObject.html#b-object-set-name">b_object_set_name</a>               (<a href="BObject.html" title="BObject">BObject</a> *object,
+                                             const gchar *name);
+const gchar* <a href="BObject.html#b-object-get-filename">b_object_get_filename</a>          (<a href="BObject.html" title="BObject">BObject</a> *object);
+const gchar* <a href="BObject.html#b-object-get-name">b_object_get_name</a>              (<a href="BObject.html" title="BObject">BObject</a> *object);
+
+</pre></div><div class="refsect1" lang="en"><a name="id2527922"></a><h2>Object Hierarchy</h2><pre class="synopsis">
+
+  GObject
+   +----BObject
+</pre></div><div class="refsect1" lang="en"><a name="id2527937"></a><h2>Properties</h2><pre class="synopsis">
+
+  "<a href="BObject.html#BObject--filename">filename</a>"             gchararray           : Read / Write
+  "<a href="BObject.html#BObject--name">name</a>"                 gchararray           : Read / Write
+</pre></div><div class="refsect1" lang="en"><a name="id2527967"></a><h2>Description</h2><p>
+<a href="BObject.html" title="BObject">BObject</a> is directly derived from GObject and adds name and filename
+ properties.
+</p></div><div class="refsect1" lang="en"><a name="id2527987"></a><h2>Details</h2><div class="refsect2" lang="en"><a name="id2527992"></a><h3><a name="BObject-struct"></a>struct BObject</h3><pre class="programlisting">struct BObject;</pre><p>
+The <a href="BObject.html" title="BObject">BObject</a> struct shouldn't be accessed directly. Its members are
+considered private.
+</p></div><hr><div class="refsect2" lang="en"><a name="id2527313"></a><h3><a name="b-object-set-filename"></a>b_object_set_filename ()</h3><pre class="programlisting">void        b_object_set_filename           (<a href="BObject.html" title="BObject">BObject</a> *object,
+                                             const gchar *filename);</pre><p>
+Sets the filename associated with <i class="parameter"><tt>object</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>object</tt></i> :</span></td><td> a <a href="BObject.html" title="BObject">BObject</a>.
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>filename</tt></i> :</span></td><td> the new filename, a nul-terminated string in the filesystem's
+encoding.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2527379"></a><h3><a name="b-object-set-name"></a>b_object_set_name ()</h3><pre class="programlisting">void        b_object_set_name               (<a href="BObject.html" title="BObject">BObject</a> *object,
+                                             const gchar *name);</pre><p>
+Sets the name associated with <i class="parameter"><tt>object</tt></i>.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>object</tt></i> :</span></td><td> a <a href="BObject.html" title="BObject">BObject</a>.
+</td></tr><tr><td><span class="term"><i class="parameter"><tt>name</tt></i> :</span></td><td> the new name, a nul-terminated string in UTF-8 encoding.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2523801"></a><h3><a name="b-object-get-filename"></a>b_object_get_filename ()</h3><pre class="programlisting">const gchar* b_object_get_filename          (<a href="BObject.html" title="BObject">BObject</a> *object);</pre><p>
+This functions retrieves the filename associated with <i class="parameter"><tt>object</tt></i>. The
+returned value must not be freed.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>object</tt></i> :</span></td><td> a <a href="BObject.html" title="BObject">BObject</a>. 
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the fileanme or <tt class="literal">NULL</tt> if no filename was set for <i class="parameter"><tt>object</tt></i>.
+</td></tr></tbody></table></div></div><hr><div class="refsect2" lang="en"><a name="id2523870"></a><h3><a name="b-object-get-name"></a>b_object_get_name ()</h3><pre class="programlisting">const gchar* b_object_get_name              (<a href="BObject.html" title="BObject">BObject</a> *object);</pre><p>
+This functions retrieves the name associated with <i class="parameter"><tt>object</tt></i>. If no
+name has been set for <i class="parameter"><tt>object</tt></i>, the name is generated from the
+<i class="parameter"><tt>object</tt></i>'s filename. The returned value must not be freed.</p><p>
+
+</p><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><i class="parameter"><tt>object</tt></i> :</span></td><td> a <a href="BObject.html" title="BObject">BObject</a>. 
+</td></tr><tr><td><span class="term"><span class="emphasis"><em>Returns</em></span> :</span></td><td> the name or <tt class="literal">NULL</tt> if no name and no filename was set
+for <i class="parameter"><tt>object</tt></i>.
+</td></tr></tbody></table></div></div></div><div class="refsect1" lang="en"><a name="id2523946"></a><h2>Properties</h2><div class="variablelist"><table border="0"><col align="left" valign="top"><tbody><tr><td><span class="term"><a name="BObject--filename"></a>"<tt class="literal">filename</tt>" (gchararray : Read / Write)</span></td><td><p>The filename associated with the object. This is a string in the filesystems's encoding.</p></td></tr><tr><td><span class="term"><a name="BObject--name"></a>"<tt class="literal">name</tt>" (gchararray : Read / Write)</span></td><td><p>The name associated with the object. This is a string in UTF-8 encoding.</p></td></tr></tbody></table></div></div></div><table class="navigation" width="100%" summary="Navigation footer" cellpadding="2" cellspacing="0"><tr valign="middle"><td align="left"><a accesskey="p" href="blib-BLib.html"><b>&lt;&lt; BLib</b></a></td><td align="right"><a accesskey="n" href="blib-BTypes.html"><b>BTypes &gt;&gt;</b></a></td></tr></table></body></html>

@@ -1,0 +1,130 @@
+19/10/2010 ola-0.8.4
+  Add the RDM web UI
+  Work around an ArtNet RDM bug
+  Handle ACK overflow in the DMX-TRI
+
+23/9/2010 ola-0.8.3
+  Add Manufacturer / Device name resolution to the web UI for RDM devices.
+  Fix a couple of compile bugs.
+  For each DMX-over-IP plugin, display the bound IP address in the device name.
+  Change the DMX console to send a packet every second even if nothing changes.
+  Fix a memory leak in the RDM controller
+
+19/9/2010 ola-0.8.2
+  Moved the DMX Console to the new UI
+  Removed the old web UI, no more requirements for ctemplate
+  Added ACK_OVERFLOW support for RDM over ArtNet
+  Added Support for the last remaining E1.20 PIDS
+  Re-factored the Ola Client code to fix the problem of de-multiplexing
+    responses.
+  Add the OlaCallbackClient as the recommended C++ API
+  Moved the HTTP Server to using the OlaCallbackClient directly.
+
+2/9/2010 ola-0.8.1
+  New web UI
+  Fixed some bugs in the device shutdown code
+  Fixed some compiler warnings with gcc 4.4
+
+7/8/2010 ola-0.8.0
+  Initial RDM support for the ArtNet, Dummy & DMX-TRI devices
+  New ArtNet stack to support RDM - no more dependency on libartnet
+  Support for packetheads DMX dongle
+  Make the FPS limit for USB Pro devices configurable
+
+20/5/2010 ola-0.7.4
+  Fixed the python API
+  Fixed the client deadlock issue
+  Fixed the USBDMX2 firmware loading
+  Fixed ARM alignment bug in E1.31
+  Fixed ambiguous errors when plugins were disabled
+  Added the /reload handler the reload plugins
+  Turn off SIGPIPEs
+  Clean up the streaming client API
+  Use the serial number to identify uDMX devices
+
+18/4/2010 ola-0.7.2 / 0.7.3
+  Added support for the Velleman 8062
+  Added support for the uDMX
+  Added support for the USBDMX2
+  Added support for the DMXKing
+  Fixed a crash if olad was started while another instance was running
+  Random build fixes
+
+27/3/2010 ola-0.7.1
+  Implemented the Usb Protocol Extensions
+  Added output rate throttling for the Usb Pro devices
+  Added the streaming DMX client
+  Fixed some uuid detection issues
+  Made the server more resistant to bad clients
+  ./configure script fixes
+
+28/2/2010 ola-0.7.0
+  Added E1.31 merging & sequencing support
+  Improved USB Pro handling
+  Added port priorities & multi source merging
+  TX support for the DMX-TRI
+  Support for the Ardiuno RGB Mixer
+  DSCP for E1.31
+  Support for using the OSSP uuid library
+  Removal of run-time loadable plugins.
+
+10/1/2010 ola-0.6.0
+  Added Pathport support
+  Added support for the final version of the E1.31 Standard
+  Changed to link time plugins rather than run time (required for win32 port)
+  Cleanup of the dmx4linux plugin (thanks to Bastien)
+  Linted almost everything
+  Many more export map variables
+  Restructure of the Port class internals
+
+21/11/2009 ola-0.5.0
+  Added Sandnet Support
+  Added automatic USB Pro device detection
+  Fixed a HTP merging bug
+
+18/10/2009 ola-0.4.0
+  Added E1.13 Support
+
+26/8/2009 ola-0.3.1
+  Fixed the open dmx usb off by one bug
+  Minor build tool fixes
+
+8/8/2009 ola-0.3.0
+  Changed the name of the project to Open Lighting Architecture
+  Major rewrite
+   - added export_map
+   - added http server & web interface
+   - added web dmx console
+   - now works on mac
+   - converted to using protocol buffers
+   - supports embedding
+   - port patches persist across restarts
+   - plenty of unittests (more required)
+
+14/10/2007 lla-0.2.3
+  Plugins can now be disabled from the config files
+
+14/9/2007 lla-0.2.2
+  Fixed a bug with the DMX USB Pro
+  Refinements to the StageProfi plugin
+
+1/1/2007 lla-0.2.1
+  Added support for the Stage Profi widget
+  Added Pathport support
+
+1/1/2007 lla-0.2.0
+  Added Sandnet Support
+  Added Open DMX USB Support
+  Re-write of the client library
+  Added universe merge modes
+  Added persistent universe names and merge modes
+  Added device config messages
+
+27/4/2006 lla-0.1.3
+  Bugfixes
+
+17/4/2006 lla-0.1.2
+  Support for multiple Enttec Pro devices
+  Logging levels can be changed with -USR1 signals
+
+

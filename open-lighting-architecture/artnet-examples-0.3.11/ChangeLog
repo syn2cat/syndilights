@@ -1,0 +1,47 @@
+28/8/2006 Simon Newton <nomis52@westnet.com.au>
+
+	* added artnet_dmxmonitor
+
+23/8/2006 Simon Newton <nomis52@westnet.com.au>
+
+	* fixed off by one error in artnet-usb
+
+
+9/05/2006 Simon Newton <nomis52@westnet.com.au>
+
+	* removed compat mode
+	* changed to single sd
+	
+25/04/2006 Simon Newton <nomis52@westnet.com.au>
+
+	* added artnet_setdmx
+	* examples now support compatability mode (libartnet >= 1.0.2)
+
+
+30/01/2006 Simon Newton <nomis52@westnet.com.au>
+
+    * Build scripts now detect ncurses
+
+30/01/2006 Simon Newton <nomis52@westnet.com.au>
+
+    * More OSX fixes
+    
+13/04/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Mac OSX portability fixes
+
+12/03/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Split from libartnet
+    * Added node joining support, two nodes can now be joined to get 8 ports -
+ 	new example program artnet_multiport (you'll need to edit the second ip)
+
+12/02/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Fixed compiler warnings
+
+11/02/2005 Simon Newton <nomis52@westnet.com.au>
+
+    * Added firmware receive support - new example program artnet_firmware_node
+    * Added firmware send support - new example program artnet_firmware_server
+

@@ -46,6 +46,7 @@ enum
   PARSER_IN_LOOP,
   PARSER_IN_FRAME,
   PARSER_IN_ROW,
+  PARSER_IN_SEGMENTS,
   PARSER_FINISH,
 };
 
@@ -221,6 +222,10 @@ parser_start_element (BParserState   state,
 
           return PARSER_IN_ROW;
         }
+       else if(! strcmp (element_name, "segments"))
+       {
+			return PARSER_IN_SEGMENTS;
+	   }
       break;
 
     default:
@@ -393,6 +398,11 @@ parser_end_element (BParserState   state,
           return B_PARSER_STATE_UNKNOWN;
       }
       return PARSER_IN_FRAME;
+
+	case PARSER_IN_SEGMENTS:
+	{
+		/* parse the segment information */
+	}
 
     default:
       break;

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<!-- Example loveletters file -->
+
+  <loveletters>
+    <movie id="2662" vanity="ANNA" href="movies/anna.blm"/>
+
+    <!-- the next vanity code is intentionally wrong to force a warning -->
+    <movie id="2663" vanity="ANNB" href="movies/annb.blm"/>
+  </loveletters>

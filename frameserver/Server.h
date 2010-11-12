@@ -1,0 +1,36 @@
+#ifndef __SERVER_H_
+#define __SERVER_H_
+
+#include <iostream>
+#include <string>
+#include <vector>
+#include <boost/array.hpp>
+#include <boost/asio.hpp>
+
+#include "Buffers.h"
+#include "Buffer.h"
+#include "defines.h"
+
+
+using boost::asio::ip::udp;
+using namespace std;
+
+class Server : public sigc::trackable
+{
+public:
+  Server(int _numbufs, int _port);
+  ~Server();
+  
+  void listen();
+  void mix();
+  void launch_threads();
+  
+private:
+  Glib::Mutex mutex_;
+  vector<Glib::Thread*> threads;
+  vector<Buffer*> buffers;
+  
+  int port;
+};
+
+#endif

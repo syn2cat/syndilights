@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -O0 -ggdb `pkg-config --libs --cflags glibmm-2.4` `pkg-config --libs --cflags gthread-2.0` -lboost_system -o test_server Buffer.cpp Buffers.cpp Server.cpp test_server.cpp

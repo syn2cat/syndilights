@@ -1,0 +1,2 @@
+#!/bin/bash
+g++ -O2 -pipe -fomit-frame-pointer `pkg-config --libs --cflags glibmm-2.4` `pkg-config --libs --cflags gthread-2.0`  -o test Buffer.cpp Buffers.cpp test.cpp

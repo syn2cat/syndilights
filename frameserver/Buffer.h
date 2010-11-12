@@ -1,5 +1,6 @@
 #ifndef __BUFFER_H_
 #define __BUFFER_H_
+#include <string>
 #include <glibmm.h>
 #include "defines.h"
 
@@ -9,15 +10,17 @@
 class Buffer : public sigc::trackable
 {
   public:
-    Buffer(int _id);
+    Buffer(std::string _id);
     ~Buffer();
     
     void set(frame_t);
     frame_t get();
-    int get_id();
+    
+    std::string get_id();
+    void set_id(std::string id);
     
   private:
-    int id;
+    std::string id;
     frame_t frame;
   
     Glib::Mutex mutex_;

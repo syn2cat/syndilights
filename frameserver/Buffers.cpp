@@ -2,12 +2,12 @@
 
 Buffers::Buffers() 
 {
-  id = 0;
+  id = "";
 }
 
 Buffers::Buffers(int _bufnum)
 {
-  id = 0;
+  id = "";
   for( int i = 0; i < _bufnum; i++)
     add();
 }
@@ -27,11 +27,11 @@ Buffer* Buffers::get(int index)
 void Buffers::add()
 {
   Glib::Mutex::Lock lock(mutex_);
-  id += 1;
-  buffers.push_back( new Buffer(id) );
+  id += "1";
+  buffers.push_back( new Buffer( id ) );
 }
 
-void Buffers::remove(int _id)
+void Buffers::remove(std::string _id)
 {
   Glib::Mutex::Lock lock(mutex_);
   int size = buffers.size();

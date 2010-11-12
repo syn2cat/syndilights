@@ -10,6 +10,7 @@
 
 #include <glibmm.h>
 #include <vector>
+#include <string>
 
 #include <time.h>
 
@@ -27,13 +28,13 @@ class Buffers : public sigc::trackable
     ~Buffers();
     
     void add();
-    void remove(int);
+    void remove(std::string);
     
     Buffer* get(int);
     
   private:
     vector<Buffer*> buffers;
-    int id;
+    std::string id;
     Glib::Mutex mutex_;
 };
 #endif

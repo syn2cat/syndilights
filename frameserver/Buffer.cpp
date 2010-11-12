@@ -1,6 +1,6 @@
 #include "Buffer.h"
 
-Buffer::Buffer( int _id )
+Buffer::Buffer( std::string _id )
 {
   id = _id;
 }
@@ -17,13 +17,19 @@ void Buffer::set(frame_t data)
   }
 }
 
+void Buffer::set_id(std::string _id)
+{
+	Glib::Mutex::Lock lock(mutex_);
+	id = _id;
+}
+
 frame_t Buffer::get()
 {
   Glib::Mutex::Lock lock(mutex_);
   return frame;
 }
 
-int Buffer::get_id()
+std::string Buffer::get_id()
 {
   Glib::Mutex::Lock lock(mutex_);
   return id;

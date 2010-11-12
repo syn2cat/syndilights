@@ -1,11 +1,8 @@
 #include "Server.h"
 
-Server::Server(int _numbufs, int _port )
+Server::Server(int _port )
 {
-  for(int i = 0; i < _numbufs; i++)
-    buffers.push_back( new Buffer(i) );
-    
-  port = _port;
+	port = _port;
 }
 
 Server::~Server()
@@ -48,6 +45,8 @@ void Server::listen()
     while (1)
     {
       frame_t frame;
+
+      // creating the buffer each time is faster than zeroing it out
       boost::array<char, BUFLEN> recv_buf;
       udp::endpoint remote_endpoint;
       boost::system::error_code error;
@@ -56,8 +55,40 @@ void Server::listen()
           remote_endpoint, 0, error);
 
       packetcounter++;
-      if( packetcounter % 1000 == 0 )
+      if( packetcounter % 1000 == 0 ) 
         cout << endl << packetcounter << endl;
+
+      // have we encountered this source before?
+      // DEBUG
+      // cout << remote_endpoint << endl;
+      int bufnum = 0;
+      {
+		  Glib::Mutex::Lock lock(mutex_);
+		  int size = endpoints.size();
+		  bool known = false;
+		  for(bufnum = 0; bufnum < size; bufnum++)
+		  {
+			  if(endpoints[bufnum] == remote_endpoint)
+			  {
+				known = true;
+			  	break;
+			  }
+	   	  }
+
+	   	  if( !known && size+1 < NUMBUFS )
+	   	  {
+			// create a new buffer make a note of the endpoint
+			std::stringstream endpointstring;
+			endpointstring << remote_endpoint;
+			cout << "adding new buffer for " << remote_endpoint <<  endl;
+			buffers.push_back( new Buffer( endpointstring.str() ) );
+			endpoints.push_back( remote_endpoint );
+		  }
+			
+		  // discard packet, we're not accepting any more sources!
+	      else if( size+1 >= NUMBUFS )
+	      	break;
+	  }
       
       for(int i = 0; i < HEIGHT; i++)
       {
@@ -79,9 +110,9 @@ void Server::listen()
         {
         Glib::Mutex::Lock lock(mutex_);
         // convert ascii to integer value
-        if( recv_buf[0]-49 < buffers.size() ) 
+        if( bufnum < buffers.size() ) 
           {
-            buffers[ recv_buf[0]-49 ]->set(frame);
+            buffers[ bufnum ]->set(frame);
           }
         }
         
@@ -122,7 +153,7 @@ void Server::mix()
       size = buffers.size();
     }
 
-    for(int x = 0; x < 6; x++)
+    for(int x = 0; x < size; x++)
     {
       {
         Glib::Mutex::Lock lock(mutex_);
@@ -162,8 +193,8 @@ void Server::mix()
       {
         cout << frame.segments[i].r;
       }
-      cout << endl << endl; //*/
-    }
+      cout << endl << endl;
+    } //*/
     
     usleep( 25000 );
   }

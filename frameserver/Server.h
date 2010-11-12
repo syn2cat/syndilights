@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <list>
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 
@@ -18,7 +19,7 @@ using namespace std;
 class Server : public sigc::trackable
 {
 public:
-  Server(int _numbufs, int _port);
+  Server(int _port);
   ~Server();
   
   void listen();
@@ -27,8 +28,12 @@ public:
   
 private:
   Glib::Mutex mutex_;
+  
   vector<Glib::Thread*> threads;
   vector<Buffer*> buffers;
+  vector<udp::endpoint> endpoints;
+  
+  int numbufs;
   
   int port;
 };

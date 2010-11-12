@@ -1,6 +1,7 @@
 #ifndef __DEFINES_H_
 #define __DEFINES_H_
 #define BUFLEN 1024
+#define NUMBUFS 100
 #define WIDTH 12
 #define HEIGHT 7
 #define SEGWIDTH 12

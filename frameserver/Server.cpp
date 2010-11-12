@@ -22,6 +22,16 @@ void Server::launch_threads()
   threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::mix), false ) );
 }
 
+
+/* this listens for UDP connections on a port and waits until there is data,
+   processes it and repeats */
+   
+/* TODO 
+    error and format checking
+    clean exit conditions
+    ability for one client to take over the display
+    */
+   
 void Server::listen()
 {
   int packetcounter = 0;
@@ -30,13 +40,15 @@ void Server::listen()
     boost::asio::io_service io_service;
      
     // next line is NOT thread-safe because we're accessing "port" without lock
+    // however, it is done only once before any other threads are started and
+    // should be safe
     udp::socket socket(io_service, udp::endpoint(udp::v4(), port));
 
     cout << "listening" << endl;
-    for (;;)
+    while (1)
     {
       frame_t frame;
-      boost::array<char, 200> recv_buf;
+      boost::array<char, BUFLEN> recv_buf;
       udp::endpoint remote_endpoint;
       boost::system::error_code error;
       
@@ -80,6 +92,7 @@ void Server::listen()
       std::string message = "received";
 
       boost::system::error_code ignored_error;
+      // we can provide feedback to clients
       //socket.send_to(boost::asio::buffer(message),
       //    remote_endpoint, 0, ignored_error);
     }
@@ -90,6 +103,11 @@ void Server::listen()
   }
 }
 
+
+/* the framemixer, this periodically (40 times a second) reads all input
+   buffers and then produces output, ready to be displayed.
+   In the final version, this is where interesting things will happen.
+   */
 void Server::mix()
 {
   int size = 0;

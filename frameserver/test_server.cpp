@@ -12,10 +12,7 @@
 #include "Buffer.h"
 #include "Buffers.h"
 
-#define NUMBUFS 10
-
 using namespace std;
-Buffers* buffers;
 
 int main(void) 
 {
@@ -25,7 +22,7 @@ int main(void)
   // our main loop with support for signals and all that jazz
   Glib::RefPtr<Glib::MainLoop> Main = Glib::MainLoop::create();
     
-  Server server(10,4321);
+  Server server(NUMBUFS,4321);
   server.launch_threads();
   
   Main->run();  

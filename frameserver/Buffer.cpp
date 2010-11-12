@@ -3,13 +3,10 @@
 Buffer::Buffer( int _id )
 {
   id = _id;
-  
-  // allocate memory
 }
 
 Buffer::~Buffer() 
 {
-  // deallocate memory
 }
 
 void Buffer::set(frame_t data)

@@ -5,6 +5,9 @@
 #include <string>
 #include <vector>
 #include <list>
+
+#include <glibmm/timeval.h>
+
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 
@@ -24,17 +27,21 @@ public:
   
   void listen();
   void mix();
+  void expire();
   void launch_threads();
-  void control();
+  void console();
+  int get_size();
   
 private:
   Glib::Mutex mutex_;
   
   vector<Glib::Thread*> threads;
+  
   vector<Buffer*> buffers;
   vector<udp::endpoint> endpoints;
+  vector<time_t> times;
   
-  int numbufs;
+  time_t currenttime;
   
   int port;
 };

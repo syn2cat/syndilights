@@ -31,7 +31,7 @@ void Server::launch_threads()
    
 void Server::listen()
 {
-  int packetcounter = 0;
+  long packetcounter = 0;
   try
   {
     boost::asio::io_service io_service;
@@ -54,55 +54,72 @@ void Server::listen()
       socket.receive_from(boost::asio::buffer(recv_buf),
           remote_endpoint, 0, error);
 
-      packetcounter++;
-      if( packetcounter % 1000 == 0 ) 
-        cout << endl << packetcounter << endl;
-
-      // have we encountered this source before?
-      // DEBUG
-      // cout << remote_endpoint << endl;
+     
+      // bufnum is used further down
       int bufnum = 0;
       {
-		  Glib::Mutex::Lock lock(mutex_);
-		  int size = endpoints.size();
-		  bool known = false;
-		  for(bufnum = 0; bufnum < size; bufnum++)
-		  {
-			  if(endpoints[bufnum] == remote_endpoint)
-			  {
-				known = true;
-			  	break;
-			  }
-	   	  }
+				Glib::Mutex::Lock lock(mutex_);
+				int size = endpoints.size();
+				bool known = false;
+				for(bufnum = 0; bufnum < size; bufnum++)
+				{
+          // have we encountered this source before?
+					if(endpoints[bufnum] == remote_endpoint)
+					{
+						known = true;
+						break;
+					}
+				}
 
-	   	  if( !known && size+1 < NUMBUFS )
-	   	  {
-			// create a new buffer make a note of the endpoint
-			std::stringstream endpointstring;
-			endpointstring << remote_endpoint;
-			cout << "adding new buffer for " << remote_endpoint <<  endl;
-			buffers.push_back( new Buffer( endpointstring.str() ) );
-			endpoints.push_back( remote_endpoint );
-		  }
-			
-		  // discard packet, we're not accepting any more sources!
-	      else if( size+1 >= NUMBUFS )
-	      	break;
-	  }
+				if( !known && size < NUMBUFS )
+				{
+					// create a new buffer make a note of the endpoint
+					std::stringstream endpointstring;
+					endpointstring << remote_endpoint;
+					cout << "adding new buffer for " << remote_endpoint <<  endl;
+					buffers.push_back( new Buffer( endpointstring.str() ) );
+					endpoints.push_back( remote_endpoint );
+				}
+				
+				// discard packet, we're not accepting any more sources!
+				else if( !known && size >= NUMBUFS )
+        {
+          cout << "no more buffers left! " << bufnum << endl;
+					continue;
+        }
+	  	}
       
+      if( packetcounter % 10000 == 0 )
+      	{
+        cout << endl << "packets received " << packetcounter << endl;
+        /*cout << remote_endpoint << endl;
+				for(int i = 0; i < BUFLEN; i++)
+					cout << recv_buf[i]; 
+        cout << endl;//*/
+				}
+      packetcounter++;        
+      
+      frame.z = recv_buf[0];
       for(int i = 0; i < HEIGHT; i++)
       {
         for(int j = 0; j < WIDTH; j++)
         {
-          frame.windows[i][j] = recv_buf[2+i*(WIDTH+1)+j];
+					for(int a = 0; a < CHANNELS; a++)
+					{
+          	frame.windows[i][j][a] = recv_buf[HEADEROFFSET+ i*(CHANNELS*WIDTH+1) + j*CHANNELS + a];
+          }
         }
       }
       
-      for(int i = 0; i < SEGWIDTH; i++ )
+      for(int w = 0; w < SEGWIDTH; w++ )
       {
-        frame.segments[i].r = recv_buf[2+(WIDTH+1)*HEIGHT+i];
-        frame.segments[i].g = recv_buf[2+(WIDTH+1)*HEIGHT+(SEGWIDTH+1)*1+i];
-        frame.segments[i].b = recv_buf[2+(WIDTH+1)*HEIGHT+(SEGWIDTH+1)*2+i];
+				for(int n = 0;n < SEGNUM; n++)
+				{
+					for(int a = 0; a < SEGCHANNELS; a++)
+					{
+						frame.segments[w][n][a] = recv_buf[HEADEROFFSET+WINDOWOFFSET+ w*(SEGCHANNELS*SEGNUM+1) + n*SEGCHANNELS + a];
+        	}
+        }
       }
       
       // this part needs to be made threadsafe because buffers will be accessed
@@ -164,39 +181,54 @@ void Server::mix()
       {
         for(int j = 0; j < WIDTH; j++)
         {
-           frame.windows[i][j] = (frame.windows[i][j] + temp_frame.windows[i][j])/2;
+					for(int a = 0; a < CHANNELS; a++)
+					{
+						// do something interesting here
+           	frame.windows[i][j][a] = temp_frame.windows[i][j][a];
+          }
         }
       }
       
-      for(int i = 0; i < SEGWIDTH; i++)
+      for(int w = 0; w < SEGWIDTH; w++ )
       {
-        frame.segments[i].r = (temp_frame.segments[i].r + frame.segments[i].r)/2;
-        frame.segments[i].g = (temp_frame.segments[i].g + frame.segments[i].g)/2;
-        frame.segments[i].b = (temp_frame.segments[i].b + frame.segments[i].b)/2;
+				for(int n = 0;n < SEGNUM; n++)
+				{
+					for(int a = 0; a < SEGCHANNELS; a++)
+					{
+						frame.segments[w][n][a] = temp_frame.segments[w][n][a];
+        	}
+        }
       }
-    }
 
-    if( counter % 100 == 0 )
-    {
-      cout << counter << endl;
-      for(int i = 0; i < HEIGHT; i++)
-      {
-        for(int j = 0; j < WIDTH; j++)
-        {
-           cout << frame.windows[i][j];
-        }
-        cout << endl;
-      }
-      cout << endl;
-      
-      for(int i = 0; i < SEGWIDTH; i++)
-      {
-        cout << frame.segments[i].r;
-      }
-      cout << endl << endl;
-    } //*/
-    
-    usleep( 25000 );
-  }
+			if( counter % 100 == 0 )
+			{
+				cout << counter << endl;
+				for(int i = 0; i < HEIGHT; i++)
+				{
+					for(int j = 0; j < WIDTH; j++)
+					{
+						 cout << frame.windows[i][j][0];
+					}
+					cout << endl;
+				}
+				cout << endl;
+				
+				for(int w = 0; w < SEGWIDTH; w++)
+				{
+					for(int n = 0; n < SEGNUM; n++)
+					{
+						cout << frame.segments[w][n][0];
+					}
+					cout << endl;
+				}
+				cout << endl << endl;
+			} //*/
+		}
+		
+  usleep( 25000 );
+	}
 }
 
+void Server::control()
+{
+}

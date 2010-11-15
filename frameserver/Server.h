@@ -25,6 +25,7 @@ public:
   void listen();
   void mix();
   void launch_threads();
+  void control();
   
 private:
   Glib::Mutex mutex_;

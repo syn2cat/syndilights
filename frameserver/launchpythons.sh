@@ -7,9 +7,9 @@ while [ "$i" -lt "$processes" ]
 do
 	python servertest.py "$i" &
 	pids=( ${pids[@]} $! )
-	echo ${pids["$i"]} 
+	echo ${pids["$i"]}
 	i=$((i+1))
-	sleep 1
+	sleep 0.1
 done
 
 #wait for input to exit

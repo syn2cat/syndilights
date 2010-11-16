@@ -1,6 +1,6 @@
 #!/bin/bash
 
-processes=100
+processes=80
 i=0
 
 while [ "$i" -lt "$processes" ]
@@ -9,7 +9,7 @@ do
 	pids=( ${pids[@]} $! )
 	echo ${pids["$i"]}
 	i=$((i+1))
-	sleep 0.1
+	#sleep 0.1
 done
 
 #wait for input to exit

@@ -3,6 +3,9 @@
 Server::Server(int _port )
 {
 	port = _port;
+	displaycounter = 0;
+	packetcounter = 0;
+	consoleinit = false;
 }
 
 Server::~Server()
@@ -33,7 +36,6 @@ void Server::launch_threads()
    
 void Server::listen()
 {
-  long packetcounter = 0;
   try
   {
     boost::asio::io_service io_service;
@@ -43,7 +45,7 @@ void Server::listen()
     // should be safe
     udp::socket socket(io_service, udp::endpoint(udp::v4(), port));
 
-    cout << "listening" << endl;
+    //cout << "listening" << endl;
     frame_t frame;
     while (1)
     {
@@ -80,7 +82,7 @@ void Server::listen()
           // create a new buffer make a note of the endpoint
           std::stringstream endpointstring;
           endpointstring << remote_endpoint;
-          cout << "adding new buffer for " << remote_endpoint <<  endl;
+          //cout << "adding new buffer for " << remote_endpoint <<  endl;
           buffers.push_back( new Buffer( endpointstring.str() ) );
           endpoints.push_back( remote_endpoint );
           times.push_back( currenttime );
@@ -89,13 +91,13 @@ void Server::listen()
         // discard packet, we're not accepting any more sources!
         else if( !known && size >= NUMBUFS )
         {
-          cout << "no more buffers left! " << bufnum << endl;
+          //cout << "no more buffers left! " << bufnum << endl;
           continue;
         }
         
         if( packetcounter % 10000 == 0 )
           {
-          cout << endl << "packets received " << packetcounter << endl;
+          //cout << endl << "packets received " << packetcounter << endl;
           /*cout << remote_endpoint << endl;
           for(int i = 0; i < BUFLEN; i++)
             cout << recv_buf[i]; 
@@ -134,7 +136,7 @@ void Server::listen()
           // this is accurate enough for the purpose of expiring unused buffers
           times[bufnum] = currenttime;
         }
-      } // lock is released  
+      } // lock is released here because the block ends
       
       if (error && error != boost::asio::error::message_size)
         throw boost::system::system_error(error);
@@ -165,14 +167,39 @@ void Server::mix()
 
   while(1)
   {
-    counter++;
-    frame_t frame, temp_frame;
+    frame_t temp_frame;
 
     // we lock the buffers for a long time, but we need to make sure
     // that none of the buffers is allowed to expire while we're working on it!
     {
       Glib::Mutex::Lock lock(mutex_);
+      displaycounter++;
       size = buffers.size();
+
+			// zero out the frame
+			for(int i = 0; i < HEIGHT; i++)
+			{
+				for(int j = 0; j < WIDTH; j++)
+				{
+					for(int a = 0; a < CHANNELS; a++)
+					{
+						// do something interesting here
+						frame.windows[i][j][a] = 0;
+					}
+				}
+			}
+			
+			for(int w = 0; w < SEGWIDTH; w++ )
+			{
+				for(int n = 0;n < SEGNUM; n++)
+				{
+					for(int a = 0; a < SEGCHANNELS; a++)
+					{
+						frame.segments[w][n][a] = 0;
+					}
+				}
+			}
+      
       for(int x = 0; x < size; x++)
       {
           temp_frame = buffers[x]->get();
@@ -200,7 +227,7 @@ void Server::mix()
           }
         }
 
-        /*if( counter % 100 == 0 )
+        /*if( counter % 100 == 0 && x == size-1 )
         {
           cout << counter << endl;
           for(int i = 0; i < HEIGHT; i++)
@@ -231,10 +258,81 @@ void Server::mix()
 
 void Server::console()
 {
+	initscr();
+	keypad(stdscr,TRUE);
+	cbreak();
+	noecho();
+	{
+		Glib::Mutex::Lock lock(mutex_);
+		consoleinit = true;
+		threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::input), false) );
+	}
+
   while(1)
   {
-    usleep( 100000 );
+		{
+			// we'll be accessing some data to provide statistics, lock the Server
+			Glib::Mutex::Lock lock(mutex_);
+			mvprintw(0,0,"Clients\t %d \t| F1 Frame | F2 Stats | F3 Clients | input: %d            ", buffers.size(),console_input );
+			switch(console_input)
+			{
+				case KEY_F(1):
+					console_printframe();
+				default:
+					console_printframe();
+			}
+			refresh();			/* Print it on to the real screen */
+		}
+    usleep( 20000 );
   }
+  endwin();			/* End curses mode		  */
+}
+
+void Server::input()
+{
+	int c;
+	while(consoleinit)
+	{
+		// getch will wait for input, so loop will not lock up cpu
+		c = getch();
+		
+		// now we need to lock data structure because we're going to use shared objects
+		{
+			Glib::Mutex::Lock lock(mutex_);
+			console_input = c;
+		}
+				
+	}
+}
+
+/* the console functions should only be used in the console thread, they don't
+ * implement their own locking and they need ncurses to be initialised */
+void Server::console_printframe()
+{
+	// output the current screen contents
+	for(int i = 0; i < HEIGHT; i++)
+	{
+		for(int j = 0; j < WIDTH; j++)
+		{
+			 mvprintw(i+2,j,"%c",frame.windows[i][j][0]);
+		}
+	}
+	
+	for(int w = 0; w < SEGWIDTH; w++)
+	{
+		for(int n = 0; n < SEGNUM; n++)
+		{
+			for(int a = 0; a < SEGCHANNELS; a++)
+			{
+				mvprintw(HEIGHT+3+w,(n*SEGCHANNELS)+a,"%c",frame.segments[w][n][a]);
+			}
+		}
+	}		
+	
+}
+
+void Server::console_printstats()
+{
 }
 
 int Server::get_size()
@@ -258,13 +356,13 @@ void Server::expire()
       {
         if( difftime( currenttime, times[i] ) > BUFTIMEOUT )
         {
-          cout << "buffer " << i << " will now expire\n";
+          //cout << "buffer " << i << " will now expire\n";
           delete buffers[i];
           buffers.erase(buffers.begin()+i);
           times.erase(times.begin()+i);
           endpoints.erase(endpoints.begin()+i);
           
-          // element i has been deleted, i-- is required
+          // element i has been erased, i-- is required
           i--;
         }
       }

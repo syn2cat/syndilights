@@ -11,6 +11,8 @@
 #include <boost/array.hpp>
 #include <boost/asio.hpp>
 
+#include <ncurses.h>
+
 #include "Buffers.h"
 #include "Buffer.h"
 #include "defines.h"
@@ -24,16 +26,26 @@ class Server : public sigc::trackable
 public:
   Server(int _port);
   ~Server();
+
+  void launch_threads();
+  
+private:
+  void console();
+  void input();
+  void console_printframe();
+  void console_printstats();
   
   void listen();
   void mix();
-  void expire();
-  void launch_threads();
-  void console();
   int get_size();
-  
-private:
+  void expire();
+
+
   Glib::Mutex mutex_;
+
+  bool consoleinit;
+  int console_input;
+  long displaycounter, packetcounter;
   
   vector<Glib::Thread*> threads;
   
@@ -42,6 +54,8 @@ private:
   vector<time_t> times;
   
   time_t currenttime;
+
+  frame_t frame;
   
   int port;
 };

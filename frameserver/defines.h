@@ -2,9 +2,9 @@
 #define __DEFINES_H_
 
 // four minutes should be enough
-#define BUFTIMEOUT 240
+#define BUFTIMEOUT 2
 
-#define NUMBUFS 200
+#define NUMBUFS 1000
 
 // one number + newline
 #define HEADEROFFSET 2

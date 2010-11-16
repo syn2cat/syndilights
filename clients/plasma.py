@@ -4,9 +4,10 @@ from socket import *
 import sys
 import time
 import random
+from math import *
 
 # Set the socket parameters
-local_port = 5000 + int( sys.argv[1] )
+local_port = 5000
 remote_port = 4321
 
 # TODO: autodetect interface address for remote application
@@ -21,27 +22,43 @@ UDPSock.bind((outgoing_if, local_port))
 # goes down or refuses connection
 #UDPSock.connect((remote_host, remote_port))
 
-display = open('display', 'r')
+segments = open('segments','r')
+
+alpha = 1
+
 z_buffer = "1" + "\n"
-
-data = z_buffer + display.read()
-
-random.seed()
+width = 7
+height = 12
 
 # Send messages
-sleeptime = 0.0001
-frequency = 1/sleeptime
-i = random.randint(0,frequency-1)
+sleeptime = 0.04
+t = 0
+frequency = 2*pi/40
 while (1):
+  #zero out the data buffer
+  data = z_buffer
+  for i in range(0,width):
+    for j in range(0,height):
+      pixel = sin(1.5*pi*(float(i)/width)+t*frequency)*sin(1.5*pi*(float(j)/height)+t*frequency)
+      if pixel < 0.25:
+        pixel = '.'
+      elif pixel < 0.5:
+        pixel = '-'
+      elif pixel < 0.75:
+        pixel = '+'
+      elif pixel <= 1.0:
+        pixel = '#'
+      else:
+        pixel = '*'
+      data = data + pixel + str(alpha)
+    data = data + "\n"
+  t+=1
+  #data += segments.read()
   if not data:
     break
   else:
     UDPSock.sendto(data,(remote_host,remote_port))
   #send ~100 packets per second
-  i+=1
   time.sleep(sleeptime)
-  if i >= frequency:
-    time.sleep(3)
-    i = random.randint(0,frequency-1)
 
 UDPSock.close()

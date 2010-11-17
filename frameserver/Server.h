@@ -17,6 +17,12 @@
 #include "Buffer.h"
 #include "defines.h"
 
+enum modes
+{
+  FRAME,
+  FRAME_VALUES,
+  CLIENTS
+};
 
 using boost::asio::ip::udp;
 using namespace std;
@@ -30,6 +36,8 @@ public:
   void launch_threads();
   
 private:
+  Glib::Mutex mutex_;
+
   void console();
   void input();
   void test();
@@ -40,14 +48,15 @@ private:
   void console_printframe(frame_t _frame);
   void console_printframe_values(frame_t _frame);
   void console_printstats();
+  void console_printclients();
   
   void listen();
   void mix();
+  void output(frame_t);
   int get_size();
   void expire();
-
-
-  Glib::Mutex mutex_;
+  
+  
 
   bool consoleinit;
   int console_input;

@@ -29,7 +29,7 @@ data = z_buffer + display.read()
 random.seed()
 
 # Send messages
-sleeptime = 0.0001
+sleeptime = 0.01
 frequency = 1/sleeptime
 i = random.randint(0,frequency-1)
 while (1):

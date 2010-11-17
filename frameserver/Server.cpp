@@ -159,6 +159,7 @@ void Server::mix()
 {
   int size = 0;
   int counter = 0;
+  int pixel = 0;
 
   while(1)
   {
@@ -178,8 +179,10 @@ void Server::mix()
 				{
 					for(int a = 0; a < CHANNELS; a++)
 					{
-						// do something interesting here
-						frame.windows[i][j][a] = 0;
+						if( a == CHANNELS-1 )
+							frame.windows[i][j][a] = 255;
+						else
+							frame.windows[i][j][a] = 0;
 					}
 				}
 			}
@@ -190,15 +193,18 @@ void Server::mix()
 				{
 					for(int a = 0; a < SEGCHANNELS; a++)
 					{
-						frame.segments[w][n][a] = 0;
+						if(a == SEGCHANNELS-1 )
+							frame.segments[w][n][a] = 255;
+						else
+							frame.segments[w][n][a] = 0;
+						
 					}
 				}
 			} // zero out frame
       
       for(int x = 0; x < size; x++)
       {
-          temp_frame = buffers[x]->get();
-        
+				temp_frame = buffers[x]->get();
         for(int i = 0; i < HEIGHT; i++)
         {
           for(int j = 0; j < WIDTH; j++)
@@ -206,7 +212,11 @@ void Server::mix()
             for(int a = 0; a < CHANNELS-1; a++)
             {
               // do something interesting here
-              frame.windows[i][j][a] = frame.windows[i][j][a] + (float)temp_frame.windows[i][j][CHANNELS-1]/254*temp_frame.windows[i][j][a];
+              pixel = frame.windows[i][j][a] + (float)temp_frame.windows[i][j][CHANNELS-1]/255*temp_frame.windows[i][j][a];
+              if( pixel >= 255 )
+              	frame.windows[i][j][a] = 255;
+              else
+              	frame.windows[i][j][a] = pixel;
             }
           }
         }
@@ -217,38 +227,27 @@ void Server::mix()
           {
             for(int a = 0; a < SEGCHANNELS-1; a++)
             {
-              frame.segments[w][n][a] = frame.segments[w][n][a] + (float)temp_frame.segments[w][n][SEGCHANNELS-1]/254*temp_frame.segments[w][n][a];
+							pixel = frame.segments[w][n][a] + (float)temp_frame.segments[w][n][SEGCHANNELS-1]/255*temp_frame.segments[w][n][a];
+							if( pixel >= 255 )
+								frame.segments[w][n][a] = 255;
+							else
+								frame.segments[w][n][a] = pixel;
             }
           }
         }
-
-
-        /* if( counter % 100 == 0 && x == size-1 )
-        {
-          for(int i = 0; i < HEIGHT; i++)
-          {
-            for(int j = 0; j < WIDTH; j++)
-            {
-               cout << brtoc(frame.windows[i][j][0]);
-            }
-            //cout << endl;
-          }
-          //cout << endl;
-          
-          /*for(int w = 0; w < SEGWIDTH; w++)
-          {
-            for(int n = 0; n < SEGNUM; n++)
-            {
-              cout << frame.segments[w][n][0];
-            }
-            cout << endl;
-          }
-          cout << endl << endl;
-        } //*/
       }
-		}
-  usleep( 25000 );
+      // temp frame has validity in the loop only so it can be safely used without locking the whole object
+			temp_frame = frame;
+		} // release lock and send off to hardware
+	output(temp_frame);
 	}
+}
+
+// output to hardware using OLA
+void Server::output(frame_t _frame)
+{
+	// pretend we're doing something
+	usleep( 25000 );
 }
 
 void Server::console()
@@ -272,7 +271,7 @@ void Server::console()
 		{
 			// we'll be accessing some data to provide statistics, lock the Server
       Glib::Mutex::Lock lock(mutex_);
-      mvprintw(0,0,"Clients %d | F2 Frame | F3 Values | F4 Stats | F5 Clients | input: %d            ", buffers.size(),console_input );
+      mvprintw(0,0,"Clients %d | F2 Frame | F3 Values | F4 Clients | F5 Stats | input: %d            ", buffers.size(),console_input );
 			switch(mode)
 			{
 				case FRAME:
@@ -281,6 +280,9 @@ void Server::console()
         case FRAME_VALUES:
           console_printframe_values(frame);
           break;
+        case CLIENTS:
+        	console_printclients();
+        	break;
 				default:
 					console_printframe(frame);
 			}
@@ -312,6 +314,11 @@ void Server::input()
           mode = FRAME_VALUES;
           clear();
           break;
+        case KEY_F(4):
+        	mode = CLIENTS;
+        	clear();
+        	break;
+        case '0':
         default:
           console_input = c;
       }
@@ -333,11 +340,12 @@ void Server::console_printframe(frame_t _frame)
 		}
 	}
 	
-  //TODO print a nicer 7 segment display with colours and brightness
 	for(int w = 0; w < SEGWIDTH; w++)
 	{
 		for(int n = 0; n < SEGNUM; n++)
 		{
+			// the segments of a display are numbered from bottom to top
+			// in a clockwise manner (6'o clock = 0)
       switch(n)
       {
         case 0:
@@ -417,6 +425,13 @@ void Server::console_printframe_values(frame_t _frame)
 		}
 	}
 }
+
+void Server::console_printclients()
+{
+	for(int i = 0; i < buffers.size(); i++)
+		mvprintw(i+2,0,"(%3d) %s\n", i,buffers[i]->get_id().c_str() );
+}
+
 
 void Server::console_printstats()
 {

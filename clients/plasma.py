@@ -26,33 +26,26 @@ segments = open('segments','r')
 
 alpha = 1
 
-z_buffer = "1" + "\n"
+z_buffer = chr(1) + "\n"
 width = 7
 height = 12
 
 # Send messages
-sleeptime = 0.04
+sleeptime = 0.03
 t = 0
-frequency = 2*pi/40
+frequency = 2*pi/200
+max = 0.0
+
 while (1):
   #zero out the data buffer
   data = z_buffer
   for i in range(0,width):
     for j in range(0,height):
-      pixel = sin(1.5*pi*(float(i)/width)+t*frequency)*sin(1.5*pi*(float(j)/height)+t*frequency)
-      if pixel < 0.25:
-        pixel = '.'
-      elif pixel < 0.5:
-        pixel = '-'
-      elif pixel < 0.75:
-        pixel = '+'
-      elif pixel <= 1.0:
-        pixel = '#'
-      else:
-        pixel = '*'
-      data = data + pixel + str(alpha)
+      pixel = fabs(sin(2*pi*(float(i)/width)+t*frequency)*sin(2*pi*(float(j)/height)+t*frequency))
+      data = data + chr(int(254*pixel)) + chr(alpha)
     data = data + "\n"
   t+=1
+  #print( data )
   #data += segments.read()
   if not data:
     break

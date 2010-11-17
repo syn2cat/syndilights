@@ -26,11 +26,19 @@
 // not used for simplicity
 //#define SEGHEIGHT 1
 
+
+
 struct frame_t 
 {
-	char z;
-  char windows[HEIGHT][WIDTH][CHANNELS];
-  char segments[SEGWIDTH][SEGNUM][SEGCHANNELS];
+	unsigned char z;
+  unsigned char windows[HEIGHT][WIDTH][CHANNELS];
+  unsigned char segments[SEGWIDTH][SEGNUM][SEGCHANNELS];
+};
+
+enum modes
+{
+  FRAME,
+  FRAME_VALUES
 };
 
 #endif

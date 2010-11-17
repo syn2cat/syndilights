@@ -6,6 +6,8 @@ Server::Server(int _port )
 	displaycounter = 0;
 	packetcounter = 0;
 	consoleinit = false;
+  mode = FRAME;
+  //test();
 }
 
 Server::~Server()
@@ -50,7 +52,7 @@ void Server::listen()
     while (1)
     {
       // creating the buffer each time is faster than zeroing it out
-      boost::array<char, BUFLEN> recv_buf;
+      boost::array<unsigned char, BUFLEN> recv_buf;
       udp::endpoint remote_endpoint;
       boost::system::error_code error;
       
@@ -95,14 +97,6 @@ void Server::listen()
           continue;
         }
         
-        if( packetcounter % 10000 == 0 )
-          {
-          //cout << endl << "packets received " << packetcounter << endl;
-          /*cout << remote_endpoint << endl;
-          for(int i = 0; i < BUFLEN; i++)
-            cout << recv_buf[i]; 
-          cout << endl;//*/
-          }
         packetcounter++;        
         
         frame.z = recv_buf[0];
@@ -113,6 +107,7 @@ void Server::listen()
             for(int a = 0; a < CHANNELS; a++)
             {
               frame.windows[i][j][a] = recv_buf[HEADEROFFSET+ i*(CHANNELS*WIDTH+1) + j*CHANNELS + a];
+              //cout << int( recv_buf[HEADEROFFSET+ i*(CHANNELS*WIDTH+1) + j*CHANNELS + a] ) << endl;
             }
           }
         }
@@ -227,20 +222,20 @@ void Server::mix()
           }
         }
 
-        /*if( counter % 100 == 0 && x == size-1 )
+
+        /* if( counter % 100 == 0 && x == size-1 )
         {
-          cout << counter << endl;
           for(int i = 0; i < HEIGHT; i++)
           {
             for(int j = 0; j < WIDTH; j++)
             {
-               cout << frame.windows[i][j][0];
+               cout << brtoc(frame.windows[i][j][0]);
             }
-            cout << endl;
+            //cout << endl;
           }
-          cout << endl;
+          //cout << endl;
           
-          for(int w = 0; w < SEGWIDTH; w++)
+          /*for(int w = 0; w < SEGWIDTH; w++)
           {
             for(int n = 0; n < SEGNUM; n++)
             {
@@ -272,14 +267,18 @@ void Server::console()
   {
 		{
 			// we'll be accessing some data to provide statistics, lock the Server
-			Glib::Mutex::Lock lock(mutex_);
-			mvprintw(0,0,"Clients\t %d \t| F1 Frame | F2 Stats | F3 Clients | input: %d            ", buffers.size(),console_input );
-			switch(console_input)
+      Glib::Mutex::Lock lock(mutex_);
+      mvprintw(0,0,"Clients %d | F2 Frame | F3 Values | F4 Stats | F5 Clients | input: %d            ", buffers.size(),console_input );
+			switch(mode)
 			{
-				case KEY_F(1):
-					console_printframe();
+				case FRAME:
+					console_printframe(frame);
+          break;
+        case FRAME_VALUES:
+          console_printframe_values(frame);
+          break;
 				default:
-					console_printframe();
+					console_printframe(frame);
 			}
 			refresh();			/* Print it on to the real screen */
 		}
@@ -299,36 +298,59 @@ void Server::input()
 		// now we need to lock data structure because we're going to use shared objects
 		{
 			Glib::Mutex::Lock lock(mutex_);
-			console_input = c;
+			switch(c)
+      {
+        case KEY_F(2):
+          mode = FRAME;
+          clear();
+          break;
+        case KEY_F(3):
+          mode = FRAME_VALUES;
+          clear();
+          break;
+        default:
+          console_input = c;
+      }
 		}
-				
 	}
 }
 
 /* the console functions should only be used in the console thread, they don't
  * implement their own locking and they need ncurses to be initialised */
-void Server::console_printframe()
+void Server::console_printframe(frame_t _frame)
 {
 	// output the current screen contents
 	for(int i = 0; i < HEIGHT; i++)
 	{
 		for(int j = 0; j < WIDTH; j++)
 		{
-			 mvprintw(i+2,j,"%c",frame.windows[i][j][0]);
+			 mvprintw(i+2,j,"%c", brtoc(_frame.windows[i][j][0]) );
 		}
 	}
 	
+  //TODO print a nicer 7 segment display with colours and brightness
 	for(int w = 0; w < SEGWIDTH; w++)
 	{
 		for(int n = 0; n < SEGNUM; n++)
 		{
 			for(int a = 0; a < SEGCHANNELS; a++)
 			{
-				mvprintw(HEIGHT+3+w,(n*SEGCHANNELS)+a,"%c",frame.segments[w][n][a]);
+				mvprintw(HEIGHT+3+w,(n*SEGCHANNELS)+a,"%c", _frame.segments[w][n][a]);
 			}
 		}
 	}		
-	
+}
+
+void Server::console_printframe_values(frame_t _frame)
+{
+	// output the current screen contents
+	for(int i = 0; i < HEIGHT; i++)
+	{
+		for(int j = 0; j < WIDTH; j++)
+		{
+			 mvprintw(i*2+2,j*4," %d ", brtoi(_frame.windows[i][j][0]) );
+		}
+	}
 }
 
 void Server::console_printstats()
@@ -368,5 +390,70 @@ void Server::expire()
       }
     }
     usleep( 1000000 );
+  }
+}
+
+int Server::brtoi(unsigned char br)
+{
+  return (int)br; 
+}
+
+// converts a given brightness value (0-255) to a character
+// relatively efficiently
+char Server::brtoc(unsigned char br)
+{
+  static char chars[11] = " ._-~:+*#@";
+  if(br > 124)
+  {
+    if( br > 202 )
+    {
+      if( br > 228 )
+        return chars[9];
+      else
+        return chars[8];
+    }
+    else
+    {
+      if( br > 176 )
+        return chars[7];
+      else
+        return chars[6];
+    }
+  }
+  else
+  {
+    if( br > 72 )
+    {
+      if( br > 124 )
+        return chars[5];
+      if( br > 98 )
+        return chars[4];
+      else
+        return chars[3];
+    }
+    else
+    {
+      if( br > 46 )
+        return chars[2];
+      if( br > 20 )
+        return chars[1];
+      else
+        return chars[0];
+    }
+  }
+}
+
+// implementation dependent behaviour of unsigned char?!
+void Server::test()
+{
+  char i = 0;
+  unsigned char j = 0;
+  while(1)
+  {
+    cout << int(i) << endl;
+    cout << int(j) << endl;
+    i--;
+    j = i;
+    usleep(20000);
   }
 }

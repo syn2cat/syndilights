@@ -32,7 +32,13 @@ public:
 private:
   void console();
   void input();
-  void console_printframe();
+  void test();
+  
+  char brtoc(unsigned char);
+  int brtoi(unsigned char);
+  
+  void console_printframe(frame_t _frame);
+  void console_printframe_values(frame_t _frame);
   void console_printstats();
   
   void listen();
@@ -58,6 +64,7 @@ private:
   frame_t frame;
   
   int port;
+  char mode;
 };
 
 #endif

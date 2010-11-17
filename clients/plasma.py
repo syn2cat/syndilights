@@ -61,7 +61,6 @@ while (1):
     break
   else:
     UDPSock.sendto(data,(remote_host,remote_port))
-  #send ~100 packets per second
   time.sleep(sleeptime)
 
 UDPSock.close()

@@ -193,7 +193,7 @@ void Server::mix()
 						frame.segments[w][n][a] = 0;
 					}
 				}
-			}
+			} // zero out frame
       
       for(int x = 0; x < size; x++)
       {
@@ -203,10 +203,10 @@ void Server::mix()
         {
           for(int j = 0; j < WIDTH; j++)
           {
-            for(int a = 0; a < CHANNELS; a++)
+            for(int a = 0; a < CHANNELS-1; a++)
             {
               // do something interesting here
-              frame.windows[i][j][a] = temp_frame.windows[i][j][a];
+              frame.windows[i][j][a] = frame.windows[i][j][a] + (float)temp_frame.windows[i][j][CHANNELS-1]/254*temp_frame.windows[i][j][a];
             }
           }
         }
@@ -215,9 +215,9 @@ void Server::mix()
         {
           for(int n = 0;n < SEGNUM; n++)
           {
-            for(int a = 0; a < SEGCHANNELS; a++)
+            for(int a = 0; a < SEGCHANNELS-1; a++)
             {
-              frame.segments[w][n][a] = temp_frame.segments[w][n][a];
+              frame.segments[w][n][a] = frame.segments[w][n][a] + (float)temp_frame.segments[w][n][SEGCHANNELS-1]/254*temp_frame.segments[w][n][a];
             }
           }
         }
@@ -257,6 +257,10 @@ void Server::console()
 	keypad(stdscr,TRUE);
 	cbreak();
 	noecho();
+  start_color();
+  init_pair(1,COLOR_RED,COLOR_BLACK);
+  init_pair(2,COLOR_GREEN,COLOR_BLACK);
+  init_pair(3,COLOR_BLUE,COLOR_BLACK);
 	{
 		Glib::Mutex::Lock lock(mutex_);
 		consoleinit = true;
@@ -319,6 +323,7 @@ void Server::input()
  * implement their own locking and they need ncurses to be initialised */
 void Server::console_printframe(frame_t _frame)
 {
+  int x1,y1,x2,y2;
 	// output the current screen contents
 	for(int i = 0; i < HEIGHT; i++)
 	{
@@ -333,9 +338,69 @@ void Server::console_printframe(frame_t _frame)
 	{
 		for(int n = 0; n < SEGNUM; n++)
 		{
-			for(int a = 0; a < SEGCHANNELS; a++)
+      switch(n)
+      {
+        case 0:
+          x1 = 2;
+          x2 = 3;
+          y1 = 7;
+          y2 = 7;
+          break;
+        case 1:
+          x1 = 0;
+          x2 = 0;
+          y1 = 5;
+          y2 = 6;
+          break;
+        case 2:
+          x1 = 2;
+          x2 = 3;
+          y1 = 4;
+          y2 = 4; 
+          break;
+        case 3:
+          x1 = 0;
+          x2 = 0;
+          y1 = 2;
+          y2 = 3;
+          break;
+        case 4:
+          x1 = 2;
+          x2 = 3;
+          y1 = 1;
+          y2 = 1;
+          break;
+        case 5:
+          x1 = 4;
+          x2 = 4;
+          y1 = 2;
+          y2 = 3;
+          break;
+        case 6:
+          x1 = 4;
+          x2 = 4;
+          y1 = 5;
+          y2 = 6;
+          break;
+        case 7:
+          x1 = 5;
+          x2 = 5;
+          y1 = 7;
+          y2 = 7;
+          break;
+      } // switch
+			
+      for(int a = 0; a < SEGCHANNELS-1; a++)
 			{
-				mvprintw(HEIGHT+3+w,(n*SEGCHANNELS)+a,"%c", _frame.segments[w][n][a]);
+        attron(COLOR_PAIR(a+1));
+				mvprintw( HEIGHT+2+a*8+y1,
+                  w*7+x1,
+                  "%c",brtoc(_frame.segments[w][n][a]));
+        mvprintw( HEIGHT+2+a*8+y2,
+                  w*7+x2,
+                  "%c",brtoc(_frame.segments[w][n][a]));
+        attroff(COLOR_PAIR(a+1));
+        
 			}
 		}
 	}		

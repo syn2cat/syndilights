@@ -24,11 +24,16 @@ UDPSock.bind((outgoing_if, local_port))
 
 segments = open('segments','r')
 
-alpha = 1
+alpha = chr(155)
 
 z_buffer = chr(1) + "\n"
+
 width = 7
 height = 12
+
+segments = 8
+segwidth = 12
+segchannels = 4
 
 # Send messages
 sleeptime = 0.03
@@ -42,8 +47,13 @@ while (1):
   for i in range(0,width):
     for j in range(0,height):
       pixel = fabs(sin(2*pi*(float(i)/width)+t*frequency)*sin(2*pi*(float(j)/height)+t*frequency))
-      data = data + chr(int(254*pixel)) + chr(alpha)
+      data = data + chr(int(254*pixel)) + alpha
     data = data + "\n"
+  for i in range(0,segwidth):
+    for j in range(0,segments):
+      for a in range(0,segchannels):
+        data += chr(254)
+    data += "\n"
   t+=1
   #print( data )
   #data += segments.read()

@@ -22,7 +22,7 @@ UDPSock.bind((outgoing_if, local_port))
 #UDPSock.connect((remote_host, remote_port))
 
 display = open('display', 'r')
-z_buffer = "1" + "\n"
+z_buffer = chr(1) + "\n"
 
 data = z_buffer + display.read()
 

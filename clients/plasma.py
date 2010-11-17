@@ -24,7 +24,7 @@ UDPSock.bind((outgoing_if, local_port))
 
 segments = open('segments','r')
 
-alpha = chr(155)
+alpha = chr(255)
 
 z_buffer = chr(1) + "\n"
 
@@ -38,6 +38,9 @@ segchannels = 4
 # Send messages
 sleeptime = 0.03
 t = 0
+
+#timer will hold the elapsed time in seconds
+timer = 0
 frequency = 2*pi/200
 max = 0.0
 
@@ -55,6 +58,7 @@ while (1):
         data += chr(254)
     data += "\n"
   t+=1
+  timer = t*sleeptime
   #print( data )
   #data += segments.read()
   if not data:

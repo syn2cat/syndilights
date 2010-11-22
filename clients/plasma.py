@@ -3,7 +3,6 @@
 from socket import *
 import sys
 import time
-import random
 from math import *
 
 # Set the socket parameters
@@ -16,6 +15,9 @@ remote_host = "127.0.0.1"
 
 # udp is the default for DGRAM
 UDPSock = socket(AF_INET, SOCK_DGRAM)
+
+# we MUST bind, otherwise python will choose a different port for each
+# connection
 UDPSock.bind((outgoing_if, local_port))
 
 # we will not use connections so we can keep working even if the server
@@ -35,14 +37,11 @@ segments = 8
 segwidth = 12
 segchannels = 4
 
-# Send messages
 sleeptime = 0.03
 t = 0
 
 #timer will hold the elapsed time in seconds
-timer = 0
 frequency = 2*pi/200
-max = 0.0
 
 while (1):
   #zero out the data buffer
@@ -50,17 +49,14 @@ while (1):
   for i in range(0,width):
     for j in range(0,height):
       pixel = fabs(sin(2*pi*(float(i)/width)+t*frequency)*sin(2*pi*(float(j)/height)+t*frequency))
-      data = data + chr(int(254*pixel)) + alpha
+      data = data + chr(int(255*pixel)) + alpha
     data = data + "\n"
   for i in range(0,segwidth):
     for j in range(0,segments):
       for a in range(0,segchannels):
-        data += chr(254)
+        data += chr(255)
     data += "\n"
   t+=1
-  timer = t*sleeptime
-  #print( data )
-  #data += segments.read()
   if not data:
     break
   else:

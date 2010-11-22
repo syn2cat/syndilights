@@ -24,7 +24,7 @@ UDPSock.bind((outgoing_if, local_port))
 
 segments = open('segments','r')
 
-alpha = chr(255)
+alpha = chr(125)
 
 z_buffer = chr(1) + "\n"
 

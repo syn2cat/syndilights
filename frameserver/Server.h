@@ -54,9 +54,7 @@ private:
   void mix();
   void output(frame_t);
   int get_size();
-  void expire();
-  
-  
+  void expire();  
 
   bool consoleinit;
   int console_input;

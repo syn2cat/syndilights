@@ -164,6 +164,7 @@ void Server::mix()
   while(1)
   {
     frame_t temp_frame;
+    float temp_alpha;
 
     // we lock the buffers for a long time, but we need to make sure
     // that none of the buffers is allowed to expire while we're working on it!
@@ -179,10 +180,7 @@ void Server::mix()
 				{
 					for(int a = 0; a < CHANNELS; a++)
 					{
-						if( a == CHANNELS-1 )
-							frame.windows[i][j][a] = 255;
-						else
-							frame.windows[i][j][a] = 0;
+						frame.windows[i][j][a] = 0;
 					}
 				}
 			}
@@ -193,15 +191,13 @@ void Server::mix()
 				{
 					for(int a = 0; a < SEGCHANNELS; a++)
 					{
-						if(a == SEGCHANNELS-1 )
-							frame.segments[w][n][a] = 255;
-						else
-							frame.segments[w][n][a] = 0;
-						
+						frame.segments[w][n][a] = 0;
 					}
 				}
 			} // zero out frame
-      
+
+
+      // implement alpha blending
       for(int x = 0; x < size; x++)
       {
 				temp_frame = buffers[x]->get();
@@ -209,12 +205,17 @@ void Server::mix()
         {
           for(int j = 0; j < WIDTH; j++)
           {
-            for(int a = 0; a < CHANNELS-1; a++)
+						temp_alpha = (float)temp_frame.windows[i][j][CHANNELS-1]/255;						
+            for(int a = 0; a < CHANNELS; a++)
             {
-              // do something interesting here
-              pixel = frame.windows[i][j][a] + (float)temp_frame.windows[i][j][CHANNELS-1]/255*temp_frame.windows[i][j][a];
+							// this works for the colors and for the alpha channel
+              pixel = (1-temp_alpha)*frame.windows[i][j][a] + temp_alpha*temp_frame.windows[i][j][a];
+
+              //make sure we don't do anything silly
               if( pixel >= 255 )
               	frame.windows[i][j][a] = 255;
+              else if( pixel <= 0 )
+              	frame.windows[i][j][a] = 0;
               else
               	frame.windows[i][j][a] = pixel;
             }
@@ -225,11 +226,17 @@ void Server::mix()
         {
           for(int n = 0;n < SEGNUM; n++)
           {
-            for(int a = 0; a < SEGCHANNELS-1; a++)
+						temp_alpha = (float)temp_frame.segments[w][n][SEGCHANNELS-1]/255;
+            for(int a = 0; a < SEGCHANNELS; a++)
             {
-							pixel = frame.segments[w][n][a] + (float)temp_frame.segments[w][n][SEGCHANNELS-1]/255*temp_frame.segments[w][n][a];
+							// this works for the colors and for the alpha channel
+							pixel = (1-temp_alpha)*frame.segments[w][n][a] + temp_alpha*temp_frame.segments[w][n][a];
+
+							// make sure we don't make silly mistakes
 							if( pixel >= 255 )
 								frame.segments[w][n][a] = 255;
+							else if( pixel <= 0 )
+								frame.segments[w][n][a] = 0;
 							else
 								frame.segments[w][n][a] = pixel;
             }
@@ -237,6 +244,8 @@ void Server::mix()
         }
       }
       // temp frame has validity in the loop only so it can be safely used without locking the whole object
+      // we do this in case output() takes a long time to return. If it read frame directly, we'd end up
+      // waiting for a long time
 			temp_frame = frame;
 		} // release lock and send off to hardware
 	output(temp_frame);
@@ -303,7 +312,7 @@ void Server::input()
 		
 		// now we need to lock data structure because we're going to use shared objects
 		{
-			Glib::Mutex::Lock lock(mutex_);
+			
 			switch(c)
       {
         case KEY_F(2):
@@ -320,7 +329,10 @@ void Server::input()
         	break;
         case '0':
         default:
-          console_input = c;
+        	{
+						Glib::Mutex::Lock lock(mutex_);
+          	console_input = c;
+          }
       }
 		}
 	}
@@ -428,8 +440,15 @@ void Server::console_printframe_values(frame_t _frame)
 
 void Server::console_printclients()
 {
+	int rows, cols, offset=0;
+	getmaxyx(stdscr,rows,cols);
 	for(int i = 0; i < buffers.size(); i++)
-		mvprintw(i+2,0,"(%3d) %s\n", i,buffers[i]->get_id().c_str() );
+		{
+		if(i >= 1 && i%(rows-2)==0)
+			offset += 27;
+		if( offset + 27 < cols )
+			mvprintw(i%(rows-2)+2,offset,"(%3d) %s\n", i,buffers[i]->get_id().c_str() );
+		}
 }
 
 

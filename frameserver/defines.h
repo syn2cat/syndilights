@@ -1,7 +1,8 @@
 #ifndef __DEFINES_H_
 #define __DEFINES_H_
 
-// four minutes should be enough
+// four minutes should be enough (seconds)
+// timeout set to two seconds for testing purposes
 #define BUFTIMEOUT 2
 
 #define NUMBUFS 1000

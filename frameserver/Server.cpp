@@ -99,6 +99,7 @@ void Server::listen()
         
         packetcounter++;        
         
+        // copy frame information into the buffer
         frame.z = recv_buf[0];
         for(int i = 0; i < HEIGHT; i++)
         {
@@ -438,13 +439,16 @@ void Server::console_printframe_values(frame_t _frame)
 	}
 }
 
+// print the list of clients connected to the server
 void Server::console_printclients()
 {
 	int rows, cols, offset=0;
 	getmaxyx(stdscr,rows,cols);
+  clrtobot();
 	for(int i = 0; i < buffers.size(); i++)
 		{
-		if(i >= 1 && i%(rows-2)==0)
+    // rows-2 because there is a header
+		if(i > 0 && i%(rows-2)==0)
 			offset += 27;
 		if( offset + 27 < cols )
 			mvprintw(i%(rows-2)+2,offset,"(%3d) %s\n", i,buffers[i]->get_id().c_str() );

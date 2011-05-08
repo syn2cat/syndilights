@@ -1,6 +1,6 @@
 #!/bin/bash
 
-processes=80
+processes=30
 i=0
 
 while [ "$i" -lt "$processes" ]

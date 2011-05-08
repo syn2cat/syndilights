@@ -1,5 +1,10 @@
 #include "Server.h"
 
+/* TODO: add ability to force z-value
+ * add display of chosen and forced z-value (maybe with differring colours
+ * so as to use less space!
+ * //*/
+
 Server::Server(int _port )
 {
 	port = _port;
@@ -7,6 +12,7 @@ Server::Server(int _port )
 	packetcounter = 0;
 	consoleinit = false;
   mode = FRAME;
+  selected_buffer=0;
   //test();
 }
 
@@ -266,10 +272,19 @@ void Server::console()
 	keypad(stdscr,TRUE);
 	cbreak();
 	noecho();
-  start_color();
+    
+	if(has_colors() == FALSE)
+	{	endwin();
+		printf("Your terminal does not support color\n");
+		// not sure what happens here because of threads!
+    exit(1);
+	}
+	start_color();			/* Start color 			*/
+
   init_pair(1,COLOR_RED,COLOR_BLACK);
   init_pair(2,COLOR_GREEN,COLOR_BLACK);
   init_pair(3,COLOR_BLUE,COLOR_BLACK);
+  init_pair(4,COLOR_BLACK,COLOR_WHITE);
 	{
 		Glib::Mutex::Lock lock(mutex_);
 		consoleinit = true;
@@ -279,7 +294,7 @@ void Server::console()
   while(1)
   {
 		{
-			// we'll be accessing some data to provide statistics, lock the Server
+			// we'll be accessing some data to provide statistics, lock the Server!!!
       Glib::Mutex::Lock lock(mutex_);
       mvprintw(0,0,"Clients %d | F2 Frame | F3 Values | F4 Clients | F5 Stats | input: %d            ", buffers.size(),console_input );
 			switch(mode)
@@ -306,14 +321,15 @@ void Server::console()
 void Server::input()
 {
 	int c;
+  
+  // get the number of buffers in a threadsafe manner (see Server::get_size() )
+  int size = get_size();
+  
 	while(consoleinit)
 	{
 		// getch will wait for input, so loop will not lock up cpu
 		c = getch();
-		
-		// now we need to lock data structure because we're going to use shared objects
 		{
-			
 			switch(c)
       {
         case KEY_F(2):
@@ -328,6 +344,15 @@ void Server::input()
         	mode = CLIENTS;
         	clear();
         	break;
+        case KEY_DOWN:
+          // get the number of buffers in a threadsafe manner (see Server::get_size() )
+          if( mode == CLIENTS && selected_buffer+1 < get_size() )
+            selected_buffer++;
+          break;
+        case KEY_UP:
+          if( mode == CLIENTS && selected_buffer-1 >= 0 )
+            selected_buffer--;
+            break;
         case '0':
         default:
         	{
@@ -449,9 +474,19 @@ void Server::console_printclients()
 		{
     // rows-2 because there is a header
 		if(i > 0 && i%(rows-2)==0)
-			offset += 27;
-		if( offset + 27 < cols )
-			mvprintw(i%(rows-2)+2,offset,"(%3d) %s\n", i,buffers[i]->get_id().c_str() );
+			offset += 32;
+		if( offset + 32 < cols )
+      {
+      //set black on white if the current buffer is selected in the screenview
+      
+      if( i == selected_buffer )
+        attron(COLOR_PAIR(4));
+        
+			mvprintw(i%(rows-2)+2,offset,"(%3d)[%3d] %s\n", i,buffers[i]->get().z,buffers[i]->get_id().c_str() );
+      
+      if( i == selected_buffer )
+        attroff(COLOR_PAIR(4));
+      }
 		}
 }
 

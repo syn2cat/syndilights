@@ -30,11 +30,15 @@ class Buffers : public sigc::trackable
     void add();
     void remove(std::string);
     
+    void set_selected_buffer(std::string);
+    std::string get_selected_buffer();
+    
     Buffer* get(int);
     
   private:
     vector<Buffer*> buffers;
     std::string id;
     Glib::Mutex mutex_;
+    std::string selected_buffer;
 };
 #endif

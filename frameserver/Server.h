@@ -71,6 +71,7 @@ private:
   frame_t frame;
   
   int port;
+  int selected_buffer;
   char mode;
 };
 

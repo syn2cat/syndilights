@@ -1,14 +1,19 @@
 #ifndef __DEFINES_H_
 #define __DEFINES_H_
 
+#define HASH "abcdefghij"
+
 // four minutes should be enough (seconds)
 // timeout set to two seconds for testing purposes
 #define BUFTIMEOUT 2
 
 #define NUMBUFS 1000
 
-// one number + newline
-#define HEADEROFFSET 2
+#define REMOTE_IP "127.0.0.1"
+#define REMOTE_PORT 1234
+
+// one byte number + 10 character hash
+#define HEADEROFFSET 11
 
 // 12 windows per floor, 7 floors, Value:Alpha
 #define WIDTH 12

@@ -24,9 +24,11 @@ UDPSock.bind((outgoing_if, local_port))
 # goes down or refuses connection
 #UDPSock.connect((remote_host, remote_port))
 
-segments = open('segments','r')
+segmentsfile = open('segments','r')
 
-alpha = chr(125)
+hash = "abcdefghij"
+
+alpha = chr(255)
 
 z_buffer = chr(1) + "\n"
 
@@ -45,7 +47,8 @@ frequency = 2*pi/200
 
 while (1):
   #zero out the data buffer
-  data = z_buffer
+  data = hash
+  data += z_buffer
   for i in range(0,width):
     for j in range(0,height):
       pixel = fabs(sin(2*pi*(float(i)/width)+t*frequency)*sin(2*pi*(float(j)/height)+t*frequency))
@@ -54,7 +57,7 @@ while (1):
   for i in range(0,segwidth):
     for j in range(0,segments):
       for a in range(0,segchannels):
-        data += chr(255)
+        data += chr( 127 + int(128*sin(2*pi*(1+i)*(1+j)*(1+a)*t*frequency/200)))
     data += "\n"
   t+=1
   if not data:

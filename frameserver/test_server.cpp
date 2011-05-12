@@ -22,9 +22,7 @@ int main(void)
   // our main loop with support for signals and all that jazz
   Glib::RefPtr<Glib::MainLoop> Main = Glib::MainLoop::create();
     
-  Server server(4321);
-  server.launch_threads();
-  
+  Server server(4321);  
   Main->run();  
   
   return 0;

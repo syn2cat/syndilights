@@ -13,7 +13,7 @@ Server::Server(int _port )
 	consoleinit = false;
   mode = FRAME;
   selected_buffer=0;
-  //test();
+  launch_threads();
 }
 
 Server::~Server()
@@ -65,6 +65,14 @@ void Server::listen()
       socket.receive_from(boost::asio::buffer(recv_buf),
           remote_endpoint, 0, error);
 
+      // check whether this is a valid packet and discard it if it isn't
+      // note, this is a very hack way of comparing strings...
+      if( std::string( (char*)recv_buf.data(), (size_t)10 ) != std::string(HASH) )
+        continue;
+
+      // DEBUG send reply to sender
+      // socket.send_to( boost::asio::buffer("ACK",3) ,remote_endpoint);
+
       // bufnum is used further down
         /* the buffer is locked for a long long time, however, we need
            to make sure that none of the buffers expires while we're about
@@ -106,7 +114,7 @@ void Server::listen()
         packetcounter++;        
         
         // copy frame information into the buffer
-        frame.z = recv_buf[0];
+        frame.z = recv_buf[10];
         for(int i = 0; i < HEIGHT; i++)
         {
           for(int j = 0; j < WIDTH; j++)
@@ -157,10 +165,53 @@ void Server::listen()
   }
 }
 
+/* this sends the frame content to a host expecting udp packets */
+void Server::send(frame_t _frame, udp::endpoint destination)
+{
+  // write the frame into a char buffer, make it static so we don't waste time creating
+  // it at every function call
+  const int length = WIDTH*HEIGHT*CHANNELS + SEGWIDTH*SEGNUM*SEGCHANNELS;
+  static char data[length];
+  for(int i = 0; i < HEIGHT; i++)
+  {
+    for(int j = 0; j < WIDTH; j++)
+    {
+      for(int k = 0; k < CHANNELS; k++)
+      {
+        data[i*WIDTH*CHANNELS + CHANNELS*j + k] = _frame.windows[i][j][k];
+      }
+    }
+  }
+  
+  for(int i = 0; i < SEGWIDTH; i++)
+  {
+    for(int j = 0; j < SEGNUM; j++)
+    {
+      for(int k = 0; k < SEGCHANNELS; k++)
+      {
+        data[WIDTH*HEIGHT*CHANNELS +
+              i*SEGNUM*SEGCHANNELS + SEGCHANNELS*j + k] = _frame.segments[i][j][k];
+      }
+    }
+  }
+
+    try
+  {
+    boost::asio::io_service io_service;
+
+    udp::socket socket(io_service, udp::endpoint(udp::v4(),0));
+
+   // std::cerr << destination << std::endl;
+    socket.send_to(boost::asio::buffer(data,length), destination);
+  }
+  catch (std::exception& e)
+  {
+    std::cerr << e.what() << std::endl;
+  }
+}
 
 /* the framemixer, this periodically (40 times a second) reads all input
    buffers and then produces output, ready to be displayed.
-   In the final version, this is where interesting things will happen.
    */
 void Server::mix()
 {
@@ -254,7 +305,9 @@ void Server::mix()
       // we do this in case output() takes a long time to return. If it read frame directly, we'd end up
       // waiting for a long time
 			temp_frame = frame;
-		} // release lock and send off to hardware
+		} /* release lock and send off to hardware
+      * (note, temp_frame is passed by value and will live only in the
+      * argument of the "output" function and does not need to be locked) */
 	output(temp_frame);
 	}
 }
@@ -262,6 +315,10 @@ void Server::mix()
 // output to hardware using OLA
 void Server::output(frame_t _frame)
 {
+  boost::asio::ip::udp::endpoint remote_endpoint( boost::asio::ip::address_v4::from_string(REMOTE_IP) , REMOTE_PORT );
+  // send frame to a network host
+  send(_frame,remote_endpoint);
+  
 	// pretend we're doing something
 	usleep( 25000 );
 }

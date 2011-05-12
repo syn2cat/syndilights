@@ -33,10 +33,10 @@ public:
   Server(int _port);
   ~Server();
 
-  void launch_threads();
-  
 private:
   Glib::Mutex mutex_;
+
+  void launch_threads();
 
   void console();
   void input();
@@ -51,6 +51,7 @@ private:
   void console_printclients();
   
   void listen();
+  void send(frame_t,udp::endpoint);
   void mix();
   void output(frame_t);
   int get_size();

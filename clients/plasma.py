@@ -51,7 +51,7 @@ while (1):
   data += z_buffer
   for i in range(0,width):
     for j in range(0,height):
-      pixel = fabs(sin(2*pi*(float(i)/width)+t*frequency)*sin(2*pi*(float(j)/height)+t*frequency))
+      pixel = fabs(sin(2*pi*(float(i+1)/width)+t*frequency)*sin(2*pi*(float(j+1)/height)+t*frequency))
       data = data + chr(int(255*pixel)) + alpha
     data = data + "\n"
   for i in range(0,segwidth):

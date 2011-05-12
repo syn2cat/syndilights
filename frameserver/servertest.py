@@ -6,7 +6,7 @@ import time
 import random
 
 # Set the socket parameters
-local_port = 5000 + int( sys.argv[1] )
+local_port = 6000 + int( sys.argv[1] )
 remote_port = 4321
 
 # TODO: autodetect interface address for remote application
@@ -22,9 +22,11 @@ UDPSock.bind((outgoing_if, local_port))
 #UDPSock.connect((remote_host, remote_port))
 
 display = open('display', 'r')
+
+hash = "abcdefghij"
 z_buffer = chr(1) + "\n"
 
-data = z_buffer + display.read()
+data = hash + z_buffer + display.read()
 
 random.seed()
 

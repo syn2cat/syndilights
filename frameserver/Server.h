@@ -25,6 +25,7 @@ enum modes
 };
 
 using boost::asio::ip::udp;
+using boost::asio::ip::tcp;
 using namespace std;
 
 class Server : public sigc::trackable
@@ -51,7 +52,7 @@ private:
   void console_printclients();
   
   void listen();
-  void send(frame_t,udp::endpoint);
+  void send();
   void mix();
   void output(frame_t);
   int get_size();

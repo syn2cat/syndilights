@@ -27,6 +27,7 @@ Server::~Server()
 void Server::launch_threads()
 {
   threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::listen), false ) );
+  threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::send), false ) );
   threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::mix), false ) );
   threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::console), false) );
   threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::expire), false) );
@@ -166,47 +167,64 @@ void Server::listen()
 }
 
 /* this sends the frame content to a host expecting udp packets */
-void Server::send(frame_t _frame, udp::endpoint destination)
+void Server::send()
 {
-  // write the frame into a char buffer, make it static so we don't waste time creating
-  // it at every function call
+
   const int length = WIDTH*HEIGHT*CHANNELS + SEGWIDTH*SEGNUM*SEGCHANNELS;
   static char data[length];
-  for(int i = 0; i < HEIGHT; i++)
-  {
-    for(int j = 0; j < WIDTH; j++)
-    {
-      for(int k = 0; k < CHANNELS; k++)
-      {
-        data[i*WIDTH*CHANNELS + CHANNELS*j + k] = _frame.windows[i][j][k];
-      }
-    }
-  }
   
-  for(int i = 0; i < SEGWIDTH; i++)
+  while(1)
   {
-    for(int j = 0; j < SEGNUM; j++)
     {
-      for(int k = 0; k < SEGCHANNELS; k++)
+      // lock the object for this operation
+      Glib::Mutex::Lock lock(mutex_);
+      // write the frame into a char buffer
+      for(int i = 0; i < HEIGHT; i++)
       {
-        data[WIDTH*HEIGHT*CHANNELS +
-              i*SEGNUM*SEGCHANNELS + SEGCHANNELS*j + k] = _frame.segments[i][j][k];
+        for(int j = 0; j < WIDTH; j++)
+        {
+          for(int k = 0; k < CHANNELS; k++)
+          {
+            data[i*WIDTH*CHANNELS + CHANNELS*j + k] = frame.windows[i][j][k];
+          }
+        }
+      }
+      
+      for(int i = 0; i < SEGWIDTH; i++)
+      {
+        for(int j = 0; j < SEGNUM; j++)
+        {
+          for(int k = 0; k < SEGCHANNELS; k++)
+          {
+            data[WIDTH*HEIGHT*CHANNELS +
+                  i*SEGNUM*SEGCHANNELS + SEGCHANNELS*j + k] = frame.segments[i][j][k];
+          }
+        }
       }
     }
-  }
 
-    try
-  {
-    boost::asio::io_service io_service;
+      try
+    {
+      boost::asio::io_service io_service;
 
-    udp::socket socket(io_service, udp::endpoint(udp::v4(),0));
+      /*UDP */
+      boost::asio::ip::udp::endpoint u_remote_endpoint( boost::asio::ip::address_v4::from_string((char*)REMOTE_IP) , (short)REMOTE_PORT );
+      udp::socket u_socket(io_service, udp::endpoint(udp::v4(),0));
+      u_socket.send_to(boost::asio::buffer(data,length), u_remote_endpoint);
 
-   // std::cerr << destination << std::endl;
-    socket.send_to(boost::asio::buffer(data,length), destination);
-  }
-  catch (std::exception& e)
-  {
-    std::cerr << e.what() << std::endl;
+      /* TCP */
+      boost::asio::ip::tcp::endpoint t_remote_endpoint( boost::asio::ip::address_v4::from_string((char*)REMOTE_IP) , (short)REMOTE_PORT );
+      tcp::socket t_socket(io_service);
+      t_socket.connect(t_remote_endpoint);
+      boost::asio::write(t_socket, boost::asio::buffer(data, length));
+
+    }
+    catch (std::exception& e)
+    {
+      //std::cerr << e.what() << std::endl;
+    }
+  // sleep until next update cycle
+  usleep(25000);
   }
 }
 
@@ -309,18 +327,13 @@ void Server::mix()
       * (note, temp_frame is passed by value and will live only in the
       * argument of the "output" function and does not need to be locked) */
 	output(temp_frame);
+  usleep( 25000 );
 	}
 }
 
 // output to hardware using OLA
 void Server::output(frame_t _frame)
 {
-  boost::asio::ip::udp::endpoint remote_endpoint( boost::asio::ip::address_v4::from_string(REMOTE_IP) , REMOTE_PORT );
-  // send frame to a network host
-  send(_frame,remote_endpoint);
-  
-	// pretend we're doing something
-	usleep( 25000 );
 }
 
 void Server::console()

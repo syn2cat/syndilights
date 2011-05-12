@@ -39,7 +39,7 @@ segments = 8
 segwidth = 12
 segchannels = 4
 
-sleeptime = 0.03
+sleeptime = 0.02
 t = 0
 
 #timer will hold the elapsed time in seconds
@@ -51,7 +51,7 @@ while (1):
   data += z_buffer
   for i in range(0,width):
     for j in range(0,height):
-      pixel = fabs(sin(2*pi*(float(i+1)/width)+t*frequency)*sin(2*pi*(float(j+1)/height)+t*frequency))
+      pixel = 0.5+0.5*sin(2*pi*(float(i+1)/width)+t*frequency)*sin(2*pi*(float(j+1)/height)+t*frequency)
       data = data + chr(int(255*pixel)) + alpha
     data = data + "\n"
   for i in range(0,segwidth):

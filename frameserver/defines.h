@@ -1,8 +1,6 @@
 #ifndef __DEFINES_H_
 #define __DEFINES_H_
 
-#define HASH "abcdefghij"
-
 // four minutes should be enough (seconds)
 // timeout set to two seconds for testing purposes
 #define BUFTIMEOUT 2
@@ -12,8 +10,10 @@
 #define REMOTE_IP "127.0.0.1"
 #define REMOTE_PORT 1234
 
-// one byte number + 10 character hash
-#define HEADEROFFSET 11
+
+#define HASH "abcdefghij"
+// one byte number + 10 character hash plus newline
+#define HEADEROFFSET 12
 
 // 12 windows per floor, 7 floors, Value:Alpha
 #define WIDTH 12
@@ -27,7 +27,7 @@
 #define SEGWIDTH 12
 #define SEGCHANNELS 4
 
-#define BUFLEN HEADEROFFSET+WINDOWOFFSET+ (SEGNUM*SEGCHANNELS+1)*SEGWIDTH
+#define BUFLEN HEADEROFFSET+WINDOWOFFSET+(SEGNUM*SEGCHANNELS+1)*SEGWIDTH
 
 // not used for simplicity
 //#define SEGHEIGHT 1

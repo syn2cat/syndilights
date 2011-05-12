@@ -66,6 +66,10 @@ void Server::listen()
       socket.receive_from(boost::asio::buffer(recv_buf),
           remote_endpoint, 0, error);
 
+
+      // DEBUG OUTPUT RAW BUFFER DATA from packet
+      // std::cout << recv_buf.data() << std::endl;
+
       // check whether this is a valid packet and discard it if it isn't
       // note, this is a very hack way of comparing strings...
       if( std::string( (char*)recv_buf.data(), (size_t)10 ) != std::string(HASH) )
@@ -122,8 +126,7 @@ void Server::listen()
           {
             for(int a = 0; a < CHANNELS; a++)
             {
-              frame.windows[i][j][a] = recv_buf[HEADEROFFSET+ i*(CHANNELS*WIDTH+1) + j*CHANNELS + a];
-              //cout << int( recv_buf[HEADEROFFSET+ i*(CHANNELS*WIDTH+1) + j*CHANNELS + a] ) << endl;
+              frame.windows[i][j][a] = recv_buf[HEADEROFFSET + i*(CHANNELS*WIDTH+1) + j*CHANNELS + a];
             }
           }
         }
@@ -237,8 +240,11 @@ void Server::mix()
   int counter = 0;
   int pixel = 0;
 
+  int frames = 0;
+
   while(1)
   {
+    frames++;
     frame_t temp_frame;
     float temp_alpha;
 
@@ -447,6 +453,8 @@ void Server::console_printframe(frame_t _frame)
 			 mvprintw(i+2,j,"%c", brtoc(_frame.windows[i][j][0]) );
 		}
 	}
+
+// TODO: correct segment numbering
 	
 	for(int w = 0; w < SEGWIDTH; w++)
 	{

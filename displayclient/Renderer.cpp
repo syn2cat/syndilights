@@ -6,8 +6,11 @@
 
 Renderer::Renderer()
 {
-	Glib::signal_timeout().connect( sigc::mem_fun(*this, &Renderer::on_timeout), 34 );
+  // this determines the refresh rate
+	Glib::signal_timeout().connect( sigc::mem_fun(*this, &Renderer::on_timeout), 10 );
 
+
+  // drawing in GTK+ is done in the "expose_event" signal handler
 	#ifndef GLIBMM_DEFAULT_SIGNAL_HANDLERS_ENABLED
 	//Connect the signal handler if it isn't already a virtual method override:
 	signal_expose_event().connect(sigc::mem_fun(*this, &Renderer::on_expose_event), false);
@@ -20,6 +23,7 @@ Renderer::Renderer()
 	invalid.ymin = get_height();
 	invalid.width = invalid.height = 0;
 
+  // launch the udp listener
   Glib::Thread::create( sigc::mem_fun(this, &Renderer::listen), false);
 }
 
@@ -68,31 +72,33 @@ bool Renderer::on_expose_event(GdkEventExpose *event)
 				cr->clip();
 		}
 		
+    // rescale coordinates of the drawing context to 1.0 1.0
 		cr->scale(width,height);
 		
+    // fill the backdrop
 		cr->set_source_rgb(0.3,0.3,0.3);
 		cr->paint();
 
     cr->set_line_width(0.05);
 
+    // geometry of the building face
     double window_width = 0.04;
     double window_height = 0.08;
     double window_hsep = 0.03;
     double window_vsep = 0.04;
 
+    // draw the windows
     for(int i = 0; i < HEIGHT; i++)
     {
       for(int j = 0; j < WIDTH; j++)
       {
-        for(int a = 0; a < CHANNELS; a++)
-        {
-          cr->set_source_rgb( (double)f.windows[i][j][0]/255, (double)f.windows[i][j][0]/255, (double)f.windows[i][j][0]/255 );
-          cr->rectangle( window_hsep + j*(window_hsep+window_width) , window_vsep + i*(window_height+window_vsep), window_width, window_height );
-          cr->fill();
-        }
+        cr->set_source_rgb( (double)f.windows[i][j][0]/255, (double)f.windows[i][j][0]/255, (double)f.windows[i][j][0]/255 );
+        cr->rectangle( window_hsep + j*(window_hsep+window_width) , window_vsep + i*(window_height+window_vsep), window_width, window_height );
+        cr->fill();
       }
     }
     
+    // draw the segments
     for(int w = 0; w < SEGWIDTH; w++ )
     {
       for(int n = 0;n < SEGNUM; n++)
@@ -166,6 +172,7 @@ void Renderer::draw_vsegment(double x, double y, double t, double l, double r, d
   cr->fill();
 }
 
+// this signal handler tells gtk+ to redraw the window contents
 bool Renderer::on_timeout()
 {
 	/*static*/ Glib::RefPtr<Gdk::Window> win;
@@ -229,7 +236,7 @@ void Renderer::listen()
             }
           }
         }
-      } // lock is released here because the block ends
+      } // lock is released here because we will not access object-wide resources anymore
       
       if (error && error != boost::asio::error::message_size)
         throw boost::system::system_error(error);

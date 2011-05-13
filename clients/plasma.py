@@ -6,7 +6,7 @@ import time
 from math import *
 
 # Set the socket parameters
-local_port = 5000
+local_port = 5001
 remote_port = 4321
 
 # TODO: autodetect interface address for remote application

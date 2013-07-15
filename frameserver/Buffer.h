@@ -16,22 +16,22 @@ class Buffer : public sigc::trackable
   public:
     Buffer(std::string _id);
     ~Buffer();
-    
+
     void set(frame_t);
     frame_t get();
-    
+
     std::string get_id();
     void set_id(std::string id);
-    
+
     bool get_selected();
     void set_selected(bool);
-    
+
   private:
     std::string id;
     frame_t frame;
-    
+
     bool selected;
-  
-    Glib::Mutex mutex_;
+
+    Glib::Threads::Mutex mutex_;
 };
 #endif

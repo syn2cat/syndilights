@@ -9,7 +9,6 @@
 #include "Buffer.h"
 #include "Buffers.h"
 
-#define NUMBUFS 100
 #define NUMTHREADS 20
 #define USECS 1000
 
@@ -22,14 +21,14 @@ Buffers* buffers;
 void reader(void);
 void writer(void);
 
-int main(void) 
+int main(void)
 {
   srand( time(NULL) );
-  Glib::thread_init();
+  Glib::init();
 
   // our main loop with support for signals and all that jazz
   //Glib::RefPtr<Glib::MainLoop> Main = Glib::MainLoop::create();
-  
+
   buffers = new Buffers(NUMBUFS);
 
   vector<Glib::Thread*> readers;
@@ -37,12 +36,12 @@ int main(void)
 
   for(int i = 0; i < NUMTHREADS; i++)
   {
-    readers.push_back( Glib::Thread::create( sigc::ptr_fun( &reader), false ) );
-    writers.push_back( Glib::Thread::create( sigc::ptr_fun( &writer), false ) );
+    readers.push_back( Glib::Threads::Thread::create( sigc::ptr_fun( &reader), false ) );
+    writers.push_back( Glib::Threads::Thread::create( sigc::ptr_fun( &writer), false ) );
   }
-  
+
   //Main->run();
-  
+
   int count = 0;
   while(1) {
     count++;
@@ -56,28 +55,28 @@ int main(void)
         cout << endl;
       }
       cout << endl;
-      
+
       for(int i = 0; i < SEGWIDTH; i++)
         cout << frame.segments[i].r;
       cout << endl << endl;
     }
-    usleep( 10000 );
+    Glib::usleep( 10000 );
   }//*/
-  
+
   return 0;
 }
 
-void reader(void) 
+void reader(void)
 {
   bool quit = false;
   frame_t frame;
   int bufnum = 0;
   while( !quit )
-  {  
+  {
     bufnum = rand()%NUMBUFS;
     frame = buffers->get(bufnum)->get();
 //    cout << "read " << bufnum << endl;
-    usleep( rand()%USECS );
+    Glib::usleep( rand()%USECS );
   }
 }
 
@@ -85,7 +84,7 @@ void writer(void)
 {
   frame_t frame;
   bool quit = false;
-  int bufnum = 0; 
+  int bufnum = 0;
   while( !quit )
   {
     bufnum = rand()%NUMBUFS;
@@ -96,16 +95,16 @@ void writer(void)
         frame.windows[i][j] = rand()%255;
       }
     }
-    
+
     for(int i = 0; i < 12; i++)
     {
       frame.segments[i].r = 33+rand()%90;
       frame.segments[i].g = 33+rand()%90;
       frame.segments[i].b = 33+rand()%90;
     }
-    
+
     buffers->get(bufnum)->set( frame );
 //    cout << "wrote " << bufnum << endl;
-    usleep( rand()%USECS );
+    Glib::usleep( rand()%USECS );
   }
 }

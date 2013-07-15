@@ -5,7 +5,7 @@
     vector of pointers to "Buffer" objects. It automates locking during
 	  all operations and generates "ID" hashes for the buffers upon creation. */
 
-/*	TODO: * create hashes during buffer creation 
+/*	TODO: * create hashes during buffer creation
           * throw and handle exceptions */
 
 #include <glibmm.h>
@@ -24,21 +24,21 @@ class Buffers : public sigc::trackable
   public:
     Buffers();
     Buffers(int);
-    
+
     ~Buffers();
-    
+
     void add();
     void remove(std::string);
-    
+
     void set_selected_buffer(std::string);
     std::string get_selected_buffer();
-    
+
     Buffer* get(int);
-    
+
   private:
     vector<Buffer*> buffers;
     std::string id;
-    Glib::Mutex mutex_;
+    Glib::Threads::Mutex mutex_;
     std::string selected_buffer;
 };
 #endif

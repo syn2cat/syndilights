@@ -1,6 +1,6 @@
 #include "Buffers.h"
 
-Buffers::Buffers() 
+Buffers::Buffers()
 {
   id = "";
 }
@@ -14,26 +14,26 @@ Buffers::Buffers(int _bufnum)
 
 Buffers::~Buffers()
 {
-  Glib::Mutex::Lock lock(mutex_);
+  Glib::Threads::Mutex::Lock lock(mutex_);
   buffers.clear();
 }
 
 Buffer* Buffers::get(int index)
 {
-  Glib::Mutex::Lock lock(mutex_);
+  Glib::Threads::Mutex::Lock lock(mutex_);
   return buffers[index];
 }
 
 void Buffers::add()
 {
-  Glib::Mutex::Lock lock(mutex_);
+  Glib::Threads::Mutex::Lock lock(mutex_);
   id += "1";
   buffers.push_back( new Buffer( id ) );
 }
 
 void Buffers::remove(std::string _id)
 {
-  Glib::Mutex::Lock lock(mutex_);
+  Glib::Threads::Mutex::Lock lock(mutex_);
   int size = buffers.size();
   for( int i = 0; i < size; i++ )
   {

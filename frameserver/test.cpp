@@ -31,8 +31,8 @@ int main(void)
 
   buffers = new Buffers(NUMBUFS);
 
-  vector<Glib::Threads::Thread::*> readers;
-  vector<Glib::Threads::Thread::*> writers;
+  vector<Glib::Threads::Thread*> readers;
+  vector<Glib::Threads::Thread*> writers;
 
   for(int i = 0; i < NUMTHREADS; i++)
   {

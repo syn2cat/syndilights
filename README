@@ -2,3 +2,25 @@ Install dependencies:
 
 sudo apt-get install libboost-all-dev libncurses5-dev libglibmm-2.4-dev build-essential
 
+= Building configuration =
+
+The main configuration of the frameserver is done in <defines.h>
+
+Main tuneables:
+
+#define REMOTE_IP "127.0.0.1"
+#define REMOTE_PORT 1234
+
+#define HASH "abcdefghij"
+// one byte number + 10 character hash plus newline
+#define HEADEROFFSET 12
+
+// 12 windows per floor, 7 floors, Value:Alpha
+#define WIDTH 12
+#define HEIGHT 7
+#define CHANNELS 2
+
+// 8 segments per window, 12 segments per floor, RGBA
+#define SEGNUM 8
+#define SEGWIDTH 12
+#define SEGCHANNELS 4

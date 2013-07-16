@@ -1,0 +1,6 @@
+Drivers for the DMX USB Pro is included in the Linux Kernel since 2.6.9 (FTDI Based)
+
+See: http://www.enttec.com/?main_menu=Products&pn=70304&show=drivers
+
+API Specifications: http://www.enttec.com/docs/dmx_usb_pro_api_spec.pdf
+C/C++ Example: http://www.enttec.com/download/pro_example_v2.zip

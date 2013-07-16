@@ -6,6 +6,9 @@ Currently used versions of dependencies:
 -- Documentation: http://www.boost.org/doc/libs/
 - libglibmm 2.35.9
 -- Documentation: https://developer.gnome.org/glibmm/2.35/
+- libglib 2.36.0
+-- Documentation: https://developer.gnome.org/glib/2.36/
+-- Deprecation notices: https://developer.gnome.org/glib/2.36/glib-Deprecated-Thread-APIs.html
 - libncurses 5.9
 -- Documentation: http://www.tldp.org/HOWTO/NCURSES-Programming-HOWTO/
 

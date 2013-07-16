@@ -1,0 +1,12 @@
+This will have some developer info.
+
+Currently used versions of dependencies:
+
+- libboost-1.49.0.1
+-- Documentation: http://www.boost.org/doc/libs/
+- libglibmm 2.35.9
+-- Documentation: https://developer.gnome.org/glibmm/2.35/
+- libncurses 5.9
+-- Documentation: http://www.tldp.org/HOWTO/NCURSES-Programming-HOWTO/
+
+

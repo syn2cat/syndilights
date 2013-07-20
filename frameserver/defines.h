@@ -37,6 +37,8 @@ struct frame_t
 	unsigned char z;
   unsigned char windows[HEIGHT][WIDTH][CHANNELS];
   unsigned char segments[SEGWIDTH][SEGNUM][SEGCHANNELS];
+//  int windows[HEIGHT][WIDTH][CHANNELS];
+//  int segments[SEGWIDTH][SEGNUM][SEGCHANNELS];
 };
 
 #endif

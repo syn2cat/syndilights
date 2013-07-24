@@ -1,0 +1,18 @@
+This is the Proof of Concept code for the 4x5 Windows mock-up.
+With a 4-7Segment Display
+
+It is a static mockup that should be used to make a Video and show off the theory of the project.
+
+The shift Array code is from this Tutorial page:
+
+http://arduino.cc/en/Tutorial/ShiftOut
+
+General information about shift registers: http://en.wikipedia.org/wiki/Shift_register
+
+The one used for driving the 7 segment LED is a standard (SN)74HC595 which is an 8bit Shift register.
+Datasheet: http://www.nxp.com/documents/data_sheet/74HC_HCT595.pdf
+
+The used module is a 16 segment element with one decimal dot (http://www.adafruit.com/datasheets/BL-S80A-13.PDF)
+UHR (Ultra High Red) version
+
+We used a single in-line i(SIL) resistor to make our lives easy. http://en.wikipedia.org/wiki/Resistor

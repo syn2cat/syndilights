@@ -17,7 +17,7 @@ void setup() {
   matrix.begin();
 }
 
-int myWindows (int w){
+  int myWindows (int w, int br){
   
     // White is 7,7,7
   uint8_t r=7, g=7, b=7;
@@ -112,8 +112,10 @@ switch (w) {
 
 void loop() {
   // do nothing
-  myWindows(random(1,21));
-  //myWindows(16);
+  //myWindows(random(1,21));
+  int window = 13;
+  int brightness = 255;
+  myWindows(window, brightness);
   int del = 100;
   delay(del);
 // fill the screen with 'black'

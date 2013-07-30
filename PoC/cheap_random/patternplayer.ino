@@ -1,6 +1,6 @@
-// testcolors demo for RGBmatrixPanel library.
-// Renders 512 colors on a 16x32 RGB LED matrix.
-// Library supports 4096 colors, but there aren't that many pixels!
+// gunsticks little pattern player
+// has several routines displaying various patterns
+// using x/y coords or window addresses
 
 #include <Adafruit_GFX.h>   // Core graphics library
 #include <RGBmatrixPanel.h> // Hardware-specific library
@@ -30,8 +30,8 @@ int patternSwitcher=0;
 while ( true ) {
   switch(patternSwitcher) {
     case 0:
-    case 1:
-    case 2:
+    case 1:   // this will repeat the following patterns 3 times
+    case 2: {
       // scan through line by line from top to bottom
       myWindows(xyToWindow(x,y), brightness, red, green, blue);
       if(x++>3) {
@@ -42,10 +42,11 @@ while ( true ) {
         }
       }
       break;
+    }
     case 3:
-    case 4:
+    case 4: {
       // move a pixel around a path
-      int path[4*5] = { 1, 6,11,16,
+      int path[] =   { 1, 6,11,16,
                        17,18,19,20,
                        15,10, 5,
                         4, 3, 2,
@@ -55,12 +56,13 @@ while ( true ) {
                        0};
       myWindows(path[pos], brightness, red, green, blue);
       pos++; 
-      if(path[pos]==0 { pos=0; patternSwitcher++; }
+      if(path[pos]==0) { pos=0; patternSwitcher++; }
       break;
+     }
      case 5:
      case 6:
      case 7:
-     case 8:
+     case 8: {
        // top bottom line wiper
        for(x=0;x<4;x++)
          myWindows(xyToWindow(x,y), brightness, red, green, blue);
@@ -68,6 +70,7 @@ while ( true ) {
          y=0;
          patternSwitcher++;
        }
+     }
   default:
         patternSwitcher=0;
       break;      

@@ -15,94 +15,107 @@ RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
 
 void setup() {
   matrix.begin();
+
+  //myWindows(random(1,21));
+  int window = 13;
+  int brightness = 255;
+  int del = 100;
+  // White is 7,7,7 (3bit) 255,255,255 (8bit)
+  uint8_t red=255, green=255, blue=255;
+
+
+while ( true ) {
+  myWindows(16, brightness, red, green, blue);
+  delay(del);
+  // fill the screen with 'black'
+  matrix.fillScreen(matrix.Color888(0, 0, 0));
+  matrix.swapBuffers(false);
 }
 
-  int myWindows (int w, int br){
+}
+
+  int myWindows (int w, int br, int r, int g, int b){
   
-    // White is 7,7,7
-  uint8_t r=7, g=7, b=7;
-
-
 switch (w) {
   case 1:
     // Window 1
-    matrix.fillRect(1,12,4,3, matrix.Color333(r,g,b));
+    matrix.fillRect(1,12,4,3, matrix.Color888(r,g,b));
     break;
   case 2:
     // Window 2
-    matrix.fillRect(7,12,4,3, matrix.Color333(r,g,b));
+    matrix.fillRect(7,12,4,3, matrix.Color888(r,g,b));
     break;
   case 3:
     // Window 3
-    matrix.fillRect(13,12,4,3, matrix.Color333(r,g,b));
+    matrix.fillRect(13,12,4,3, matrix.Color888(r,g,b));
     break;
   case 4:
     // Window 4
-    matrix.fillRect(19,12,4,3, matrix.Color333(r,g,b));
+    matrix.fillRect(19,12,4,3, matrix.Color888(r,g,b));
     break;
   case 5:
     // Window 5
-    matrix.fillRect(25,12,4,3, matrix.Color333(r,g,b));
+    matrix.fillRect(25,12,4,3, matrix.Color888(r,g,b));
     break;
   case 6:
-    // Window 5
-    matrix.fillRect(1,8,4,3, matrix.Color333(r,g,b));
+    // Window 6
+    matrix.fillRect(1,8,4,3, matrix.Color888(r,g,b));
     break;
   case 7:
-    // Window 5
-    matrix.fillRect(7,8,4,3, matrix.Color333(r,g,b));
+    // Window 7
+    matrix.fillRect(7,8,4,3, matrix.Color888(r,g,b));
     break;
   case 8:
-    // Window 5
-    matrix.fillRect(13,8,4,3, matrix.Color333(r,g,b));
+    // Window 8
+    matrix.fillRect(13,8,4,3, matrix.Color888(r,g,b));
     break;
   case 9:
-    // Window 5
-    matrix.fillRect(19,8,4,3, matrix.Color333(r,g,b));
+    // Window 9
+    matrix.fillRect(19,8,4,3, matrix.Color888(r,g,b));
     break;
   case 10:
-    // Window 5
-    matrix.fillRect(25,8,4,3, matrix.Color333(r,g,b));
+    // Window 10
+    matrix.fillRect(25,8,4,3, matrix.Color888(r,g,b));
     break;
   case 11:
-    // Window 5
-    matrix.fillRect(1,4,4,3, matrix.Color333(r,g,b));
+    // Window 11
+    matrix.fillRect(1,4,4,3, matrix.Color888(r,g,b));
     break;
   case 12:
-    // Window 5
-    matrix.fillRect(7,4,4,3, matrix.Color333(r,g,b));
+    // Window 12
+    matrix.fillRect(7,4,4,3, matrix.Color888(r,g,b));
     break;
   case 13:
-    // Window 5
-    matrix.fillRect(13,4,4,3, matrix.Color333(r,g,b));
+    // Window 13
+    matrix.fillRect(13,4,4,3, matrix.Color888(r,g,b));
     break;
   case 14:
-    // Window 5
-    matrix.fillRect(19,4,4,3, matrix.Color333(r,g,b));
+    // Window 14
+    matrix.fillRect(19,4,4,3, matrix.Color888(r,g,b));
     break;
   case 15:
-    // Window 5
-    matrix.fillRect(25,4,4,3, matrix.Color333(r,g,b));
+    // Window 15
+    matrix.fillRect(25,4,4,3, matrix.Color888(r,g,b));
     break;
   case 16:
-    // Window 5
-    matrix.fillRect(1,0,4,3, matrix.Color333(r,g,b));
+    // Window 16
+    matrix.fillRect(1,0,4,3, matrix.Color888(r,g,b));
     break;
   case 17:
-    // Window 5
-    matrix.fillRect(7,0,4,3, matrix.Color333(r,g,b));
+    // Window 17
+    matrix.fillRect(7,0,4,3, matrix.Color888(r,g,b));
     break;
   case 18:
-    // Window 5
-    matrix.fillRect(13,0,4,3, matrix.Color333(r,g,b));
+    // Window 18
+    matrix.fillRect(13,0,4,3, matrix.Color888(r,g,b));
     break;
   case 19:
-    // Window 5
-    matrix.fillRect(19,0,4,3, matrix.Color333(r,g,b));
+    // Window 19
+    matrix.fillRect(19,0,4,3, matrix.Color888(r,g,b));
     break;
   case 20:
-    // Window 5
-    matrix.fillRect(25,0,4,3, matrix.Color333(r,g,b));
+    // Window 20
+    matrix.fillRect(25,0,4,3, matrix.Color888(r,g,b));
     break;
 
   default:
@@ -112,15 +125,5 @@ switch (w) {
 
 void loop() {
   // do nothing
-  //myWindows(random(1,21));
-  int window = 13;
-  int brightness = 255;
-  myWindows(window, brightness);
-  int del = 100;
-  delay(del);
-// fill the screen with 'black'
-matrix.fillScreen(matrix.Color333(0, 0, 0));
-matrix.swapBuffers(false);
-
 }
 

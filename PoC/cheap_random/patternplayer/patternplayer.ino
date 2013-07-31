@@ -66,7 +66,7 @@ while ( true ) {
        // top bottom line wiper
        for(x=0;x<4;x++)
          myWindows(xyToWindow(x,y), brightness, red, green, blue);
-       if(y++>4) {
+       if(y++>3) {
          y=0;
          patternSwitcher++;
        }

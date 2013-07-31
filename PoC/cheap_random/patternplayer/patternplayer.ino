@@ -34,9 +34,9 @@ while ( true ) {
     case 2: {
       // scan through line by line from top to bottom
       myWindows(xyToWindow(x,y), brightness, red, green, blue);
-      if(x++>3) {
+      if(x++>2) {
         x=0;
-        if(y++>4) {
+        if(y++>3) {
           y=0;
           patternSwitcher++;
         }

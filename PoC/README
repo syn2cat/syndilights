@@ -1,7 +1,30 @@
 This is the Proof of Concept code for the 4x5 Windows mock-up.
-With a 4-7Segment Display
+With a 4-7Segment Display on top
 
 It is a static mockup that should be used to make a Video and show off the theory of the project.
+
+Current structure:
+
+PoC/
+-> patternplayer
+= This plays pre-defined patterns
+-> life
+= Game of Life
+-> cheap_random
+= dirty hack to show random windows
+-> 7seg
+= 7 segment tester
+-> VdL_demo
+= Main Demo Folder for the final VdL Demo
+-> shiftout1
+= Shift register test code
+-> shiftout2
+= Shift register test code
+-> shiftout3
+= Shift register test code
+-> testcolors
+= Test the 16x32 RGB Panel
+
 
 The shift Array code is from this Tutorial page:
 
@@ -16,3 +39,123 @@ The used module is a 16 segment element with one decimal dot (http://www.adafrui
 UHR (Ultra High Red) version
 
 We used a single in-line i(SIL) resistor to make our lives easy. http://en.wikipedia.org/wiki/Resistor
+The LED Panel is a 16x32 panel. It is to be used vertically.
+
+
+^ UP
+
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *|
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -|
+
+We flipped it 90 degrees ClockWise (CW)
+> UP
+|- - - - - - - - - - - - - - - -|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|* * * * * * * * * * * * * * * *|
+|- - - - - - - - - - - - - - - -|
+
+The Library of course uses the regular orientation. Consider this:
+
+matrix.drawRect(x,y, sizeX, sizeY, matrix.Color888(255,255,255));
+
+x,y are the starting co-ordinates starting from top-left
+
+sizeX, sizeY will be the size of the rectangle we want to draw.
+
+Everything is in pixel (px) logically 1px == 1LED
+
+The ColorXXX() functions are used to define the color "spectrum"
+
+Color333() - 3bit color representation
+Color444() - 4bit color representation
+Color888() - 8bit color representation
+
+To simulate a grayscale is pretty difficult and needs some hacking:
+
+http://upload.wikimedia.org/wikipedia/commons/9/93/256colour.png
+
+We have 20 windows at our disposal.
+
+I chose the cheapeast and dirties path possible for the PoC and the following map gives you an overview of the addressing of the windows on the mock-up:
+
+> UP
+|- - - - - - - - - - - - - - - -|
+|X X X X X X X X X X X X X X X X|
+|X       X       X       X      |
+|X  W    X  W    X  W    X  W   |
+|X       X       X       X      |
+|X    1  X    6  X   11  X   16 |
+|X       X       X       X      |
+|X X X X X X X X X X X X X X X X|
+|X       X       X       X      |
+|X  W    X  W    X  W    X  W   |
+|X       X       X       X      |
+|X    2  X    7  X   12  X   17 |
+|X       X       X       X      |
+|X X X X X X X X X X X X X X X X|
+|X       X       X       X      |
+|X  W    X  W    X  W    X  W   |
+|X       X       X       X      |
+|X    3  X    8  X   13  X   18 |
+|X       X       X       X      |
+|X X X X X X X X X X X X X X X X|
+|X       X       X       X      |
+|X  W    X  W    X  W    X  W   |
+|X       X       X       X      |
+|X    4  X    9  X   14  X   19 |
+|X       X       X       X      |
+|X X X X X X X X X X X X X X X X|
+|X       X       X       X      |
+|X  W    X  W    X  W    X  W   |
+|X       X       X       X      |
+|X    5  X   10  X   15  X   20 |
+|X       X       X       X      |
+|X X X X X X X X X X X X X X X X|
+|X X X X X X X X X X X X X X X X|
+|X X X X X X X X X X X X X X X X|

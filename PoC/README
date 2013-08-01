@@ -10,6 +10,8 @@ PoC/
 = This plays pre-defined patterns
 -> life
 = Game of Life
+-> leap
+= Leap motion controller demo
 -> cheap_random
 = dirty hack to show random windows
 -> 7seg
@@ -25,6 +27,7 @@ PoC/
 -> testcolors
 = Test the 16x32 RGB Panel
 
+Leap motion Python issues: under OS-X make sure you use the stock Python interpreter (/usr/bin/python)
 
 The shift Array code is from this Tutorial page:
 

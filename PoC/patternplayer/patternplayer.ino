@@ -26,7 +26,7 @@ void setup() {
 int x=0;
 int y=0;
 int pos=0;
-int patternSwitcher=0;
+int patternSwitcher=5;
 while ( true ) {
   switch(patternSwitcher) {
     case 0:
@@ -60,17 +60,31 @@ while ( true ) {
       break;
      }
      case 5:
+     x=y=0;patternSwitcher++;
      case 6:
      case 7:
      case 8: {
        // top bottom line wiper
+      myWindows(xyToWindow(x,y), brightness, red, green, blue);
+      myWindows(xyToWindow(x+1,y), brightness, red, green, blue);
+      myWindows(xyToWindow(x+2,y), brightness, red, green, blue);
+      myWindows(xyToWindow(x+3,y), brightness, red, green, blue);
+        if(y++>3) {
+          y=0;
+          patternSwitcher++;
+        }
+      }
+      
+      break;
+     case 9: 
+       x=y=0;patternSwitcher++;
+     case 10:
        for(x=0;x<4;x++)
-         myWindows(xyToWindow(x,y), brightness, red, green, blue);
-       if(y++>3) {
-         y=0;
-         patternSwitcher++;
-       }
-     }
+         for(y=0;y<5;y++)
+           myWindows(xyToWindow(x,y), brightness, red, green, blue);  
+         patternSwitcher++;  
+       break;
+     
   default:
         patternSwitcher=0;
       break;      

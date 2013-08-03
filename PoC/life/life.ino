@@ -13,16 +13,16 @@
 #define C   A2
 RGBmatrixPanel matrix(A, B, C, CLK, LAT, OE, false);
 
-// number of windows in a row (e.g. 12)
-#define MAXX 4
-// number of stories, eg 8
-#define MAXY 5
+// number of cells in a row (e.g. 12)
+#define MAXX 8
+// number of rows, eg 8
+#define MAXY 7
 
 
 int lifearray[MAXX][MAXY];
 void setup() {
   matrix.begin();
-
+  Serial.begin(9600);
   //myWindows(random(1,21));
   int window = 13;
   int brightness = 255;
@@ -34,34 +34,59 @@ for(int y=0;y<MAXY;y++)
   for(int x=0;x<MAXX;x++)
     lifearray[x][y]=0;
 
+delay(1000);
 // now load a pattern into the life buffer
 //  X   => 1,0
 // X    => 0,1
 // XXX  => 0-2,2
-int p[]={1,0,0,1,0,2,1,2,2,2,-1};
-
+// glider
+ int p[]={1,0,0,1,0,2,1,2,2,2,-1};
+// block
+// int p[]={1,2,2,2,2,1,1,1,-1};
+// flipper
+// int p[]={1,2,2,2,3,2,-1};
+// pento1000
+// X
+// XXX
+//  X
+// int p[]={0,0,1,0,1,1,1,2,2,1,-1};
+  
+  
 int n=0;
 while (p[n]!=-1)
 {
   lifearray[p[n]][p[n+1]]=1;
+        myWindows(xyToWindow(p[n],p[n+1]), brightness, red, green, blue);
   n+=2;
 }
 
+
+delay(2000);
 int x=0;
 int y=0;
 while ( true ) {
+  delay(100);
+      int lifebuf[MAXX][MAXY];
+
+      for(int j=0;j<MAXY;j++) {
+        for(int i=0;i<MAXX;i++) {
+          lifebuf[i][j]=lifearray[i][j];
+          if(lifearray[i][j]==1) {
+            Serial.print("X");
+          } else {
+            Serial.print(".");
+          }
+        }
+        Serial.println("");
+      }
+
   for(y=0;y<MAXY;y++)
     for(x=0;x<MAXX;x++) 
     {
       int count=0;
-      int lifebuf[MAXX][MAXY];
       // copy the playfield into temp buffer
-      for(int j=0;j<MAXY;j++)
-        for(int i=0;i<MAXX;i++)
-          lifebuf[i][j]=lifearray[i][j];
-
       // now we count cells neighbors
-      count+=lifebuf[(x-1+MAXX)%MAXX][(y-1+MAXY)%MAXY];   // top left (wrap around)
+      count =lifebuf[(x-1+MAXX)%MAXX][(y-1+MAXY)%MAXY];   // top left (wrap around)
       count+=lifebuf[x]              [(y-1+MAXY)%MAXY];   // top
       count+=lifebuf[(x+1+MAXX)%MAXX][(y-1+MAXY)%MAXY];   // top right
       count+=lifebuf[(x-1+MAXX)%MAXX][y];                 // left
@@ -81,16 +106,18 @@ while ( true ) {
 
 
   // display the array
-  for(y=0;y<MAXY;y++)
-    for(x=0;x<MAXX;x++) {
+  for(y=0;y<5;y++)
+    for(x=0;x<4;x++) {
       if(lifearray[x][y]==1)
         myWindows(xyToWindow(x,y), brightness, red, green, blue);
+      else
+        myWindows(xyToWindow(x,y), brightness, 0,0,0);
     }
-     }
+  }
   delay(del);
   // fill the screen with 'black'
-  matrix.fillScreen(matrix.Color888(0, 0, 0));
-  matrix.swapBuffers(false);
+//  matrix.fillScreen(matrix.Color888(0, 0, 0));
+//  matrix.swapBuffers(false);
 }
 
 

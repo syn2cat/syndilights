@@ -87,25 +87,32 @@ int d;
   } 
   switch (segment) {
   case 0:
-    matrix.drawLine(0,d+1,0,d+2, matrix.Color888(r,g,b));
+//    matrix.drawLine(0,d+1,0,d+2, matrix.Color888(r,g,b));
+    matrix.drawLine(0,d,0,d+3, matrix.Color888(r,g,b));
     break;
   case 1:
-    matrix.drawLine(1,d,2,d, matrix.Color888(r,g,b));
+//    matrix.drawLine(1,d,2,d, matrix.Color888(r,g,b));
+    matrix.drawLine(0,d,3,d, matrix.Color888(r,g,b));
     break;
   case 2:
-    matrix.drawLine(4,d,5,d, matrix.Color888(r,g,b));
+//    matrix.drawLine(4,d,5,d, matrix.Color888(r,g,b));
+    matrix.drawLine(3,d,6,d, matrix.Color888(r,g,b));
     break;
   case 3:
-    matrix.drawLine(6,d+1,6,d+2, matrix.Color888(r,g,b));
+//    matrix.drawLine(6,d+1,6,d+2, matrix.Color888(r,g,b));
+    matrix.drawLine(6,d,6,d+3, matrix.Color888(r,g,b));
     break;
   case 4:
-    matrix.drawLine(4,d+3,5,d+3, matrix.Color888(r,g,b));
+//    matrix.drawLine(4,d+3,5,d+3, matrix.Color888(r,g,b));
+    matrix.drawLine(3,d+3,6,d+3, matrix.Color888(r,g,b));
     break;
   case 5:
-    matrix.drawLine(1,d+3,2,d+3, matrix.Color888(r,g,b));
+//    matrix.drawLine(1,d+3,2,d+3, matrix.Color888(r,g,b));
+    matrix.drawLine(0,d+3,3,d+3, matrix.Color888(r,g,b));
     break;
   case 6:
-    matrix.drawLine(3,d+1,3,d+2, matrix.Color888(r,g,b));
+//    matrix.drawLine(3,d+1,3,d+2, matrix.Color888(r,g,b));
+    matrix.drawLine(3,d,3,d+3, matrix.Color888(r,g,b));
     break;
   case 7:
     matrix.drawLine(7,d,7,d, matrix.Color888(r,g,b));
@@ -209,9 +216,16 @@ int printChar(int display, char c, int r, int g, int b) {
   segs=ascii2segments[c-32];   // get bit pattern what to light
   for(int i=8;i>=0;i--) {
     if(segs & (1<<i)) {
-      RGB7seg(display,i,r,g,b);
+      // RGB7seg(display,i,r,g,b);
     } else {
       RGB7seg(display,i,0,0,0);
+    }
+  }
+  for(int i=8;i>=0;i--) {
+    if(segs & (1<<i)) {
+      RGB7seg(display,i,r,g,b);
+    } else {
+      // RGB7seg(display,i,0,0,0);
     }
   }
 }
@@ -228,7 +242,7 @@ void loop() {
     for(int i=0; i<4; i++) {
 //      shiftOut(dataPin, clockPin, steve_converter(ascii2segments[dataOut[i]-32])); 
 //      Serial.print(dataOut[i]);
-      printChar(i,dataOut[i],255,255,sin(j/200)*256);
+      printChar(i,dataOut[i],255*(i%2),255*(i%3),sin(j/200)*100)+55;
     }
     //return the latch pin high to signal chip that it 
     //no longer needs to listen for information
@@ -244,10 +258,10 @@ void loop() {
   int i;
   i=0;
   while(scrolltext[i+4] != 0) {
-      printChar(0,scrolltext[i],255,255,255);
-      printChar(1,scrolltext[i+1],255,255,255);
-      printChar(2,scrolltext[i+2],255,255,255);
-      printChar(3,scrolltext[i+3],255,255,255);
+      printChar(0,scrolltext[i],255*(i%3),255*(i%2),255);
+      printChar(1,scrolltext[i+1],255*((i+1)%3),255*((i+1)%2),200);
+      printChar(2,scrolltext[i+2],255*((i+2)%3),255*((i+2)%2),150);
+      printChar(3,scrolltext[i+3],255*((i+3)%3),255*((i+3)%2),100);
     delay(200);
     i++;
   }

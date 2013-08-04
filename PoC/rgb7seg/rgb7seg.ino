@@ -23,10 +23,18 @@ void setup() {
   // White is 7,7,7 (3bit) 255,255,255 (8bit)
   uint8_t red=255, green=255, blue=255;
 
-
+int d=0;
+int s=0;
 while ( true ) {
-  myWindows(16, brightness, red, green, blue);
-  delay(del);
+  //  matrix.drawLine(4,12,5,12, matrix.Color888(255,255,255));
+  RGB7seg(d,s,255,255,0);
+  if(s++>6) {
+    s=0;
+    if(d++>2) {
+      d=0;
+    }
+  }    
+  delay(20);
   // fill the screen with 'black'
   matrix.fillScreen(matrix.Color888(0, 0, 0));
   matrix.swapBuffers(false);
@@ -35,7 +43,7 @@ while ( true ) {
 }
 
 
-intRGB7seg (int displayNR, int segment, int r, int g, int b) {
+int RGB7seg (int displayNR, int segment, int r, int g, int b) {
 // segment is standard numbered, top=0, DP=7
 // displayNR is the display number, counted from the left 0, 1, 2 ,3
 // simulated 7seg is like this:
@@ -69,35 +77,35 @@ int d;
     d=0;
     break;
   default:
-    return;
+    return 1;
   } 
   switch (segment) {
   case 0:
-    matrix.fillRect(0,d+1,0,d+2, matrix.Color888(r,g,b));
+    matrix.drawLine(0,d+1,0,d+2, matrix.Color888(r,g,b));
     break;
   case 1:
-    matrix.fillRect(1,d,2,d, matrix.Color888(r,g,b));
+    matrix.drawLine(1,d,2,d, matrix.Color888(r,g,b));
     break;
   case 2:
-    matrix.fillRect(4,d,5,d, matrix.Color888(r,g,b));
+    matrix.drawLine(4,d,5,d, matrix.Color888(r,g,b));
     break;
   case 3:
-    matrix.fillRect(6,d+1,6,d+2, matrix.Color888(r,g,b));
+    matrix.drawLine(6,d+1,6,d+2, matrix.Color888(r,g,b));
     break;
   case 4:
-    matrix.fillRect(4,d+3,5,d+3, matrix.Color888(r,g,b));
+    matrix.drawLine(4,d+3,5,d+3, matrix.Color888(r,g,b));
     break;
   case 5:
-    matrix.fillRect(1,d+3,2,d+3, matrix.Color888(r,g,b));
+    matrix.drawLine(1,d+3,2,d+3, matrix.Color888(r,g,b));
     break;
   case 6:
-    matrix.fillRect(3,d+1,3,d+2, matrix.Color888(r,g,b));
+    matrix.drawLine(3,d+1,3,d+2, matrix.Color888(r,g,b));
     break;
   case 7:
-    matrix.fillRect(7,d,7,d, matrix.Color888(r,g,b));
+    matrix.drawLine(7,d,7,d, matrix.Color888(r,g,b));
     break;
   default:
-    return;
+    return 1;
   }
 }
 

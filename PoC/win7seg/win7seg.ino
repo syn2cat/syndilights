@@ -116,7 +116,7 @@ int d;
     matrix.drawLine(3,d,3,d+3, matrix.Color888(r,g,b));
     break;
   case 7:
-    matrix.drawLine(6,d,6,d, matrix.Color888(r,g,b));
+    matrix.drawLine(7,d,7,d, matrix.Color888(r,g,b));
     break;
   default:
     return 1;
@@ -132,19 +132,19 @@ switch (w) {
     break;
   case 2:
     // Window 2
-    matrix.fillRect(7+3,12,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(7+2,12,4,3, matrix.Color888(r,g,b));
     break;
   case 3:
     // Window 3
-    matrix.fillRect(13+3,12,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(13+2,12,4,3, matrix.Color888(r,g,b));
     break;
   case 4:
     // Window 4
-    matrix.fillRect(19+3,12,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(19+2,12,4,3, matrix.Color888(r,g,b));
     break;
   case 5:
     // Window 5
-    matrix.fillRect(25+3,12,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(25+2,12,4,3, matrix.Color888(r,g,b));
     break;
   case 6:
     // Window 6
@@ -152,19 +152,19 @@ switch (w) {
     break;
   case 7:
     // Window 7
-    matrix.fillRect(7+3,8,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(7+2,8,4,3, matrix.Color888(r,g,b));
     break;
   case 8:
     // Window 8
-    matrix.fillRect(13+3,8,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(13+2,8,4,3, matrix.Color888(r,g,b));
     break;
   case 9:
     // Window 9
-    matrix.fillRect(19+3,8,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(19+2,8,4,3, matrix.Color888(r,g,b));
     break;
   case 10:
     // Window 10
-    matrix.fillRect(25+3,8,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(25+2,8,4,3, matrix.Color888(r,g,b));
     break;
   case 11:
     // Window 11
@@ -172,19 +172,19 @@ switch (w) {
     break;
   case 12:
     // Window 12
-    matrix.fillRect(7+3,4,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(7+2,4,4,3, matrix.Color888(r,g,b));
     break;
   case 13:
     // Window 13
-    matrix.fillRect(13+3,4,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(13+2,4,4,3, matrix.Color888(r,g,b));
     break;
   case 14:
     // Window 14
-    matrix.fillRect(19+3,4,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(19+2,4,4,3, matrix.Color888(r,g,b));
     break;
   case 15:
     // Window 15
-    matrix.fillRect(25+3,4,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(25+2,4,4,3, matrix.Color888(r,g,b));
     break;
   case 16:
     // Window 16
@@ -192,19 +192,19 @@ switch (w) {
     break;
   case 17:
     // Window 17
-    matrix.fillRect(7+3,0,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(7+2,0,4,3, matrix.Color888(r,g,b));
     break;
   case 18:
     // Window 18
-    matrix.fillRect(13+3,0,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(13+2,0,4,3, matrix.Color888(r,g,b));
     break;
   case 19:
     // Window 19
-    matrix.fillRect(19+3,0,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(19+2,0,4,3, matrix.Color888(r,g,b));
     break;
   case 20:
     // Window 20
-    matrix.fillRect(25+3,0,4,3, matrix.Color888(r,g,b));
+    matrix.fillRect(25+2,0,4,3, matrix.Color888(r,g,b));
     break;
 
   default:
@@ -243,7 +243,7 @@ int xyToWindow(int x, int y) {
 
 
 
-const char* scrolltext="    WELCOME    S Y N 2 C A T   IN   COLLABORATION   WITH  G R A F F I T I  R E S E A R C H   L A B   L U X E M B O U R G    PRESENTS     S Y N 2 L I G H T S        ";
+const char* scrolltext="    WELCOME ... . . .   S Y N 2 C A T   IN   COLLABORATION   WITH  G R A F F I T I  R E S E A R C H   L A B   L U X E M B O U R G    PRESENTS     S Y N 2 L I G H T S        ";
 //  const char* scrolltext="    WELCOME    S Y N 2 C A T        ";
 
 int myclock;
@@ -269,7 +269,6 @@ uint8_t red=255, green=255, blue=255;
 int brightness = 255;
 int nextwclock=0;
 void loop() {
-  delay(1);
   myclock=millis();   // ever running clock
   // manage the 7 segment display routines
   //  Serial.print("state= ");Serial.println(state7);
@@ -284,15 +283,19 @@ void loop() {
 //      Serial.print("counter= ");Serial.println(j);
       //count down routine
       // send data, left char first
-      char dataOut[5];
-      sprintf(dataOut,"%04d",j);
-      for(int i=0; i<4; i++) {
-        printChar(i,dataOut[i],255*(i%2),255*(i%3),sin(j/200)*100)+55;
-      }
-      j--;
+      if(myclock > nextdclock) {
+        nextdclock=myclock+5;
+        char dataOut[5];
+        sprintf(dataOut,"%04d",j);
+        for(int i=0; i<4; i++) {
+          printChar(i,dataOut[i],255*(i%2),255*(i%3),sin(j/200)*100)+55;
+        }
+        
+        j--;
 //      Serial.print("    counter= ");Serial.println(j);
-      if(j<0) {state7++ ; }
-      matrix.swapBuffers(false);
+        if(j<0) {state7++ ; }
+       // matrix.swapBuffers(false);
+      }
       break;
     }
    
@@ -303,7 +306,8 @@ void loop() {
     }
     case 3: { 
       // scroller
-      if(myclock%200 == 0) {
+      if(myclock > nextdclock) {
+        nextdclock=myclock+200;
         printChar(0,scrolltext[i],255*(i%3),255*(i%2),255);
         printChar(1,scrolltext[i+1],255*((i+1)%3),255*((i+1)%2),200);
         printChar(2,scrolltext[i+2],255*((i+2)%3),255*((i+2)%2),150);
@@ -321,7 +325,8 @@ void loop() {
     }
     case 5: { 
 //      matrix.fillScreen(matrix.Color888(0, 0, 0));
-      if(myclock%200 == 0) {
+      if(myclock > nextdclock) {
+        nextdclock=myclock+200;
         // pattern player
         // coords are simply: display, segment
         int pats[]={0,5,0,1,1,5,1,1,2,5,2,1,3,5,3,1,
@@ -341,7 +346,7 @@ void loop() {
   } // esac 
 
 if(myclock>nextwclock) {
-  nextwclock=myclock+50;
+  nextwclock=myclock+120;
   switch(patternSwitcher) {
     case 0:
     case 1:   // this will repeat the following patterns 3 times

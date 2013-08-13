@@ -1,0 +1,186 @@
+<html><head>
+<title>Syn2lights simulator</title>
+</head>
+<body>
+    <canvas id="myCanvas" width="1437" height="1051"></canvas>
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var imageObj = new Image();
+      imageObj.src = 'building-isometric_b.jpg';
+//      windowTab[0][0]={x:488,y:265};
+//      windowTab[1][0]={x:528,y:265};
+      function lightWindow(x,y,val) {
+        context.beginPath();
+        context.rect(488+40.3*x, 265+87.4*y, 23, 34);
+        context.fillStyle = 'rgb('+val+','+val+','+val+')';
+        context.fill();
+      }
+      function lightSegment(display,segment,r,g,b) {
+        context.beginPath();
+        segx=488+40.3*display;
+	segy=176
+	switch(segment) { 
+        case 0:  //segment 0
+	  context.moveTo(segx,segy);
+	  context.lineTo(segx+23,segy);
+	  break;
+        case 1:  
+	  context.moveTo(segx+23,segy);
+	  context.lineTo(segx+23,segy+17);
+	  break;
+        case 2:  
+	  context.moveTo(segx+23,segy+18);
+	  context.lineTo(segx+23,segy+34);
+	  break;
+        case 3:  
+	  context.moveTo(segx,segy+34);
+	  context.lineTo(segx+23,segy+34);
+	  break;
+        case 4:  
+	  context.moveTo(segx,segy+18);
+	  context.lineTo(segx,segy+34);
+	  break;
+        case 5:  
+	  context.moveTo(segx,segy);
+	  context.lineTo(segx,segy+17);
+	  break;
+        case 6:  
+	  context.moveTo(segx,segy+17);
+	  context.lineTo(segx+23,segy+17);
+	  break;
+        case 7:  
+	  context.moveTo(segx+23,segy+38);
+	  context.lineTo(segx+23,segy+42);
+	  break;
+	}
+	context.lineWidth=5;
+        context.strokeStyle = 'rgb('+r+','+g+','+b+')';
+        context.stroke();
+      }
+      imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0);
+
+      for(x=0;x<12;x++)
+        for(y=0;y<8;y++)
+          lightWindow(x,y,0);
+
+i=0;
+j=0;
+oldi=oldj=0;
+colwave=0;
+d=0;
+s=0;
+oldd=olds=0;
+       setInterval("loop()",100);
+      };
+
+var ascii2segments = new Array ( 
+ 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x02, 
+ 0x80, 0x0f, 0x80, 0x80, 0x04, 0x40, 0x80, 0x80, 
+ 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 
+ 0x7F, 0x6F, 0x80, 0x80, 0x80, 0x48, 0x80, 0x27, 
+ 0x80, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71, 0x3d, 
+ 0x76, 0x30, 0x1E, 0x76, 0x38, 0x15, 0x37, 0x3f, 
+ 0x73, 0x67, 0x31, 0x6d, 0x78, 0x3e, 0x1C, 0x2A, 
+ 0x76, 0x6e, 0x5b, 0x39, 0x80, 0x0F, 0x80, 0x08, 
+ 0x80, 0x5f, 0x7c, 0x58, 0x5e, 0x7b, 0x71, 0x6F, 
+ 0x74, 0x30, 0x0E, 0x76, 0x06, 0x15, 0x54, 0x5c, 
+ 0x73, 0x67, 0x50, 0x6d, 0x78, 0x1c, 0x1c, 0x2A, 
+ 0x76, 0x6e, 0x5b, 0x39, 0x80, 0x0F, 0x80, 0x08 
+);
+
+scrolltext="    WELCOME ... . . .   S Y N 2 C A T   IN   COLLABORATION   WITH  G R A F F I T I  R E S E A R C H   L A B   L U X E M B O U R G    PRESENTS     S Y N 2 L I G H T S        ç";
+
+function printChar(display, c, r, g, b) {
+  var segs;
+  var i;
+  //console.log("char: ",c);
+  //console.log("val: ",c.charCodeAt()-32);
+  segs=ascii2segments[c.charCodeAt()-32];   // get bit pattern what to light
+  //console.log("segs: ",segs);
+  for(i=8;i>=0;i--) {
+    if(segs & (1<<i)) {
+      lightSegment(display,i,r,g,b);
+    } else {
+      lightSegment(display,i,0,0,0);
+    }
+  }
+}
+
+var state7=0;
+var j=0;
+var myclock=0;
+function loop() {
+  // 7 segments colorful sequence
+
+  switch(state7) {
+    case 0: {
+      // init of counter rout
+      j=2560;
+	j=22;
+      state7++;
+    }
+    case 1: {
+      //count down routine
+      // send data, left char first
+      //if(myclock > nextdclock) {
+      if(myclock == myclock) {
+        nextdclock=myclock+5;
+        var dataOut;
+        dataOut=j.toString();
+        for(var i=0; i<4; i++) {
+   //       printChar(i,dataOut.substring(i,i+1),255*(i%2),255*(i%3),Math.sin(j/200)*100)+55;
+          printChar(i,dataOut.substring(i,i+1),255*(i%2),255*(i%3),Math.floor(Math.sin(j/200)*100)+55);
+        }
+        j--;
+        if(j<0) {state7++ ; }
+      }
+      break;
+    }
+    case 2: {
+      // scroller init
+      state7++;
+      si=0;
+    }
+    case 3: { 
+      // scroller
+      // if(myclock > nextdclock) {
+      if(myclock == myclock) {
+        nextdclock=myclock+200;
+	for(sj=0;sj<12;sj++) {
+          printChar(sj,scrolltext.substring(si+sj,si+sj+1),255*((si+1)%3),255*((si+1)%2),200);
+        }
+        if(scrolltext.substring(si+5) == 'ç') { state7++ ; }
+        si++;
+      }
+      break;
+    }
+
+    default: {
+      state7=0;
+    }
+  } // esac 
+
+
+  //lightSegment(oldd,olds,0,0,0);
+  // printChar( d, "A", 255,0,0);
+  //lightSegment(d,s,255,Math.floor((Math.sin(colwave/30)+1)*127),Math.floor((Math.cos(colwave/17)+1)*127));
+colwave++;
+  // windows sliding light
+console.log("wi=",wi,"wj=",wj);
+  lightWindow(oldi,oldj,0)   // switch off previous window
+  lightWindow(wi,wj,Math.floor((Math.sin(colwave/77)+1)*127))       // switch on new window
+  oldi=wi;
+  oldj=wj;
+  wi++;  
+  if(wi>=12) {
+    wi=0;
+    wj++;
+    if(wj>=8) {
+      wi=wj=0
+    }
+  }
+}
+    </script>
+</body></html>

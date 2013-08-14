@@ -1,0 +1,66 @@
+
+<!DOCTYPE HTML>
+<html> 
+<head> 
+ 
+<script src="codef_core.js"></script> 
+<script src="codef_scrolltext.js"></script> 
+
+<script> 
+
+var myimage=new image('building-isometric_b.jpg');
+var myfont = new image('font.png');
+
+var mycanvas;
+var mycanvas2;
+var myscrolltext;
+
+ 
+function init(){
+	mycanvas=new canvas(719*2,526*2,"main");
+
+	mycanvas2=new canvas(12,9,"main");
+	myfont.initTile(8,8,32);
+	myscrolltext = new scrolltext_horizontal();
+	myscrolltext.scrtxt="SYN2LIGHTS RULEZ    ";
+	myscrolltext.init(mycanvas2,myfont,0.5);
+
+
+	go();
+}
+function lightWindow(x,y,val) {
+	mycanvas.quad(488+40.3*x, 265+87.4*y, 23, 34,val);
+}
+
+function lightall(){
+	var imgPixels = mycanvas2.contex.getImageData(0, 0, 12, 9);
+
+	for(var x=0;x<12;x++){
+        	for(var y=0;y<=8;y++){
+			var i = ((y) * 4) * 12 + x * 4;
+			var shit = imgPixels.data[i];
+          		lightWindow(x,y,'rgb('+shit+','+shit+','+shit+')');
+		}
+	}
+
+}
+
+function go(){
+        myimage.draw(mycanvas,0,0);
+	
+	lightall();
+
+	mycanvas2.fill('#000000');
+	myscrolltext.draw(0);	
+	requestAnimFrame( go );
+}
+ 
+</script> 
+</head> 
+<body onLoad="init();">
+<br>
+<br>
+<center><div id="main"></div></center>
+</body> 
+</html>
+

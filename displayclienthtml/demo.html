@@ -107,18 +107,44 @@ function printChar(display, c, r, g, b) {
     }
   }
 }
+var path = new Array  ( 
+  0, 0,255,
+  0, 1,255,
+  0, 2,255,
+  0, 3,255,
+  1, 3,255,
+  2, 3,255,
+  3, 3,255,
+  4, 3,255,
+  4, 2,255,
+  4, 1,255,
+  4, 0,255,
+  3, 0,255,
+  2, 0,255,
+  1, 0,255,
+  0, 0,255,
+  0, 0,100,
+  0, 0,255,
+  0, 0,100,
+  0, 0,255,
+  0, 0,100,
+  0, 0,255,
+ -1,-1,-1);
 
 var state7=0;
-var j=0;
+var counter=0;
 var myclock=0;
+var wi=0;
+var wj=0;
+lastpos=pos=0
+patternSwitcher=3
 function loop() {
   // 7 segments colorful sequence
 
   switch(state7) {
     case 0: {
       // init of counter rout
-      j=2560;
-	j=22;
+      counter=2560;
       state7++;
     }
     case 1: {
@@ -128,13 +154,14 @@ function loop() {
       if(myclock == myclock) {
         nextdclock=myclock+5;
         var dataOut;
-        dataOut=j.toString();
+        temp=counter.toString();
+        dataOut=("0000"+temp).substring(temp.length,temp.length+4);
         for(var i=0; i<4; i++) {
-   //       printChar(i,dataOut.substring(i,i+1),255*(i%2),255*(i%3),Math.sin(j/200)*100)+55;
-          printChar(i,dataOut.substring(i,i+1),255*(i%2),255*(i%3),Math.floor(Math.sin(j/200)*100)+55);
+   //       printChar(i,dataOut.substring(i,i+1),255*(i%2),255*(i%3),Math.sin(counter/200)*100)+55;
+          printChar(i,dataOut.substring(i,i+1),255*(i%2),255*(i%3),Math.floor(Math.sin(counter/200)*100)+55);
         }
-        j--;
-        if(j<0) {state7++ ; }
+        counter-=11;
+        if(counter<0) {state7++ ; }
       }
       break;
     }
@@ -149,7 +176,7 @@ function loop() {
       if(myclock == myclock) {
         nextdclock=myclock+200;
 	for(sj=0;sj<12;sj++) {
-          printChar(sj,scrolltext.substring(si+sj,si+sj+1),255*((si+1)%3),255*((si+1)%2),200);
+          printChar(sj,scrolltext.substring(si+sj,si+sj+1),Math.floor(Math.sin(si/50)*200)+55,si%255,255);
         }
         if(scrolltext.substring(si+5) == 'ç') { state7++ ; }
         si++;
@@ -163,22 +190,49 @@ function loop() {
   } // esac 
 
 
-  //lightSegment(oldd,olds,0,0,0);
-  // printChar( d, "A", 255,0,0);
-  //lightSegment(d,s,255,Math.floor((Math.sin(colwave/30)+1)*127),Math.floor((Math.cos(colwave/17)+1)*127));
-colwave++;
-  // windows sliding light
-console.log("wi=",wi,"wj=",wj);
-  lightWindow(oldi,oldj,0)   // switch off previous window
-  lightWindow(wi,wj,Math.floor((Math.sin(colwave/77)+1)*127))       // switch on new window
-  oldi=wi;
-  oldj=wj;
-  wi++;  
-  if(wi>=12) {
-    wi=0;
-    wj++;
-    if(wj>=8) {
-      wi=wj=0
+  switch(patternSwitcher) {
+    case 0:
+    case 1:   // this will repeat the following patterns 3 times
+    case 2: {
+      // scan through line by line from top to bottom
+
+      colwave++;
+      lightWindow(oldi,oldj,0)   // switch off previous window
+      lightWindow(wi,wj,Math.floor((Math.sin(colwave/77)+1)*127))       // switch on new window
+      oldi=wi;
+      oldj=wj;
+      wi++;  
+      if(wi>=12) {
+        wi=0;
+        wj++;
+        if(wj>=8) {
+          wi=wj=0;
+          patternSwitcher++;
+        }
+      }
+      break;
+    }
+    case 3: {
+      lightWindow(oldi,oldj,0);   // switch off previous window
+      patternSwitcher++;
+      break;
+    }
+    case 4:
+    case 5:
+    case 6:
+    case 7: {
+            // move a pixel around a path
+      lightWindow(path[lastpos],path[lastpos+1], 0);
+console.log("p=",pos,"x=",path[pos],"y=",path[pos+1],"b=",path[pos+3])
+      lightWindow(path[pos], path[pos+1], path[pos+2]);
+      lastpos=pos;
+      pos+=3; 
+      if(path[pos]==-1) { pos=0; patternSwitcher++; }
+      break;
+
+    }
+    default: {
+      patternSwitcher=0
     }
   }
 }

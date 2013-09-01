@@ -1,0 +1,6 @@
+this contains currently standalone html pages showing off how the displayclient looks like
+
+the final setup will be a central server using node.js which gets it's data from the frameserver
+and manages the multiple connections to web clients visualizing the virtual building
+
+howto install node js: http://howtonode.org/how-to-install-nodejs

@@ -4,20 +4,28 @@
 <meta charset="utf-8">
 <title>Web socket test</title>	
 <script type="text/javascript">
-	var ws = new WebSocket('ws://localhost:1234', 'echo-protocol');	
+
+	var ws;
 
 	function sendMessage(){
 		var message = document.getElementById('message').value;
 		ws.send(message);
 	}
 
-	ws.addEventListener("message", function(e) {
-		// The data is simply the message that we're sending back
-		var msg = e.data;
+	function connection() {
+		ws = new WebSocket('ws://localhost:1234', 'echo-protocol');	
 
-		// Append the message
-		document.getElementById('chatlog').innerHTML += '<br>' + msg;
-	});
+		ws.addEventListener("message", function(e) {
+			// The data is simply the message that we're sending back
+			var msg = e.data;
+
+			// Append the message
+			document.getElementById('chatlog').innerHTML += '<br>' + msg;
+		});
+
+		document.getElementById('connect_button').style.display = 'none';
+	}
+
 
 </script>
 </head>
@@ -27,5 +35,6 @@
 	<input type='button' value='send message' onclick='sendMessage()'/>
 	<div>Received from server:</div>
 	<div id='chatlog'></div>
+	<input id='connect_button' type='button' value='Connect to server using websockets' onclick='connection()'/>
 </body>
 </html>

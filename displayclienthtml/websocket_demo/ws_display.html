@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Web socket test</title>	
+<script type="text/javascript">
+	var ws = new WebSocket('ws://localhost:1234', 'echo-protocol');	
+
+	ws.addEventListener("message", function(e) {
+		// The data is simply the message that we're sending back
+		var msg = e.data;
+
+		// Append the message
+		document.getElementById('chatlog').innerHTML = '<pre>' + msg + '</pre>';
+	});
+
+</script>
+</head>
+<body>
+	<div>Received from server:</div>
+	<div id='chatlog'></div>
+</body>
+</html>

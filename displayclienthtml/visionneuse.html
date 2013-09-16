@@ -11,16 +11,43 @@
 		var message = document.getElementById('message').value;
 		ws.send(message);
 	}
-
+// this displays a standard frame
+// header: 10 bytes. must be "s2l\n<8<18 "
+// z buffer: 1 byte 
+// CR \n: 1 byte
+headersize=12;
 	function connection() {
 		ws = new WebSocket('ws://localhost:1234', 'echo-protocol');	
 
 		ws.addEventListener("message", function(e) {
-			// The data is simply the message that we're sending back
-			var msg = e.data;
-
-			// Append the message
-			document.getElementById('chatlog').innerHTML += '<br>' + msg;
+			// The data is the message from stdin of the server
+			var frame = e.data;
+                        // we got a frame here
+                        // the header is skipped (headersize)
+                        // we should test here if it's correct header
+                        // first the windows 8*(12*4+1)  (8 rows of 12 windows with 4 valus plus a \n per row)
+                        for(y=0;y<8;y++) 
+                          for(x=0;x<12;x++) {
+                            r=frame[headersize+y*(x*4+1)]  // 4 because RGBA (we ignore A)
+                            g=frame[headersize+y*(x*4+1)]
+                            b=frame[headersize+y*(x*4+1)]
+//console.log("put on d="+d+" s="+s+" val="+r+","+g+","+b+"="+b.charCodeAt(0))
+                            lightWindow(x,y,r.charCodeAt(0),g.charCodeAt(0),b.charCodeAt(0));
+                        }
+                        // now the 7 segments display
+                        // it contains 12*(8*4+1) bytes for the 7 segments
+                        // bytes012: color of segment0, display0
+                        // bytes456: color of segment1, display0
+                        // bytes89a: color of segment2, display0
+                        headersize+=8*(12*4+1)
+                        for(d=0;d<12;d++)
+                          for(s=0;s<8;s++) {
+                            r=frame[headersize+d*(8*4+1)+s*4+0]  // 4 because RGBA (we ignore A)
+                            g=frame[headersize+d*(8*4+1)+s*4+1]
+                            b=frame[headersize+d*(8*4+1)+s*4+2]
+//console.log("put on d="+d+" s="+s+" val="+r+","+g+","+b+"="+b.charCodeAt(0))
+                            lightSegment(d,s,r.charCodeAt(0),g.charCodeAt(0),b.charCodeAt(0));
+                          }
 		});
 
 		document.getElementById('connect_button').style.display = 'none';
@@ -30,6 +57,101 @@
 </script>
 </head>
 <body onload=connection()>
+    <canvas id="myCanvas" width="1437" height="1051"></canvas>
+    <script>
+      var canvas = document.getElementById('myCanvas');
+      var context = canvas.getContext('2d');
+      var imageObj = new Image();
+      imageObj.src = 'building-isometric_night.jpg';
+//      windowTab[0][0]={x:488,y:265};
+//      windowTab[1][0]={x:528,y:265};
+      function lightWindowBW(x,y,r,g,b) {
+        luminance = 0.299*r + 0.587*g + 0.114*Bb 
+        context.beginPath();
+        context.rect(488+40.3*x, 265+87.4*y, 23, 34);
+        context.fillStyle = 'rgb('+luminance+','+luminance+','+luminance+')';
+        context.fill();
+      }
+      function lightWindow(x,y,r,g,b) {
+        context.beginPath();
+        context.rect(488+40.3*x, 265+87.4*y, 23, 34);
+        context.fillStyle = 'rgb('+r+','+g+','+b+')';
+        context.fill();
+      }
+      function lightSegment(display,segment,r,g,b) {
+        context.beginPath();
+        segx=488+40.3*display;
+	segy=176
+	switch(segment) { 
+        case 0:  //segment 0
+	  context.moveTo(segx,segy);
+	  context.lineTo(segx+23,segy);
+	  break;
+        case 1:  
+	  context.moveTo(segx+23,segy);
+	  context.lineTo(segx+23,segy+17);
+	  break;
+        case 2:  
+	  context.moveTo(segx+23,segy+18);
+	  context.lineTo(segx+23,segy+34);
+	  break;
+        case 3:  
+	  context.moveTo(segx,segy+34);
+	  context.lineTo(segx+23,segy+34);
+	  break;
+        case 4:  
+	  context.moveTo(segx,segy+18);
+	  context.lineTo(segx,segy+34);
+	  break;
+        case 5:  
+	  context.moveTo(segx,segy);
+	  context.lineTo(segx,segy+17);
+	  break;
+        case 6:  
+	  context.moveTo(segx,segy+17);
+	  context.lineTo(segx+23,segy+17);
+	  break;
+        case 7:  
+	  context.moveTo(segx+23,segy+38);
+	  context.lineTo(segx+23,segy+42);
+	  break;
+	}
+	context.lineWidth=5;
+        context.strokeStyle = 'rgb('+r+','+g+','+b+')';
+        context.stroke();
+      }
+var ascii2segments = new Array ( 
+ 0x00, 0x80, 0x80, 0x80, 0x80, 0x80, 0x80, 0x02, 
+ 0x80, 0x0f, 0x80, 0x80, 0x04, 0x40, 0x80, 0x80, 
+ 0x3F, 0x06, 0x5B, 0x4F, 0x66, 0x6D, 0x7D, 0x07, 
+ 0x7F, 0x6F, 0x80, 0x80, 0x80, 0x48, 0x80, 0x27, 
+ 0x80, 0x77, 0x7c, 0x39, 0x5e, 0x79, 0x71, 0x3d, 
+ 0x76, 0x30, 0x1E, 0x76, 0x38, 0x15, 0x37, 0x3f, 
+ 0x73, 0x67, 0x31, 0x6d, 0x78, 0x3e, 0x1C, 0x2A, 
+ 0x76, 0x6e, 0x5b, 0x39, 0x80, 0x0F, 0x80, 0x08, 
+ 0x80, 0x5f, 0x7c, 0x58, 0x5e, 0x7b, 0x71, 0x6F, 
+ 0x74, 0x30, 0x0E, 0x76, 0x06, 0x15, 0x54, 0x5c, 
+ 0x73, 0x67, 0x50, 0x6d, 0x78, 0x1c, 0x1c, 0x2A, 
+ 0x76, 0x6e, 0x5b, 0x39, 0x80, 0x0F, 0x80, 0x08 
+);
+
+      imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0);
+
+      for(x=0;x<12;x++)
+        for(y=-1;y<8;y++)
+          lightWindow(x,y,0,0,0);
+
+      };
+  // delete segment s on display d (0=left, 11=right)
+  // lightSegment(d,s,0,0,0);
+  // color r g b of segment s on display d
+  // lightSegment(d,s,r,g,b);
+  // windows light
+  // lightWindow(i,j,0)   // switch off window i (0=left) in row j (0=top)
+  // lightWindow(i,j,w)   // switch on new window with brightness w
+
+    </script>
 	<div>Received from server:</div>
 	<div id='chatlog'></div>
 </body>

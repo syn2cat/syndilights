@@ -13,3 +13,50 @@ Currently used versions of dependencies:
 -- Documentation: http://www.tldp.org/HOWTO/NCURSES-Programming-HOWTO/
 
 
+Frame format (frame=all infos to display the windows and segments)
+The frames are separated in UDP packets, so each packet has one frame
+
+Original format (this will be changed, see below):
+This is set in frameserver/defines.h
+* byte "abcdefghij"   (10 chars)
+* byte z (indicates z level. 1=the most backwards)
+* byte '\n'
+* byte windows (width*height*channels) (so this starts 12 bytes from beginning)
+* byte segments (displays*segments*channels)
+
+
+
+Proposed new format, to be able to treat a stream of frames
+* byte "s2l\n"
+* byte windows per row (i.e. max X) in ASCII.  in our case 12 => '<'
+* byte rows (i.e. max Y) in ASCII. in our case 8 => '8'
+* byte displays per row (usually same as windows per row) '<'
+* byte disprows (how many rows of 7 segment displays). In our case always '1'
+* byte segments per display (can be 7,8,14 ... depending on the hardware)
+* byte reserved (future use) currently always set to 0x20 ' '
+* byte z (indicates z level. 1=the most backwards) this is in binary...
+* byte '\n'
+* byte windows (channels*width+1)*height (so this starts 12 bytes from beginning)
+* byte segments displays*(channels*segments+1)*disprows
+
+channels??? Is always 4, means you send RGBA values. If the display is just
+greyscale the output from frameserver to display should be quantized 
+accordingly. Best done in the display code. E.g. the building is B/W, then
+render RGB to HUE in the display client. The html simulator could output
+it as is, or do the conversion via a toggle button on the webpage.
+
++1??? Well looks like in the frameserver code and in the clients the
+"lines" of each frame are separated by a nice \n character.
+And the 7 segment displays are each separated by a \n
+Oh so why not? Let's have it display nicely on screen if dumped in 
+a network trace.
+
+so size max of a UDP packet is 
+  (full rgba) : 10+2+(4*12+1)*8+12*(4*8+1)*1=800 bytes
+
+Note that the current code needs change of HASH define to
+"s2l\n<8<18 "
+as that value is always checked to validate a correct frame
+and the code does not use the infos to size buffers (else: buffer overrun hack)
+
+

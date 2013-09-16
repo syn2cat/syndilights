@@ -4,3 +4,13 @@ the final setup will be a central server using node.js which gets it's data from
 and manages the multiple connections to web clients visualizing the virtual building
 
 howto install node js: http://howtonode.org/how-to-install-nodejs
+
+*run the latest demo
+** run the webserver/udp listener:
+nodejs ws_udp.js
+
+** run the random data feeder
+./feed_stream.sh
+
+** run the visualizer
+./firefox visionneuse.html

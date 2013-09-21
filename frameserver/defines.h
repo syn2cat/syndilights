@@ -8,17 +8,17 @@
 #define NUMBUFS 1000
 
 #define REMOTE_IP "127.0.0.1"
-#define REMOTE_PORT 1234
+#define REMOTE_PORT 4422
 
 
-#define HASH "abcdefghij"
+#define HASH "s2l\n<8<18 "
 // one byte number + 10 character hash plus newline
 #define HEADEROFFSET 12
 
-// 12 windows per floor, 7 floors, Value:Alpha
+// 12 windows per floor, 8 floors, Value:Alpha
 #define WIDTH 12
-#define HEIGHT 7
-#define CHANNELS 2
+#define HEIGHT 8
+#define CHANNELS 4
 
 #define WINDOWOFFSET (WIDTH*CHANNELS+1)*HEIGHT
 

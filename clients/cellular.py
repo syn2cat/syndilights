@@ -1,10 +1,10 @@
 # Client program "cellular"
 
 from socket import *
-import sys
-import time
+import sys, time
 from math import *
 from random import randint
+from copy import deepcopy
 
 # Set the socket parameters
 local_port = 5001
@@ -30,8 +30,9 @@ UDPSock.bind((outgoing_if, local_port))
 #UDPSock.connect((remote_host, remote_port))
 
 # this is our handshake, weak certification
-hash = "s2l\n<8<18 "
+hash = "s2l\n<8<18 " # 10 bytes
 
+# plus 2 bytes below
 alpha = chr(255)
 z_buffer = chr(1) + "\n"
 
@@ -50,27 +51,34 @@ segchannels = 4 # RGBA
 # timing elements
 # timer will hold the elapsed time in seconds
 timer = 0
-sleeptime = 5000 # milliseconds
+sleeptime = 100 # milliseconds
 frequency = 1000 / sleeptime # frames per second
 
 # function resets map to zero
-def zero_wdata():
+def set_wdata(r, g, b):
   for x in xrange(width):
     wdata.append([0] * height)
     for y in xrange(height):
-      # create an RGBA array at each location
-      wdata[x][y] = [0, 0, 0, 1]
+      # create an SRGBA array at each location
+      # where S is the state, and RGBA is colour
+      wdata[x][y] = [0, r, g, b, 1]
 
 # function resets segment display
-def zero_sdata():
-  for s in xrange(segwindows):
+def set_sdata(r, g, b):
+  global sdata
+  sdata = []
+
+  for s in xrange(segwindows): 
     sdata.append([0] * segments)
     for seg in xrange(segments):
-      sdata[s][seg] = [0, 0, 1, 1]
+      # create an SRGBA array at each location
+      # where S is the state, and RGBA is colour
+      sdata[s][seg] = [0, r, g, b, 1]
 
 # convert [r,g,b,a] to chr string
 def i2c(rgba):
-  return chr(int(255 * rgba[0])) + chr(int(255 * rgba[1])) + chr(int(255 * rgba[2])) + chr(int(255 * rgba[3])) 
+  # ignore rgba[0] because it is the state
+  return chr(int(rgba[1])) + chr(int(rgba[2])) + chr(int(rgba[3])) + chr(int(rgba[4])) 
 
 # function sends wdata and sdata state to server
 def send_update():
@@ -82,61 +90,116 @@ def send_update():
   for y in xrange(height):
     for x in xrange(width):
       data = data + i2c( wdata[x][y] )
+      #print str(wdata[x][y]) + " ",
+    #print "\n"
     data = data + "\n"
 
   # write segment window displays
   for s in xrange(segwindows):
     for seg in xrange(segments):
-      # I don't think I understand what the 3 channels are...
-      for sc in xrange(segchannels):
 	data = data + i2c( sdata[s][seg] )
     data = data + "\n"
 
-  print data
+  # print data
 
   # send the data packet to remote host
   UDPSock.sendto(data,(remote_host,remote_port))
 
-# clear map
-zero_wdata()
-zero_sdata()
+# initialize map
+set_wdata(0,0,0)
+set_sdata(0,0,255)
 
 # set start seed
 # get random location
 rx = randint(0, width - 1)
 ry = randint(0, height - 1)
-wdata[rx][ry] = [1,0,0,0.5]
+wdata[rx][ry] = [1,1,0,0,1]
+print "origin(" + str(rx) + "," + str(ry) + ")"
 
-send_update()
+def has_active_neighb(x, y):
+	# check the cell to the left
+	if x > 0 and wdata[x - 1][y][0] > 0:
+		return True
+	# check the cell above
+	if y > 0 and wdata[x][y - 1][0] > 0:
+		return True
+	# check the cell to the right
+	if x < (width - 1) and wdata[x + 1][y][0] > 0:
+		return True
+	# check the cell below
+	if y < (height - 1) and wdata[x][y + 1][0] > 0:
+		return True
+		
+# main logic loop
+for t in range(60):
+	
+	# push update to clients
+	send_update()
 
-exit()
+	# create CA buffer
+	data_buffer = deepcopy(wdata)
 
-# build loop here
-time.sleep(sleeptime/1000)
+	for y in xrange(height):
+		for x in xrange(width):
+			# if cell is active, increase its rating/value
+			if wdata[x][y][0] > 0:
+				# change the state of the cell
+				data_buffer[x][y][0] += 10
 
-# old code below ...
-# keep to compare for now
+				# assign stat to red colour
+				data_buffer[x][y][1] = data_buffer[x][y][0]
 
-t = 0
-if True:
-  #zero out the data buffer
-  data = hash
-  data += z_buffer
-  for i in range(0,width):
-    for j in range(0,height):
-      pixel = 0.5+0.5*sin(2*pi*(float(i+1)/width)+t*frequency)*sin(2*pi*(float(j+1)/height)+t*frequency)
-      data = data + chr(int(255*pixel)) + alpha
-    data = data + "\n"
-  for i in range(0,segwindows):
-    for j in range(0,segments):
-      for a in range(0,segchannels):
-	val = chr( 127 + int(128*sin(2*pi*(1+i)*(1+j)*(1+a)*t*frequency/200)))
-        data += val + val + val
-    data += "\n"
-  t+=1
+				# check we don't go too high
+				if data_buffer[x][y][0] > 127:
+					data_buffer[x][y][1] = 127
+					# assign stat to green colour
+					data_buffer[x][y][2] = data_buffer[x][y][0] - 127
 
-  print data
-  UDPSock.sendto(data,(remote_host,remote_port))
+				if data_buffer[x][y][0] > 255:
+					data_buffer[x][y][2] = 127
+					# assign stat to blue colour
+					data_buffer[x][y][3] = data_buffer[x][y][0] - 255
+					
+				if data_buffer[x][y][0] > 383:
+					data_buffer[x][y][3] = 127
+
+					set_sdata(0,0,0)
+					# E
+					sdata[0][0] = [0,255,0,0,1]
+					sdata[0][3] = [0,255,0,0,1]
+					sdata[0][4] = [0,255,0,0,1]
+					sdata[0][5] = [0,255,0,0,1]
+					sdata[0][6] = [0,255,0,0,1]
+					# N
+					sdata[1][2] = [0,255,0,0,1]
+					sdata[1][4] = [0,255,0,0,1]
+					sdata[1][5] = [0,255,0,0,1]
+					sdata[1][6] = [0,255,0,0,1]
+					# D
+					sdata[2][1] = [0,255,0,0,1]
+					sdata[2][2] = [0,255,0,0,1]
+					sdata[2][3] = [0,255,0,0,1]
+					sdata[2][4] = [0,255,0,0,1]
+					sdata[2][6] = [0,255,0,0,1]
+
+					send_update()
+					exit()
+				
+
+			# if not active, check if adjacent cell is active
+			if wdata[x][y][0] == 0 and has_active_neighb(x, y):
+				# activate and colour
+				data_buffer[x][y][0] = 1
+				data_buffer[x][y][1] = 1
+				data_buffer[x][y][2] = 0
+				data_buffer[x][y][3] = 0
+
+
+	# set wdata to new buffer
+	wdata = data_buffer
+
+	# wait to paint process next frame
+	time.sleep(sleeptime/1000.0)
 
 # close socket
 UDPSock.close()

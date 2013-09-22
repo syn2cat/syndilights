@@ -5,54 +5,83 @@
 <title>Web socket test</title>	
 <script type="text/javascript">
 
-	var ws;
+var ws;
+var msg;
 
-	function sendMessage(){
-		var message = document.getElementById('message').value;
-		ws.send(message);
-	}
+function sendMessage(){
+	var message = document.getElementById('message').value;
+	ws.send(message);
+}
+
 // this displays a standard frame
-// header: 10 bytes. must be "s2l\n<8<18 "
-// z buffer: 1 byte 
-// CR \n: 1 byte
-headersize=12;
-	function connection() {
-		ws = new WebSocket('ws://localhost:1234', 'echo-protocol');	
+function connection() {
+	ws = new WebSocket('ws://localhost:1234', 'echo-protocol');	
 
-		ws.addEventListener("message", function(e) {
-			// The data is the message from stdin of the server
-			var frame = e.data;
-                        // we got a frame here
-                        // the header is skipped (headersize)
-                        // we should test here if it's correct header
-                        // first the windows 8*(12*4+1)  (8 rows of 12 windows with 4 valus plus a \n per row)
-                        for(y=0;y<8;y++) 
-                          for(x=0;x<12;x++) {
-                            r=frame[headersize+y*(x*4+1)]  // 4 because RGBA (we ignore A)
-                            g=frame[headersize+y*(x*4+1)]
-                            b=frame[headersize+y*(x*4+1)]
-//console.log("put on d="+d+" s="+s+" val="+r+","+g+","+b+"="+b.charCodeAt(0))
-                            lightWindow(x,y,r.charCodeAt(0),g.charCodeAt(0),b.charCodeAt(0));
-                        }
-                        // now the 7 segments display
-                        // it contains 12*(8*4+1) bytes for the 7 segments
-                        // bytes012: color of segment0, display0
-                        // bytes456: color of segment1, display0
-                        // bytes89a: color of segment2, display0
-                        headersize+=8*(12*4+1)
-                        for(d=0;d<12;d++)
-                          for(s=0;s<8;s++) {
-                            r=frame[headersize+d*(8*4+1)+s*4+0]  // 4 because RGBA (we ignore A)
-                            g=frame[headersize+d*(8*4+1)+s*4+1]
-                            b=frame[headersize+d*(8*4+1)+s*4+2]
-//console.log("put on d="+d+" s="+s+" val="+r+","+g+","+b+"="+b.charCodeAt(0))
-                            lightSegment(d,s,r.charCodeAt(0),g.charCodeAt(0),b.charCodeAt(0));
-                          }
-		});
+	ws.addEventListener("message", function(e) {
 
-		document.getElementById('connect_button').style.display = 'none';
-	}
+		// TO DO
+		// check size of data
+		// if 800 then update both windows and 7-segment display
+		// if only window data is sent, redraw only that
+		// if only segment..
+		// if unexpected size...
 
+		// header: 12 bytes.
+		// 10 first bytes must be "s2l\n<8<18 "
+		// z buffer: 1 byte 
+		// CR \n: 1 byte
+		var headersize = 12;
+
+		// The data is the message from stdin of the server
+		var frame = e.data;
+		msg = frame;
+		console.log("Data length received: " + frame.length);
+
+		// we got a frame here
+		// the header is skipped (headersize)
+		// we should test here if it's correct header
+		// first the windows 8*(12*4+1)  (8 rows of 12 windows with 4 valus plus a \n per row)
+		//console.log(frame);
+
+		var width = 12;
+		var height = 8;
+
+		for(y=0;y<height;y++) {
+		  for(x=0;x<width;x++) {
+		    // Determine r g b for this window x,y
+		    r = frame[headersize + (y * (width * 4 + 1)) + (x * 4 + 0)];
+		    g = frame[headersize + (y * (width * 4 + 1)) + (x * 4 + 1)];
+		    b = frame[headersize + (y * (width * 4 + 1)) + (x * 4 + 2)];
+
+//console.log("RGB val=" + r.charCodeAt(0) + "," + g.charCodeAt(0) + "," + b.charCodeAt(0))
+		    lightWindow(x,y,r.charCodeAt(0),g.charCodeAt(0),b.charCodeAt(0));
+		  }
+		}
+
+		// now the 7 segment (8 actually) display
+		// it contains 12*(8*4+1) bytes for the 8 segments
+		// bytes012: color of segment0, display0
+		// bytes456: color of segment1, display0
+		// bytes89a: color of segment2, display0
+		var segments = 8;
+
+		// add all the display windows/frame data to header
+		headersize += height * (width * 4 + 1);
+
+		for(d=0;d<width;d++) {
+		  for(s=0;s<segments;s++) {
+		    
+		    //console.log(headersize + d * (segments * 4 + 1) + s * 4 + 0)
+		    // Determine r g b for this window d, segment s
+		    r = frame[headersize + d * (segments * 4 + 1) + s * 4 + 0];
+		    g = frame[headersize + d * (segments * 4 + 1) + s * 4 + 1];
+		    b = frame[headersize + d * (segments * 4 + 1) + s * 4 + 2];
+//console.log("Window " + d + ", segment " + s + "=" + r.charCodeAt(0) + "," + g.charCodeAt(0) + "," + b.charCodeAt(0));
+		    lightSegment(d, s, r.charCodeAt(0), g.charCodeAt(0), b.charCodeAt(0));
+		  }
+		}
+	});
+}
 
 </script>
 </head>
@@ -73,6 +102,7 @@ headersize=12;
         context.fill();
       }
       function lightWindow(x,y,r,g,b) {
+	//console.log(r + ',' + g + ',' + b);
         context.beginPath();
         context.rect(488+40.3*x, 265+87.4*y, 23, 34);
         context.fillStyle = 'rgb('+r+','+g+','+b+')';
@@ -152,7 +182,5 @@ var ascii2segments = new Array (
   // lightWindow(i,j,w)   // switch on new window with brightness w
 
     </script>
-	<div>Received from server:</div>
-	<div id='chatlog'></div>
 </body>
 </html>

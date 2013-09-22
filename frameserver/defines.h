@@ -11,13 +11,13 @@
 #define REMOTE_PORT 4422
 
 
-#define HASH "s2j\n8<18< "
+#define HASH "s2l\n<8<18 "
 // one byte number + 10 character hash plus newline
 #define HEADEROFFSET 12
 
-// 12 windows per floor, 7 floors, Value:Alpha
+// 12 windows per floor, 8 floors, Value:Alpha
 #define WIDTH 12
-#define HEIGHT 7
+#define HEIGHT 8
 #define CHANNELS 4
 
 #define WINDOWOFFSET (WIDTH*CHANNELS+1)*HEIGHT

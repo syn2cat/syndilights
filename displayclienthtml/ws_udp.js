@@ -10,6 +10,9 @@
 // byte windows 12*4 RGBA values '\n'    repeated 8 times for the 8 rows
 // byte segments 8*4 RGBA values '\n'    repeated 12 times for the top row
 
+// set to true for debugging and seeing messages sent to server
+var verbose = false;
+
 var count = 0;
 var clients = {};
 
@@ -82,8 +85,11 @@ var sendTime = function () {
 };
 
 server.on("message", function (msg, rinfo) {
-  console.log("server got: " + msg + " from " +
+  if( verbose ) {
+    console.log("server got: " + msg + " from " +
     rinfo.address + ":" + rinfo.port);
+  }
+
   for(i in clients) {
      // Send a message to the client with the message
      clients[i].sendUTF(msg);

@@ -1,0 +1,11 @@
+The goal is to make a nice python client library that allows us to quickly make new clients.
+
+First goal is to get cellular.py and plasma.py to work through full stack.
+
+plasma.py sends packets to:
+frameserver, which sends packets to:
+ws_udp.js, which sends it to the visionneuse.html client.
+
+PROBLEMS:
+- For some reason the cellular.py packet is not being processed by the frameserver
+- When running plasma.py there is an alignment error in visionneuse.hml

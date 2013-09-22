@@ -84,7 +84,7 @@ def i2c(rgba):
 def send_update():
   #zero out the data buffer
   data = hash
-  data = data + z_buffer
+  data = data + z_buffer # 12 bytes
 
   # write frame data
   for y in xrange(height):
@@ -106,7 +106,7 @@ def send_update():
   UDPSock.sendto(data,(remote_host,remote_port))
 
 # initialize map
-set_wdata(0,0,0)
+set_wdata(67,67,67)
 set_sdata(0,0,255)
 
 # set start seed

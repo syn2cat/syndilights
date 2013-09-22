@@ -22,9 +22,9 @@
 
 #define WINDOWOFFSET (WIDTH*CHANNELS+1)*HEIGHT
 
-// 8 segments per window, 12 segments per floor, RGBA
-#define SEGNUM 8
+// 12 windows wide, 8 segment per window, RGBA
 #define SEGWIDTH 12
+#define SEGNUM 8
 #define SEGCHANNELS 4
 
 #define BUFLEN HEADEROFFSET+WINDOWOFFSET+(SEGNUM*SEGCHANNELS+1)*SEGWIDTH
@@ -34,7 +34,7 @@
 
 struct frame_t 
 {
-	unsigned char z;
+  unsigned char z;
   unsigned char windows[HEIGHT][WIDTH][CHANNELS];
   unsigned char segments[SEGWIDTH][SEGNUM][SEGCHANNELS];
 //  int windows[HEIGHT][WIDTH][CHANNELS];

@@ -7,10 +7,10 @@
 
 Server::Server(int _port )
 {
-	port = _port;
-	displaycounter = 0;
-	packetcounter = 0;
-	consoleinit = false;
+  port = _port;
+  displaycounter = 0;
+  packetcounter = 0;
+  consoleinit = false;
   mode = FRAME;
   selected_buffer=0;
   launch_threads();
@@ -68,7 +68,7 @@ void Server::listen()
 
 
       // DEBUG OUTPUT RAW BUFFER DATA from packet
-      // std::cout << recv_buf.data() << std::endl;
+      //std::cout << recv_buf.data() << std::endl;
 
       // check whether this is a valid packet and discard it if it isn't
       // note, this is a very hack way of comparing strings...
@@ -173,7 +173,7 @@ void Server::listen()
 void Server::send()
 {
 
-  const int length = WIDTH*HEIGHT*CHANNELS + SEGWIDTH*SEGNUM*SEGCHANNELS;
+  const int length = 12 + HEIGHT*(WIDTH*CHANNELS+1) + SEGWIDTH*(SEGNUM*SEGCHANNELS+1);
   static char data[length];
   
   while(1)
@@ -188,9 +188,10 @@ void Server::send()
         {
           for(int k = 0; k < CHANNELS; k++)
           {
-            data[i*WIDTH*CHANNELS + CHANNELS*j + k] = frame.windows[i][j][k];
+            data[i*(WIDTH*CHANNELS+1) + j*CHANNELS + k] = frame.windows[i][j][k];
           }
         }
+        data[i*(WIDTH*CHANNELS+1) + (WIDTH*CHANNELS)] = '\n';
       }
       
       for(int i = 0; i < SEGWIDTH; i++)
@@ -199,10 +200,12 @@ void Server::send()
         {
           for(int k = 0; k < SEGCHANNELS; k++)
           {
-            data[WIDTH*HEIGHT*CHANNELS +
-                  i*SEGNUM*SEGCHANNELS + SEGCHANNELS*j + k] = frame.segments[i][j][k];
+            data[HEIGHT*(WIDTH*CHANNELS+1) +
+                  i*(SEGNUM*SEGCHANNELS+1) + j*SEGCHANNELS + k] = frame.segments[i][j][k];
           }
         }
+        data[HEIGHT*(WIDTH*CHANNELS+1) +
+                  i*(SEGNUM*SEGCHANNELS+1) + (SEGNUM*SEGCHANNELS)] = '\n';
       }
     }
 
@@ -282,12 +285,12 @@ void Server::mix()
       // implement alpha blending
       for(int x = 0; x < size; x++)
       {
-				temp_frame = buffers[x]->get();
+	temp_frame = buffers[x]->get();
         for(int i = 0; i < HEIGHT; i++)
         {
           for(int j = 0; j < WIDTH; j++)
           {
-						temp_alpha = (float)temp_frame.windows[i][j][CHANNELS-1]/255;						
+	    temp_alpha = (float)temp_frame.windows[i][j][CHANNELS-1]/255;						
             for(int a = 0; a < CHANNELS; a++)
             {
 							// this works for the colors and for the alpha channel
@@ -350,53 +353,55 @@ void Server::console()
 	noecho();
     
 	if(has_colors() == FALSE)
-	{	endwin();
+	{	
+		endwin();
 		printf("Your terminal does not support color\n");
 		// not sure what happens here because of threads!
-    exit(1);
+		exit(1);
 	}
 	start_color();			/* Start color 			*/
 
-  init_pair(1,COLOR_RED,COLOR_BLACK);
-  init_pair(2,COLOR_GREEN,COLOR_BLACK);
-  init_pair(3,COLOR_BLUE,COLOR_BLACK);
-  init_pair(4,COLOR_BLACK,COLOR_WHITE);
+	init_pair(1,COLOR_RED,COLOR_BLACK);
+	init_pair(2,COLOR_GREEN,COLOR_BLACK);
+	init_pair(3,COLOR_BLUE,COLOR_BLACK);
+	init_pair(4,COLOR_BLACK,COLOR_WHITE);
+
 	{
 		Glib::Mutex::Lock lock(mutex_);
 		consoleinit = true;
 		threads.push_back( Glib::Thread::create( sigc::mem_fun(this, &Server::input), false) );
 	}
 
-  while(1)
-  {
+	while(1)
+	{
 		{
 			// we'll be accessing some data to provide statistics, lock the Server!!!
-      Glib::Mutex::Lock lock(mutex_);
-      mvprintw(0,0,"Clients %d | F2 Frame | F3 Values | F4 Clients | F5 Stats | input: %d            ", buffers.size(),console_input );
+			Glib::Mutex::Lock lock(mutex_);
+			mvprintw(0,0,"Clients %d | F2 Frame | F3 Values | F4 Clients | F5 Stats | input: %d            ", buffers.size(),console_input );
 			switch(mode)
 			{
 				case FRAME:
 					console_printframe(frame);
-          break;
-        case FRAME_VALUES:
-          console_printframe_values(frame);
-          break;
-        case CLIENTS:
-        	console_printclients();
-        	break;
+					break;
+				case FRAME_VALUES:
+					console_printframe_values(frame);
+					break;
+				case CLIENTS:
+					console_printclients();
+					break;
 				default:
 					console_printframe(frame);
 			}
 			refresh();			/* Print it on to the real screen */
 		}
-    usleep( 20000 );
-  }
-  endwin();			/* End curses mode		  */
+		usleep( 20000 );
+	}
+	endwin();			/* End curses mode		  */
 }
 
 void Server::input()
 {
-	int c;
+  int c;
   
   // get the number of buffers in a threadsafe manner (see Server::get_size() )
   int size = get_size();
@@ -432,7 +437,7 @@ void Server::input()
         case '0':
         default:
         	{
-						Glib::Mutex::Lock lock(mutex_);
+		Glib::Mutex::Lock lock(mutex_);
           	console_input = c;
           }
       }
@@ -567,7 +572,6 @@ void Server::console_printclients()
       }
 		}
 }
-
 
 void Server::console_printstats()
 {

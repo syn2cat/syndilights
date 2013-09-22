@@ -7,6 +7,9 @@ from math import *
 
 # Set the socket parameters
 local_port = 5001
+# direct html udp port
+#remote_port = 4422
+# production port
 remote_port = 4321
 
 # TODO: autodetect interface address for remote application
@@ -26,20 +29,20 @@ UDPSock.bind((outgoing_if, local_port))
 
 segmentsfile = open('segments','r')
 
-hash = "abcdefghij"
+hash = "s2l\n<8<18 " # 10 bytes
 
 alpha = chr(255)
 
 z_buffer = chr(1) + "\n"
 
-width = 7
-height = 12
+width = 12
+height = 8
 
 segments = 8
 segwidth = 12
-segchannels = 4
+segchannels = 3
 
-sleeptime = 0.02
+sleeptime = 0.2
 t = 0
 
 #timer will hold the elapsed time in seconds
@@ -49,15 +52,22 @@ while (1):
   #zero out the data buffer
   data = hash
   data += z_buffer
-  for i in range(0,width):
-    for j in range(0,height):
-      pixel = 0.5+0.5*sin(2*pi*(float(i+1)/width)+t*frequency)*sin(2*pi*(float(j+1)/height)+t*frequency)
-      data = data + chr(int(255*pixel)) + alpha
-    data = data + "\n"
+
+  # windows
+  for j in range(0,height):
+    for i in range(0,width):
+      pixel = 0.5 + 0.5*sin(2*pi*(float(i+1)/width)+t*frequency)*sin(2*pi*(float(j+1)/height)+t*frequency)
+      char = chr(int(127 * pixel))
+      data += char + char + char + alpha
+    data += "\n"
+  
+  # segment/text display
   for i in range(0,segwidth):
     for j in range(0,segments):
       for a in range(0,segchannels):
-        data += chr( 127 + int(128*sin(2*pi*(1+i)*(1+j)*(1+a)*t*frequency/200)))
+        val = 63 + int(63*sin(2*pi*(1+i)*(1+j)*t*frequency/200))
+        data += chr(val)
+      data += alpha
     data += "\n"
   t+=1
   if not data:

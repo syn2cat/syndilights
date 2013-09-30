@@ -79,6 +79,9 @@ class syndelights_canvas:
 	def setwin_xy_srgba_array(self, x, y, srgba):
 		self.window_data[y][x] = dict(s=srgba[0], r=srgba[1], g=srgba[2], b=srgba[3], a=srgba[4])
 
+	def setsegwin_ws_srgba_array(self, w, s, srgba):
+		self.segmented_windows[w][s] = dict(s=srgba[0], r=srgba[1], g=srgba[2], b=srgba[3], a=srgba[4])
+
 	def setwin_xy_sval(self, x, y, col, val):
 		if col == 's':
 			self.window_data[y][x]['s'] = val

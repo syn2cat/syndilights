@@ -8,7 +8,7 @@ from math import *
 # Set the socket parameters
 local_port = 5001
 # direct html udp port
-#remote_port = 4422
+remote_port = 4422
 # production port
 remote_port = 4321
 
@@ -40,11 +40,11 @@ segments = 8
 segwidth = 12
 segchannels = 3
 
-sleeptime = 0.2
+sleeptime = 0.1
 t = 0
 
 #timer will hold the elapsed time in seconds
-frequency = 2*pi/200
+frequency = 2*pi/20
 
 while (1):
   #zero out the data buffer

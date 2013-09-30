@@ -86,7 +86,7 @@ var sendTime = function () {
 
 server.on("message", function (msg, rinfo) {
   if( verbose ) {
-    console.log("server got: " + msg + " from " +
+    console.log("server got (" + msg.length + ") bytes: " + msg + " from " +
     rinfo.address + ":" + rinfo.port);
   }
 

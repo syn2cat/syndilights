@@ -7,7 +7,7 @@ seg_windows = 12
 segments = 8
 
 test = syndelights_canvas("s2l\n<8<18 ", 1, width, height, seg_windows, "127.0.0.1", 5001, "127.0.0.1", 4422, 3)
-test = syndelights_canvas("s2l\n<8<18 ", 1, width, height, seg_windows, "127.0.0.1", 5001, "127.0.0.1", 4321, 3)
+test = syndelights_canvas("s2l\n<8<18 ", 1, width, height, seg_windows, "127.0.0.1", 5002, "127.0.0.1", 4321, 3)
 
 test.connect()
 test.reset_windows(0, 0, 0, 0, 127)

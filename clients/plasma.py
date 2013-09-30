@@ -6,7 +6,7 @@ import time
 from math import *
 
 # Set the socket parameters
-local_port = 5001
+local_port = 5003
 # direct html udp port
 remote_port = 4422
 # production port
@@ -29,7 +29,7 @@ UDPSock.bind((outgoing_if, local_port))
 
 hash = "s2l\n<8<18 " # 10 bytes
 
-alpha = chr(255)
+alpha = chr(55)
 
 z_buffer = chr(1) + "\n"
 

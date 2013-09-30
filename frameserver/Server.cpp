@@ -173,7 +173,7 @@ void Server::listen()
 void Server::send()
 {
 
-  const int length = 12 + HEIGHT*(WIDTH*CHANNELS+1) + SEGWIDTH*(SEGNUM*SEGCHANNELS+1);
+  const int length = HEADEROFFSET + HEIGHT*(WIDTH*CHANNELS+1) + SEGWIDTH*(SEGNUM*SEGCHANNELS+1);
   static char data[length];
   
   while(1)
@@ -188,10 +188,10 @@ void Server::send()
         {
           for(int k = 0; k < CHANNELS; k++)
           {
-            data[i*(WIDTH*CHANNELS+1) + j*CHANNELS + k] = frame.windows[i][j][k];
+            data[HEADEROFFSET + i*(WIDTH*CHANNELS+1) + j*CHANNELS + k] = frame.windows[i][j][k];
           }
         }
-        data[i*(WIDTH*CHANNELS+1) + (WIDTH*CHANNELS)] = '\n';
+        data[HEADEROFFSET + i*(WIDTH*CHANNELS+1) + (WIDTH*CHANNELS)] = '\n';
       }
       
       for(int i = 0; i < SEGWIDTH; i++)
@@ -200,11 +200,11 @@ void Server::send()
         {
           for(int k = 0; k < SEGCHANNELS; k++)
           {
-            data[HEIGHT*(WIDTH*CHANNELS+1) +
+            data[HEADEROFFSET + HEIGHT*(WIDTH*CHANNELS+1) +
                   i*(SEGNUM*SEGCHANNELS+1) + j*SEGCHANNELS + k] = frame.segments[i][j][k];
           }
         }
-        data[HEIGHT*(WIDTH*CHANNELS+1) +
+        data[HEADEROFFSET + HEIGHT*(WIDTH*CHANNELS+1) +
                   i*(SEGNUM*SEGCHANNELS+1) + (SEGNUM*SEGCHANNELS)] = '\n';
       }
     }

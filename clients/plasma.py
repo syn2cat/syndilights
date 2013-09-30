@@ -27,8 +27,6 @@ UDPSock.bind((outgoing_if, local_port))
 # goes down or refuses connection
 #UDPSock.connect((remote_host, remote_port))
 
-segmentsfile = open('segments','r')
-
 hash = "s2l\n<8<18 " # 10 bytes
 
 alpha = chr(255)

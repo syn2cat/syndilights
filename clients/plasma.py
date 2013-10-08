@@ -6,12 +6,13 @@ import time
 from math import *
 
 # Set the socket parameters
-local_port = 5003
+local_port = 5004
 # direct html udp port
 remote_port = 4422
 # production port
 remote_port = 4321
 
+zlevel=15
 # TODO: autodetect interface address for remote application
 outgoing_if = "127.0.0.1"
 remote_host = "127.0.0.1"
@@ -31,7 +32,7 @@ hash = "s2l\n<8<18 " # 10 bytes
 
 alpha = chr(55)
 
-z_buffer = chr(1) + "\n"
+z_buffer = chr(zlevel) + "\n"
 
 width = 12
 height = 8

@@ -7,5 +7,3 @@ frameserver, which sends packets to:
 ws_udp.js, which sends it to the visionneuse.html client.
 
 PROBLEMS:
-- For some reason the cellular.py packet is not being processed by the frameserver
-- When running plasma.py there is an alignment error in visionneuse.hml

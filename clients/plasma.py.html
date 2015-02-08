@@ -1,0 +1,86 @@
+<html><head>
+<title>plasma.py</title>
+<meta name="Generator" content="htmlizer/[twisted, version 11.1.0]" />
+<link rel="alternate" href="plasma.py" type="text/x-python" />
+
+</head>
+<body>
+<pre><span class="py-src-comment"># Client program</span>
+
+<span class="py-src-keyword">from</span> <span class="py-src-variable">socket</span> <span class="py-src-keyword">import</span> *
+<span class="py-src-keyword">import</span> <span class="py-src-variable">sys</span>
+<span class="py-src-keyword">import</span> <span class="py-src-variable">time</span>
+<span class="py-src-keyword">from</span> <span class="py-src-variable">math</span> <span class="py-src-keyword">import</span> *
+
+<span class="py-src-comment"># Set the socket parameters</span>
+<span class="py-src-variable">local_port</span> = <span class="py-src-number">5003</span>
+<span class="py-src-comment"># direct html udp port</span>
+<span class="py-src-variable">remote_port</span> = <span class="py-src-number">4422</span>
+<span class="py-src-comment"># production port</span>
+<span class="py-src-variable">remote_port</span> = <span class="py-src-number">4321</span>
+
+<span class="py-src-comment"># TODO: autodetect interface address for remote application</span>
+<span class="py-src-variable">outgoing_if</span> = <span class="py-src-string">"127.0.0.1"</span>
+<span class="py-src-variable">remote_host</span> = <span class="py-src-string">"127.0.0.1"</span>
+
+<span class="py-src-comment"># udp is the default for DGRAM</span>
+<span class="py-src-variable">UDPSock</span> = <span class="py-src-variable">socket</span>(<span class="py-src-variable">AF_INET</span>, <span class="py-src-variable">SOCK_DGRAM</span>)
+
+<span class="py-src-comment"># we MUST bind, otherwise python will choose a different port for each</span>
+<span class="py-src-comment"># connection</span>
+<span class="py-src-variable">UDPSock</span>.<span class="py-src-variable">bind</span>((<span class="py-src-variable">outgoing_if</span>, <span class="py-src-variable">local_port</span>))
+
+<span class="py-src-comment"># we will not use connections so we can keep working even if the server</span>
+<span class="py-src-comment"># goes down or refuses connection</span>
+<span class="py-src-comment">#UDPSock.connect((remote_host, remote_port))</span>
+
+<span class="py-src-variable">hash</span> = <span class="py-src-string">"s2l\n&lt;8&lt;18 "</span> <span class="py-src-comment"># 10 bytes</span>
+
+<span class="py-src-variable">alpha</span> = <span class="py-src-variable">chr</span>(<span class="py-src-number">55</span>)
+
+<span class="py-src-variable">z_buffer</span> = <span class="py-src-variable">chr</span>(<span class="py-src-number">1</span>) + <span class="py-src-string">"\n"</span>
+
+<span class="py-src-variable">width</span> = <span class="py-src-number">12</span>
+<span class="py-src-variable">height</span> = <span class="py-src-number">8</span>
+
+<span class="py-src-variable">segments</span> = <span class="py-src-number">8</span>
+<span class="py-src-variable">segwidth</span> = <span class="py-src-number">12</span>
+<span class="py-src-variable">segchannels</span> = <span class="py-src-number">3</span>
+
+<span class="py-src-variable">sleeptime</span> = <span class="py-src-number">0.1</span>
+<span class="py-src-variable">t</span> = <span class="py-src-number">0</span>
+
+<span class="py-src-comment">#timer will hold the elapsed time in seconds</span>
+<span class="py-src-variable">frequency</span> = <span class="py-src-number">2</span>*<span class="py-src-variable">pi</span>/<span class="py-src-number">20</span>
+
+<span class="py-src-keyword">while</span> (<span class="py-src-number">1</span>):
+  <span class="py-src-comment">#zero out the data buffer</span>
+  <span class="py-src-variable">data</span> = <span class="py-src-variable">hash</span>
+  <span class="py-src-variable">data</span> += <span class="py-src-variable">z_buffer</span>
+
+  <span class="py-src-comment"># windows</span>
+  <span class="py-src-keyword">for</span> <span class="py-src-variable">j</span> <span class="py-src-keyword">in</span> <span class="py-src-variable">range</span>(<span class="py-src-number">0</span>,<span class="py-src-variable">height</span>):
+    <span class="py-src-keyword">for</span> <span class="py-src-variable">i</span> <span class="py-src-keyword">in</span> <span class="py-src-variable">range</span>(<span class="py-src-number">0</span>,<span class="py-src-variable">width</span>):
+      <span class="py-src-variable">pixel</span> = <span class="py-src-number">0.5</span> + <span class="py-src-number">0.5</span>*<span class="py-src-variable">sin</span>(<span class="py-src-number">2</span>*<span class="py-src-variable">pi</span>*(<span class="py-src-variable">float</span>(<span class="py-src-variable">i</span>+<span class="py-src-number">1</span>)/<span class="py-src-variable">width</span>)+<span class="py-src-variable">t</span>*<span class="py-src-variable">frequency</span>)*<span class="py-src-variable">sin</span>(<span class="py-src-number">2</span>*<span class="py-src-variable">pi</span>*(<span class="py-src-variable">float</span>(<span class="py-src-variable">j</span>+<span class="py-src-number">1</span>)/<span class="py-src-variable">height</span>)+<span class="py-src-variable">t</span>*<span class="py-src-variable">frequency</span>)
+      <span class="py-src-variable">char</span> = <span class="py-src-variable">chr</span>(<span class="py-src-variable">int</span>(<span class="py-src-number">127</span> * <span class="py-src-variable">pixel</span>))
+      <span class="py-src-variable">data</span> += <span class="py-src-variable">char</span> + <span class="py-src-variable">char</span> + <span class="py-src-variable">char</span> + <span class="py-src-variable">alpha</span>
+    <span class="py-src-variable">data</span> += <span class="py-src-string">"\n"</span>
+  
+  <span class="py-src-comment"># segment/text display</span>
+  <span class="py-src-keyword">for</span> <span class="py-src-variable">i</span> <span class="py-src-keyword">in</span> <span class="py-src-variable">range</span>(<span class="py-src-number">0</span>,<span class="py-src-variable">segwidth</span>):
+    <span class="py-src-keyword">for</span> <span class="py-src-variable">j</span> <span class="py-src-keyword">in</span> <span class="py-src-variable">range</span>(<span class="py-src-number">0</span>,<span class="py-src-variable">segments</span>):
+      <span class="py-src-keyword">for</span> <span class="py-src-variable">a</span> <span class="py-src-keyword">in</span> <span class="py-src-variable">range</span>(<span class="py-src-number">0</span>,<span class="py-src-variable">segchannels</span>):
+        <span class="py-src-variable">val</span> = <span class="py-src-number">63</span> + <span class="py-src-variable">int</span>(<span class="py-src-number">63</span>*<span class="py-src-variable">sin</span>(<span class="py-src-number">2</span>*<span class="py-src-variable">pi</span>*(<span class="py-src-number">1</span>+<span class="py-src-variable">i</span>)*(<span class="py-src-number">1</span>+<span class="py-src-variable">j</span>)*<span class="py-src-variable">t</span>*<span class="py-src-variable">frequency</span>/<span class="py-src-number">200</span>))
+        <span class="py-src-variable">data</span> += <span class="py-src-variable">chr</span>(<span class="py-src-variable">val</span>)
+      <span class="py-src-variable">data</span> += <span class="py-src-variable">alpha</span>
+    <span class="py-src-variable">data</span> += <span class="py-src-string">"\n"</span>
+  <span class="py-src-variable">t</span>+=<span class="py-src-number">1</span>
+  <span class="py-src-keyword">if</span> <span class="py-src-keyword">not</span> <span class="py-src-variable">data</span>:
+    <span class="py-src-keyword">break</span>
+  <span class="py-src-keyword">else</span>:
+    <span class="py-src-variable">UDPSock</span>.<span class="py-src-variable">sendto</span>(<span class="py-src-variable">data</span>,(<span class="py-src-variable">remote_host</span>,<span class="py-src-variable">remote_port</span>))
+  <span class="py-src-variable">time</span>.<span class="py-src-variable">sleep</span>(<span class="py-src-variable">sleeptime</span>)
+
+<span class="py-src-variable">UDPSock</span>.<span class="py-src-variable">close</span>()
+</pre>
+</body>

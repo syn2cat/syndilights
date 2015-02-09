@@ -34,6 +34,7 @@ The main configuration of the frameserver is done in <defines.h>
 
 Main tuneables:
 
+```
 // where to send the UDP output of the frameserver
 #define REMOTE_IP "127.0.0.1"
 #define REMOTE_PORT 1234
@@ -53,3 +54,4 @@ Main tuneables:
 #define SEGNUM 8
 #define SEGWIDTH 12
 #define SEGCHANNELS 4
+```

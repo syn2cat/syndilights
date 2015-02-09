@@ -1,24 +1,34 @@
-Install dependencies:
+Install dependencies
+--------------------
 
+```
 sudo apt-get install libboost-all-dev libncurses5-dev libglibmm-2.4-dev build-essential
+```
 
-= setup =
+setup
+-----
+
 The system is set up of various parts. See frameserver.png
 
 Latest setup is:
+
 * displayclienthtml/ws_udp.js
+-----------------------------
 A nodjs server => $ node displayclienthtml/ws_udp.js
 This listens for UDP packets to show on a virtual building
 This server creates a webserver where a browser can connect to see a simulation
-of the building. => $ firefox/chromium displayclienthtml/visionneuse.html 
+of the building. => $ firefox/chromium displayclienthtml/visionneuse.html
 
-* frameserver 
+* frameserver
+-------------
 A c++ program recieving UDP frames combining them to generate the final display
 
 * clients
+---------
 Written in any language, creates UDP packets which are sent to the frameserver
 
-= Building configuration =
+Building configuration
+----------------------
 
 The main configuration of the frameserver is done in <defines.h>
 

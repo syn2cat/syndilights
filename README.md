@@ -12,12 +12,12 @@ The system is set up of various parts. See frameserver.png
 
 Latest setup is:
 
-* displayclienthtml/ws_udp.js
+* displayclient/html/ws_udp.js
 -----------------------------
-A nodjs server => $ node displayclienthtml/ws_udp.js
+A nodjs server => $ node displayclient/html/ws_udp.js
 This listens for UDP packets to show on a virtual building
 This server creates a webserver where a browser can connect to see a simulation
-of the building. => $ firefox/chromium displayclienthtml/visionneuse.html
+of the building. => $ firefox/chromium displayclient/html/visionneuse.html
 
 * frameserver
 -------------

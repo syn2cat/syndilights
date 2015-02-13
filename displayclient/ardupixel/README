@@ -1,0 +1,15 @@
+This recieves a syn2lighs packet via UDP and displays it on an neopixel array
+The arduino does the conversion from normal x/y coordinates to physical pixels.
+This means thet the physical layout should not be of concern for the
+sender of the UDP packet. Top left is always 0,0
+
+The neopixel array can be set up several ways:
+
+Feed in is in one of the 4 corners
+From there it goes vertically in zigzag to the opposing side.
+e.g. feed in is top left corner
+Left down, then 1 right, up gain, 1 right etc...
+
+Alternatively it can also go horizontally in zigzag to the opposite side
+
+Enhancement: have dip switches to configure max X/Y and layout

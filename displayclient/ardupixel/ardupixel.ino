@@ -13,10 +13,14 @@
 #define PIN            6
 
 // How many NeoPixels are attached to the Arduino?
-#define NUMPIXELS      25
+// at 800Mhz we can send 33333 color values / second
+// so to have 60hz refresh the max pixels is 555 so we set it to arbitryrily 512
+#define ROWS    5
+#define COLS    5
+#define NUMPIXELS      ROWS*COLS
+
+
 Adafruit_NeoPixel pixels = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
- 
-uint16_t brightness = 10;
 
 // the mac will be filled out by serial number, stored as ascii hex in the eeprom 6 first bytes
 byte mac[] = { '2', 'S', 'L', 0, 0, 0 };  // 2(to) S-yn2-L-ights  (2 because unicast + locally administered)
@@ -61,7 +65,21 @@ void setup() {
   }
   Serial.println();
   pixels.begin();
+  pixels.show(); // Initialize all pixels to 'off'
+
+  for(int x=0;x<COLS;x++) {
+   for(int y=0;y<ROWS;y++) {
+    // pixels.setPixelColor(indirect(x,y), pixels.Color(r, g, b));
+    pixels.setPixelColor(indirect(x,y), pixels.Color(255, 0, 0));
+    pixels.show();
+    delay(100);
+    pixels.setPixelColor(indirect(x,y), pixels.Color(0, 0, 0));
+   }
+  }
+  pixels.show();
+  
 }
+
 
 void loop() {
   int packetSize = Udp.parsePacket();
@@ -84,26 +102,56 @@ uint16_t readSubPixelValue(byte in){
 }
  
  
+#define S2LHEADERLEN 12-1
 void drawCommand() {
   Udp.read(packetBuffer,UDP_TX_PACKET_MAX_SIZE);
-  for(uint16_t i = 0; i<NUMPIXELS; i++){
-    byte r=(byte)packetBuffer[i*3];
-    byte g=(byte)packetBuffer[i*3+1];
-    byte b=(byte)packetBuffer[i*3+2];
-    pixels.setPixelColor(indirect(i), pixels.Color(readSubPixelValue(r), readSubPixelValue(g), readSubPixelValue(b)));
+  if(strncmp("s2l\n",packetBuffer,4)) {
+    Serial.println("unknown packet recieved");
+    return;
+  }
+  int width=(int)(packetBuffer[4]-'0');
+  int height=(int)(packetBuffer[5]-'0');
+  Serial.print(" width:");
+    Serial.println(width);
+  Serial.print("height:");
+    Serial.println(height);
+  // now we have RGBA values coming in, ignore the A channel
+  // rows * (columns * 4 +1) 
+  // e.g. 20  * (200 * 4 + )   20 rows of 200 pixels (+1 as there is a \n after each row)
+  for(int y=0;y<height;y++) {
+    for(int x=0;x<width;x++) {
+      // determine r g b for this pixel x,y
+      // for(uint16_t i = S2LHEADERLEN-1; i<NUMPIXELS; i++){
+      uint16_t r=(uint16_t)packetBuffer[S2LHEADERLEN+(y * (width * 4 + 1)) + (x * 4 + 1)];
+      Serial.print((char)r);
+      uint16_t g=(uint16_t)packetBuffer[S2LHEADERLEN+(y * (width * 4 + 1)) + (x * 4 + 2)];
+      Serial.print((char)g);
+      uint16_t b=(uint16_t)packetBuffer[S2LHEADERLEN+(y * (width * 4 + 1)) + (x * 4 + 3)];
+      Serial.print((char)b);
+      Serial.print(' ');      
+      uint16_t pix=indirect(x,y);
+      if (pix>=0) {
+        pixels.setPixelColor(indirect(x,y), pixels.Color(r, g, b));
+      }
+    }
+    Serial.println();
   }
   pixels.show();
 }
  
-#define ROWS 5
-uint16_t indirect(uint16_t in) {
-  if((in/ROWS)%2) {
-    uint16_t t;
-    t=in/ROWS;
-    t*=ROWS;
-    t+=ROWS-(in%ROWS)-1;
-    return t;
-  } else {
-    return in;
+uint16_t indirect(uint16_t col,uint16_t row) {
+  if(col>COLS) { return -1;}
+  if(row>ROWS) { return -1;}
+  
+  // orientation is top to bottom, one right, then bottom to top
+  // we may want to add a mirror into this if it's put into a window
+
+  if(col%2) { // odd column, this reverses the direction
+    // invert the row
+    uint16_t invrow=ROWS-row-1;
+    return col*ROWS+invrow;
+  } else {    // check if column is even, i.e. the first = 0 = even
+    return col*ROWS+row;   
   }
 }
+

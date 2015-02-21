@@ -1,6 +1,7 @@
 #!/bin/bash
 # test program
 # modify below the ethernet adress
+IP="$1"
 # width and height are unfortunately hardcoded
 a=-1
 while true
@@ -24,7 +25,7 @@ frame="$(
       then
         printf "xyz "
       else
-        printf "012 "
+        printf "    "
       fi
       i=$((i+1))
     done
@@ -45,6 +46,6 @@ frame="$(
 #  done
 )"
   echo "$frame"
-  echo "$frame" | nc -w 1 -u 10.2.113.161 8888
-  sleep 1
+  echo "$frame" | nc -w 1 -u $IP 8888
+#  sleep 1
 done

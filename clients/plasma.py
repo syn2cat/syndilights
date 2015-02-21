@@ -10,12 +10,12 @@ local_port = 5004
 # direct html udp port
 remote_port = 4422
 # production port
-remote_port = 4321
+remote_port = 8888
 
 zlevel=15
 # TODO: autodetect interface address for remote application
-outgoing_if = "127.0.0.1"
-remote_host = "127.0.0.1"
+outgoing_if = "10.2.113.175"
+remote_host = "10.2.113.161"
 
 # udp is the default for DGRAM
 UDPSock = socket(AF_INET, SOCK_DGRAM)
@@ -28,7 +28,7 @@ UDPSock.bind((outgoing_if, local_port))
 # goes down or refuses connection
 #UDPSock.connect((remote_host, remote_port))
 
-hash = "s2l\n<8<18 " # 10 bytes
+hash = "s2l\n55<18 " # 10 bytes
 
 alpha = chr(55)
 

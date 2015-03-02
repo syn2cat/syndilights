@@ -37,16 +37,14 @@
 //     edit framerate in movieEvent().
 
 import processing.serial.*;
-import java.awt.Rectangle;
 
 float gamma = 1.7;
 
 Serial ledSerial;     // each port's actual Serial port
-PImage ledImage;
-Rectangle ledArea; // the area of the movie each port gets, in % (0-100)
 int[] gammatable = new int[256];
-int errorCount=0;
 float framerate=0;
+int brightness = 4;
+int errorCount=0;
 
 PImage img;  // Declare variable "a" of type PImage
 
@@ -70,7 +68,6 @@ void setup() {
 void image2data(PImage image, byte[] data) {
   int offset = 3;
   int x, y, xbegin, xend, xinc, mask;
-  int linesPerPin = 1 / 8;
   int pixel[] = new int[8];
   xbegin = 0;
   xend = image.width;
@@ -92,6 +89,7 @@ void image2data(PImage image, byte[] data) {
   } 
 }
 
+
 // translate the 24 bit color from RGB to the actual
 // order used by the LED wiring.  GRB is the most common.
 int colorWiring(int c) {
@@ -101,6 +99,9 @@ int colorWiring(int c) {
   red = gammatable[red];
   green = gammatable[green];
   blue = gammatable[blue];
+  red = (red * brightness) >> 8;
+  green = (green * brightness) >> 8;
+  blue = (blue * brightness) >> 8;
   return (green << 16) | (red << 8) | (blue); // GRB - most common wiring
 }
 
@@ -123,17 +124,12 @@ void serialConfigure(String portName) {
     errorCount++;
     return;
   }
-  println(line);
   String param[] = line.split(",");
   if (param.length != 12) {
     println("Error: port " + portName + " did not respond to LED config query");
     errorCount++;
     return;
   }
-  // only store the info and increase numPorts if Teensy responds properly
-  ledImage = new PImage(Integer.parseInt(param[0]), Integer.parseInt(param[1]), RGB);
-  ledArea = new Rectangle(Integer.parseInt(param[5]), Integer.parseInt(param[6]),
-                     Integer.parseInt(param[7]), Integer.parseInt(param[8]));
 }
 
 // draw runs every time the screen is redrawn - show the movie...

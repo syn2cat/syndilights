@@ -6,9 +6,8 @@ import jarray
 gamma = 1.7
 
 framerate = 0.0
-brightness = 4
+brightness = 12
 errorCount = 0
-gammatable = [0 for i in range(0, 256)]
 s = None
 img = None
 ledSerial = None
@@ -26,11 +25,12 @@ def setup():
     gammatable = [math.pow(i / 255.0, gamma) * 255.0 + 0.5 for i in range(0, 256)]
     
     size(40, 1)
-    img = loadImage("test2.png")
+    img = loadImage("test3.png")
 
 def image2data(data):
-    offset = 0
-    for x in range(0, img.width):
+    offset = 3
+    dimension = img.width * img.height
+    for x in xrange(0, dimension, 1):
         pixel = [colorWiring(img.pixels[x]) for i in range(0, 8)]
         imgmask = 0x800000
         while imgmask != 0:
@@ -85,7 +85,7 @@ def serialConfigure(portName):
 def draw():
     global img
     image(img, 0, 0)
-    data = jarray.zeros(img.width * 24 + 3, "b")
+    data = jarray.zeros(img.width * img.height * 24 + 3, "b")
     image2data(data)
     data[0] = ord('*')
     framerate = 30.0

@@ -26,7 +26,7 @@ def setup():
     gammatable = [math.pow(i / 255.0, gamma) * 255.0 + 0.5 for i in range(0, 256)]
     
     size(40, 1)
-    img = loadImage("test1.png")
+    img = loadImage("test2.png")
 
 def image2data(data):
     offset = 0
@@ -38,8 +38,9 @@ def image2data(data):
             for i in range(0, 8):
                 if ((pixel[i] & imgmask) != 0):
                     b |= (1 << i)
-            if b == 255:
-                b = -1
+            if b > 127:
+                # Convert to signed bytes (expected by jarray)
+                b -= 2**8
             data[offset] = b
             offset += 1
             imgmask >>= 1
@@ -89,7 +90,7 @@ def draw():
     data[0] = ord('*')
     framerate = 30.0
     usec = int((1000000.0 / framerate) * 0.75)
-    data[1] = usec /2000
+    data[1] = (usec % 256) - 2**8
     data[2] = usec >> 8
     ledSerial.write(data)
     

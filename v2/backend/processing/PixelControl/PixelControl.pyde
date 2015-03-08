@@ -8,6 +8,8 @@ errorCount = 0
 framerate = 30
 dimension = 0 
 
+long_line = False
+
 ledSerial = None
 data = None
 
@@ -51,7 +53,14 @@ def image2data(data):
             if b > 127:
                 # Convert to signed bytes (expected by jarray)
                 b -= 2**8
-            data[offset] = b
+            if long_line:
+                if x/width%2 == 0:
+                    data[offset] = b
+                else:
+                    # TODO: write data in the opposite order
+                    pass
+            else:
+                data[offset] = b
             offset += 1
             imgmask >>= 1
 
@@ -79,7 +88,7 @@ def prepare_data():
 def setup():
     global gammatable
     global dimension
-    size(700, 1)
+    size(8, 5)
     dimension = width * height
     frameRate(framerate)
     serialConfigure("/dev/ttyACM0") 

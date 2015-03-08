@@ -92,7 +92,7 @@
 
 
 //const int ledsPerStrip = LED_WIDTH * LED_HEIGHT / 8;
-const int ledsPerStrip = 40;
+const int ledsPerStrip = 700;
 
 DMAMEM int displayMemory[ledsPerStrip*6];
 int drawingMemory[ledsPerStrip*6];

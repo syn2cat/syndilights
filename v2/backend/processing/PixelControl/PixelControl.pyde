@@ -8,7 +8,7 @@ errorCount = 0
 framerate = 30
 dimension = 0 
 
-long_line = False
+long_line = True
 
 ledSerial = None
 data = None
@@ -42,27 +42,28 @@ def serialConfigure(portName):
 
 def image2data(data):
     offset = 3
-    for x in xrange(0, dimension, 1):
-        pixel = [colorWiring(pixels[x]) for i in range(0, 8)]
-        imgmask = 0x800000
-        while imgmask != 0:
-            b = 0
-            for i in range(0, 8):
-                if ((pixel[i] & imgmask) != 0):
-                    b |= (1 << i)
-            if b > 127:
-                # Convert to signed bytes (expected by jarray)
-                b -= 2**8
-            if long_line:
-                if x/width%2 == 0:
+    pixel_nb = 0  
+    for x in range(0, height):
+        pixel_line = pixels[pixel_nb:pixel_nb+width]
+        if long_line and pixel_nb/width%2 == 1:
+            pixel_line = reversed(pixel_line)
+        for px in pixel_line:
+            pixel = [colorWiring(px) for i in range(0, 8)]
+            imgmask = 0x800000
+            while imgmask != 0:
+                b = 0
+                for i in range(0, 8):
+                    if ((pixel[i] & imgmask) != 0):
+                        b |= (1 << i)
+                if b > 127:
+                    # Convert to signed bytes (expected by jarray)
+                    b -= 2**8
                     data[offset] = b
                 else:
-                    # TODO: write data in the opposite order
-                    pass
-            else:
-                data[offset] = b
-            offset += 1
-            imgmask >>= 1
+                    data[offset] = b
+                offset += 1
+                imgmask >>= 1
+            pixel_nb +=1
 
 def colorWiring(c):
     red = (c & 0xFF0000) >> 16

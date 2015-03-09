@@ -64,8 +64,8 @@
 // are arranged.  If 0, each strip begins on the left for its first row,
 // then goes right to left for its second row, then left to right,
 // zig-zagging for each successive row.
-#define LED_WIDTH      50   // number of LEDs horizontally
-#define LED_HEIGHT     1   // number of LEDs vertically (must be multiple of 8)
+#define LED_WIDTH      500   // number of LEDs horizontally
+#define LED_HEIGHT     8   // number of LEDs vertically (must be multiple of 8)
 #define LED_LAYOUT     0    // 0 = even rows left->right, 1 = even rows right->left
 
 // The portion of the video image to show on this set of LEDs.  All 4 numbers
@@ -77,8 +77,8 @@
 // or device names are assigned to each Teensy 3.0 by your operating system.
 #define VIDEO_XOFFSET  0
 #define VIDEO_YOFFSET  0       // display entire image
-#define VIDEO_WIDTH    10
-#define VIDEO_HEIGHT   10
+#define VIDEO_WIDTH    100
+#define VIDEO_HEIGHT   100
 
 //#define VIDEO_XOFFSET  0
 //#define VIDEO_YOFFSET  0     // display upper half
@@ -91,8 +91,8 @@
 //#define VIDEO_HEIGHT   50
 
 
-//const int ledsPerStrip = LED_WIDTH * LED_HEIGHT / 8;
-const int ledsPerStrip = 700;
+const int ledsPerStrip = LED_WIDTH * LED_HEIGHT / 8;
+//const int ledsPerStrip = 1000;
 
 DMAMEM int displayMemory[ledsPerStrip*6];
 int drawingMemory[ledsPerStrip*6];

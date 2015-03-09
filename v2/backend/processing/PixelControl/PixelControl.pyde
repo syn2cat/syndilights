@@ -6,9 +6,12 @@ gamma = 1.7
 brightness = 4
 errorCount = 0
 framerate = 30
-dimension = 0 
+dimension = 0
 
-long_line = True
+# TODO: test with real serial
+# https://www.pjrc.com/teensy/td_uart.html
+
+long_line = False
 
 ledSerial = None
 data = None
@@ -33,7 +36,7 @@ def serialConfigure(portName):
         println("Is it really a Teensy 3.0 running VideoDisplay?")
         errorCount += 1
         return
-    
+
     param = line_serial.split(",")
     if (len(param) != 12):
         println("Error: port " + portName + " did not respond to LED config query")
@@ -42,7 +45,7 @@ def serialConfigure(portName):
 
 def image2data(data):
     offset = 3
-    pixel_nb = 0  
+    pixel_nb = 0
     for x in range(0, height):
         pixel_line = pixels[pixel_nb:pixel_nb+width]
         if long_line and pixel_nb/width%2 == 1:
@@ -77,7 +80,7 @@ def colorWiring(c):
 def send_serial():
     image2data(data)
     ledSerial.write(data)
-    
+
 def prepare_data():
     global data
     data = jarray.zeros(dimension * 24 + 3, "b")
@@ -89,10 +92,10 @@ def prepare_data():
 def setup():
     global gammatable
     global dimension
-    size(8, 5)
+    size(500, 8)
     dimension = width * height
     frameRate(framerate)
-    serialConfigure("/dev/ttyACM0") 
+    serialConfigure("/dev/ttyACM0")
     if (errorCount > 0):
         exit()
     gammatable = [int((math.pow(i / 255.0, gamma) * 255.0 + 0.5) * brightness) for i in range(0, 256)]
@@ -101,6 +104,7 @@ def setup():
     for i in range(dimension):
         pixels[i] = color(0, 0, 0)
     updatePixels()
+    send_serial()
 
 def draw():
     global current_px
@@ -112,6 +116,6 @@ def draw():
     updatePixels()
     if current_px == len(pixels) - 1:
         current_px = 0
-    else: 
+    else:
         current_px += 1
     send_serial()

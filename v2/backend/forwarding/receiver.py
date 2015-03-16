@@ -1,4 +1,4 @@
-#!/usr/bon/env python
+#!/usr/bin/env python
 
 import socketserver
 import redis
@@ -13,19 +13,20 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
 
+    def get_config(self):
+        self.imgsize = int(self.r.hget('config', 'imgsize'))
+
     def handle(self):
-        r = redis.Redis()
-        data = None
+        print('Start receiving from {}...'.format(self.client_address[0]))
+        self.r = redis.Redis()
+        self.get_config()
         while True:
-            temp = self.request.recv(1024).strip()
-            if data is None:
-                data = temp
-            else:
-                data += temp
-            if len(temp) == 0:
+            data = self.request.recv(self.imgsize)
+            print(len(data))
+            self.r.lpush('new', data)
+            if len(data) == 0:
                 break
-        print("{} sent a packet".format(self.client_address[0]))
-        r.sadd('new', data)
+        print('... Done with {}.'.format(self.client_address[0]))
 
 
 if __name__ == "__main__":

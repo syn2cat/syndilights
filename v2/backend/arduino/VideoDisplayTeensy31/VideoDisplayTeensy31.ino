@@ -60,15 +60,14 @@
 
 #include "OctoWS2811.h"
 
-int height;
-int width;
-int ledsPerStrip;
+int height = 0;
+int width = 0;
+int ledsPerStrip = 0;
 
 int count = 0;
-DMAMEM int* displayMemory = 0;
-int* drawingMemory = 0;
+DMAMEM int* displayMemory;
+int* drawingMemory;
 elapsedMicros elapsedUsecSinceLastFrameSync = 0;
-
 
 const int config = WS2811_800kHz; // color config is on the PC side
 
@@ -77,16 +76,16 @@ OctoWS2811 leds;
 void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
-  Serial.setTimeout(50000);
-  // delay(1000);
-  Serial.readBytes((char *)&height, 4);
-  Serial.write(height);
-  Serial.readBytes((char *)&width, 4);
-  Serial.write(width);
+  Serial.setTimeout(5000);
+  //delay(1000);
+  Serial.readBytes((char *)&height, sizeof(height));
+  Serial.write((char *)&height, sizeof(height));
+  Serial.readBytes((char *)&width, sizeof(width));
+  Serial.write((char *)&width, sizeof(width));
   digitalWrite(13, LOW);
-  pinMode(12, INPUT_PULLUP); // Frame Sync
+  //pinMode(12, INPUT_PULLUP); // Frame Sync
   Serial.setTimeout(50);
-  ledsPerStrip = width * height / 8;
+  ledsPerStrip = width * height;
   displayMemory = new int[ledsPerStrip*6];
   drawingMemory = new int[ledsPerStrip*6];
   leds.attach(ledsPerStrip, displayMemory, drawingMemory, config);
@@ -97,26 +96,29 @@ void setup() {
 void loop() {
   int startChar = Serial.read();
   
-  if (startChar == 42) {
+  if (startChar == '*') {
     unsigned int startAt = micros();
     unsigned int usecUntilFrameSync = 0;
-    count = Serial.readBytes((char *)drawingMemory, sizeof(drawingMemory));
-    if (count >= sizeof(drawingMemory)) {
+    count = Serial.readBytes((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
+    Serial.write((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
+    if (count >= sizeof(int) * ledsPerStrip*6) {
       unsigned int endAt = micros();
       unsigned int usToWaitBeforeSyncOutput = 100;
       if (endAt - startAt < usecUntilFrameSync) {
         usToWaitBeforeSyncOutput = usecUntilFrameSync - (endAt - startAt);
       }
-      digitalWrite(12, HIGH);
-      pinMode(12, OUTPUT);
+      //digitalWrite(12, HIGH);
+      //pinMode(12, OUTPUT);
       delayMicroseconds(usToWaitBeforeSyncOutput);
-      digitalWrite(12, LOW);
+      //digitalWrite(12, LOW);
       // WS2811 update begins immediately after falling edge of frame sync
       digitalWrite(13, HIGH);
       leds.show();
       digitalWrite(13, LOW);
     }
   } else if (startChar >= 0) {
+    //Serial.write(startChar);
+    //Serial.flush()
     //digitalWrite(13, HIGH);
     //delay(100);
     //digitalWrite(13, LOW);

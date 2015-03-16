@@ -23,7 +23,7 @@ def TCPConfigure(server, port):
     ledTCP = Client(this, server, port)
 
 def image2data(data):
-    offset = 1
+    offset = 0
     pixel_nb = 0
     for x in range(0, height):
         pixel_line = pixels[pixel_nb:pixel_nb+width]
@@ -58,18 +58,17 @@ def colorWiring(c):
 
 def send_TCP():
     image2data(data)
-    println(data)
+    #println(data)
     ledTCP.write(data)
 
 def prepare_data():
     global data
-    data = jarray.zeros(dimension * 24 + 1 , "b")
-    data[0] = ord('*')
+    data = jarray.zeros(dimension * 24, "b")
 
 def setup():
     global gammatable
     global dimension
-    size(5, 8)
+    size(50, 30)
     dimension = width * height
     frameRate(framerate)
     TCPConfigure("127.0.0.1", 9999)

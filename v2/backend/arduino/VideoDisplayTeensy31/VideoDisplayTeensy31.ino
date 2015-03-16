@@ -100,10 +100,10 @@ void loop() {
     unsigned int startAt = micros();
     unsigned int usecUntilFrameSync = 0;
     count = Serial.readBytes((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
-    Serial.write((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
+    //Serial.write((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
     if (count >= sizeof(int) * ledsPerStrip*6) {
       unsigned int endAt = micros();
-      unsigned int usToWaitBeforeSyncOutput = 100;
+      unsigned int usToWaitBeforeSyncOutput = 1000;
       if (endAt - startAt < usecUntilFrameSync) {
         usToWaitBeforeSyncOutput = usecUntilFrameSync - (endAt - startAt);
       }

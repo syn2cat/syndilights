@@ -23,7 +23,7 @@ def send(r, s):
         # print('Data sent ({} bytes)'.format(size))
 
 
-def serialConfigure(port_name, baudrate=38400):
+def serialConfigure(port_name, baudrate=9600):
     '''
         We use a very low baudrate by default because the USB port on the teensy
         enforce this value: http://www.pjrc.com/teensy/td_serial.html
@@ -50,10 +50,25 @@ def serialConfigure(port_name, baudrate=38400):
     ser.timeout = 1
     return ser
 
+
+def serialDataConfigure(port_name, baudrate=115200):
+    ser = Serial()
+    ser.port = port_name
+    ser.baudrate = baudrate
+    try:
+        ser.open()
+    except SerialException as e:
+        sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
+        return
+
+    ser.timeout = 1
+    return ser
+
 if __name__ == "__main__":
     r = redis.Redis()
     r.hset('config', 'imgsize', height * width * 24)
     s = serialConfigure('/dev/ttyACM0')
+    #s_data = serialDataConfigure('/dev/ttyUSB0')
     while True:
         while r.llen('new') > 0:
             send(r, s)

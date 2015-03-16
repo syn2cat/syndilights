@@ -11,7 +11,7 @@ dimension = 0
 # TODO: test with real serial
 # https://www.pjrc.com/teensy/td_uart.html
 
-long_line = False
+long_line = True
 
 ledTCP = None
 data = None

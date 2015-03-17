@@ -1,0 +1,14 @@
+Forwarder
+=========
+
+* Control framerate in send function
+* Define a max framerate and announce it in the config (redis)
+* Only send the LED/strip value to the adruino code
+* Remove commented code
+
+Receiver
+========
+
+* Listen on an other port to give the config to the client (H/W, max framerate)
+* Allow the user to set a lower framerate than the max one anounced by the forwarder
+* Remove debug code

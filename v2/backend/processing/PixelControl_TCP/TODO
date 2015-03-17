@@ -1,3 +1,4 @@
 * Get config (H/W and max framerate) from the config server
 * Set current framerate (lower than max), ad send it to the config server
 * Optimize the datastream generator
+* Split the processing code (setup & dray) from the datastreem generator => library

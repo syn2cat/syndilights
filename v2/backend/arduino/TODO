@@ -1,5 +1,2 @@
-* More cleanup: the only required is the nb of leds/strip, not H/W
-* Process as fast as possible (no frame sync required)
 * Get the OctoWS2811 out, try to go upstream
 * There will be 2 Serial ports used, the startChar will not be used anymore (Serial1 will *only* get LED data)
-* remove commented/debug code

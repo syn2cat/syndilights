@@ -60,8 +60,6 @@
 
 #include "OctoWS2811.h"
 
-int height = 0;
-int width = 0;
 int ledsPerStrip = 0;
 
 int count = 0;
@@ -77,15 +75,10 @@ void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
   Serial.setTimeout(5000);
-  //delay(1000);
-  Serial.readBytes((char *)&height, sizeof(height));
-  Serial.write((char *)&height, sizeof(height));
-  Serial.readBytes((char *)&width, sizeof(width));
-  Serial.write((char *)&width, sizeof(width));
+  Serial.readBytes((char *)&ledsPerStrip, sizeof(ledsPerStrip));
+  Serial.write((char *)&ledsPerStrip, sizeof(ledsPerStrip));
   digitalWrite(13, LOW);
-  //pinMode(12, INPUT_PULLUP); // Frame Sync
   Serial.setTimeout(50);
-  ledsPerStrip = width * height;
   displayMemory = new int[ledsPerStrip*6];
   drawingMemory = new int[ledsPerStrip*6];
   leds.attach(ledsPerStrip, displayMemory, drawingMemory, config);
@@ -100,28 +93,12 @@ void loop() {
     unsigned int startAt = micros();
     unsigned int usecUntilFrameSync = 0;
     count = Serial.readBytes((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
-    //Serial.write((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
     if (count >= sizeof(int) * ledsPerStrip*6) {
-      unsigned int endAt = micros();
-      unsigned int usToWaitBeforeSyncOutput = 1000;
-      if (endAt - startAt < usecUntilFrameSync) {
-        usToWaitBeforeSyncOutput = usecUntilFrameSync - (endAt - startAt);
-      }
-      //digitalWrite(12, HIGH);
-      //pinMode(12, OUTPUT);
-      delayMicroseconds(usToWaitBeforeSyncOutput);
-      //digitalWrite(12, LOW);
-      // WS2811 update begins immediately after falling edge of frame sync
       digitalWrite(13, HIGH);
       leds.show();
       digitalWrite(13, LOW);
     }
   } else if (startChar >= 0) {
-    //Serial.write(startChar);
-    //Serial.flush()
-    //digitalWrite(13, HIGH);
-    //delay(100);
-    //digitalWrite(13, LOW);
     // discard unknown characters
   }
 }

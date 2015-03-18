@@ -3,7 +3,6 @@ Forwarder
 
 * Control framerate in send function
 * Define a max framerate and announce it in the config (redis)
-* Only send the LED/strip value to the adruino code
 * Remove commented code
 
 Receiver

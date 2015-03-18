@@ -38,12 +38,10 @@ def serialConfigure(port_name, baudrate=9600):
         sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
         return
 
-    print(height, width)
-    ser.write(height.to_bytes(4, byteorder='little'))
-    data = ser.read(4)
-    print(data, int.from_bytes(data, byteorder='little'))
+    ledsPerStrip = height * width
+    print(ledsPerStrip)
+    ser.write(ledsPerStrip.to_bytes(4, byteorder='little'))
 
-    ser.write(width.to_bytes(4, byteorder='little'))
     data = ser.read(4)
     print(data, int.from_bytes(data, byteorder='little'))
 

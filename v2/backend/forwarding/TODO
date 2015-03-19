@@ -1,13 +1,4 @@
-Forwarder
-=========
+Both sides
+==========
 
-* Control framerate in send function
-* Define a max framerate and announce it in the config (redis)
-* Remove commented code
-
-Receiver
-========
-
-* Listen on an other port to give the config to the client (H/W, max framerate)
-* Allow the user to set a lower framerate than the max one anounced by the forwarder
-* Remove debug code
+Support screen sizes > 1byte

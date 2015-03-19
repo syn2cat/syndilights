@@ -5,22 +5,31 @@ import time
 from serial import Serial, SerialException
 import sys
 
-height = 50
-width = 20
+max_height = 5
+max_width = 8
+max_framerate = 40
+
+wait_time = None
+
+
+def update_framerate():
+    global wait_time
+    new_framerate = int(r.hget('config', 'cur_framerate'))
+    if new_framerate >= max_framerate or new_framerate == 0:
+        wait_time = 1.0 / max_framerate
+    else:
+        wait_time = 1.0 / new_framerate
 
 
 def send(r, s):
     print(r.llen('new'))
     data = r.rpop('new')
     if data is not None and len(data) > 0:
-        a = bytes([ord('*')]) + bytearray(data)
-        #la = len(a)
+        now = time.time()
+        end = now + wait_time
+        a = bytes([ord('*')]) + bytearray(data) + bytes([ord('#')])
         s.write(a)
-        #time.sleep(.05)
-        #data = s.read(la)
-        #print(data)
-        # size = s.write(data)
-        # print('Data sent ({} bytes)'.format(size))
+        time.sleep(end - now)
 
 
 def serialConfigure(port_name, baudrate=9600):
@@ -38,7 +47,7 @@ def serialConfigure(port_name, baudrate=9600):
         sys.stderr.write("Could not open serial port %s: %s\n" % (ser.portstr, e))
         return
 
-    ledsPerStrip = height * width
+    ledsPerStrip = max_height * max_width
     print(ledsPerStrip)
     ser.write(ledsPerStrip.to_bytes(4, byteorder='little'))
 
@@ -64,10 +73,16 @@ def serialDataConfigure(port_name, baudrate=115200):
 
 if __name__ == "__main__":
     r = redis.Redis()
-    r.hset('config', 'imgsize', height * width * 24)
+    r.hset('config', 'height', max_height)
+    r.hset('config', 'width', max_width)
+    r.hset('config', 'imgsize', max_height * max_width * 24)
+    r.hset('config', 'max_framerate', max_framerate)
+    r.hset('config', 'cur_framerate', max_framerate)
     s = serialConfigure('/dev/ttyACM0')
-    #s_data = serialDataConfigure('/dev/ttyUSB0')
+    # s_data = serialDataConfigure('/dev/ttyUSB0')
+    wait_time = 1.0 / max_framerate
     while True:
         while r.llen('new') > 0:
             send(r, s)
         time.sleep(1)
+        update_framerate()

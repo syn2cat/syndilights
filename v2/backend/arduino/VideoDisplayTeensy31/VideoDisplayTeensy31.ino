@@ -92,12 +92,10 @@ void loop() {
   if (startChar == '*') {
     unsigned int startAt = micros();
     unsigned int usecUntilFrameSync = 0;
-    count = Serial.readBytes((char *)drawingMemory, sizeof(int) * ledsPerStrip*6);
-    if (count >= sizeof(int) * ledsPerStrip*6) {
-      digitalWrite(13, HIGH);
-      leds.show();
-      digitalWrite(13, LOW);
-    }
+    count = Serial.readBytesUntil('#', (char *)drawingMemory, sizeof(int) * ledsPerStrip*6 + 1);
+    digitalWrite(13, HIGH);
+    leds.show();
+    digitalWrite(13, LOW);
   } else if (startChar >= 0) {
     // discard unknown characters
   }

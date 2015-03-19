@@ -1,11 +1,17 @@
 add_library('net')
 import math
 import jarray
+import time
+import struct
+
+# Config, will be checked upstream
+height = 5
+width = 8
+framerate = 30
+#####################################
 
 gamma = 1.7
 brightness = 4
-errorCount = 0
-framerate = 30
 dimension = 0
 
 # TODO: test with real serial
@@ -58,22 +64,53 @@ def colorWiring(c):
 
 def send_TCP():
     image2data(data)
-    #println(data)
     ledTCP.write(data)
 
 def prepare_data():
     global data
     data = jarray.zeros(dimension * 24, "b")
 
+def receive_config():
+    max_height = jarray.zeros(1, "b")
+    max_width = jarray.zeros(1, "b")
+    max_framerate = jarray.zeros(1, "b")
+    while True:
+        available_bytes = ledTCP.available()
+        if available_bytes > 0:
+            break
+        time.sleep(1)
+    ledTCP.readBytes(max_height)
+    ledTCP.readBytes(max_width)
+    ledTCP.readBytes(max_framerate)
+    return max_height[0], max_width[0], max_framerate[0]
+
+def check_config(max_height, max_width, max_framerate):
+    if height > max_height:
+        return False, "height cannot be higher than {}".format(max_height)
+    if width > max_width:
+        return False, "width cannot be higher than {}".format(max_width)
+    if framerate > max_framerate:
+        return False, "framerate cannot be higher than {}".format(max_framerate)
+    return True, None
+
+def send_config():
+    ledTCP.write(height)
+    ledTCP.write(width)
+    ledTCP.write(framerate)
+
 def setup():
     global gammatable
     global dimension
-    size(50, 30)
+    TCPConfigure("127.0.0.1", 9999)
+    max_height, max_width, max_framerate = receive_config()
+    
+    good, reason = check_config(max_height, max_width, max_framerate)
+    if not good:
+        raise Exception(reason)
+    send_config()
+    size(width, height)
     dimension = width * height
     frameRate(framerate)
-    TCPConfigure("127.0.0.1", 9999)
-    if (errorCount > 0):
-        exit()
     gammatable = [int((math.pow(i / 255.0, gamma) * 255.0 + 0.5) * brightness) for i in range(0, 256)]
     prepare_data()
     loadPixels()

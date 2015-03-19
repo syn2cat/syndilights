@@ -13,16 +13,51 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
     client.
     """
 
-    def get_config(self):
+    def _get_config(self):
+        self.max_height = int(self.r.hget('config', 'height'))
+        self.max_width = int(self.r.hget('config', 'width'))
+        self.max_framerate = int(self.r.hget('config', 'max_framerate'))
+        self.cur_framerate = int(self.r.hget('config', 'cur_framerate'))
         self.imgsize = int(self.r.hget('config', 'imgsize'))
 
+    def _set_config(self, framerate, height, width):
+        self.r.hset('config', 'cur_framerate', framerate)
+        self.imgsize = height * width * 24
+
+    def _send_config_to_client(self):
+        self.request.sendall(bytearray([self.max_height]))
+        self.request.sendall(bytearray([self.max_width]))
+        self.request.sendall(bytearray([self.max_framerate]))
+
+    def _receive_client_config(self):
+        height = int.from_bytes(self.request.recv(1), byteorder='little')
+        width = int.from_bytes(self.request.recv(1), byteorder='little')
+        framerate = int.from_bytes(self.request.recv(1), byteorder='little')
+        good, reason = self._check_config(height, width, framerate)
+        if good:
+            self._set_config(framerate, height, width)
+        return good, reason
+
+    def _check_config(self, height, width, framerate):
+        if height > 0 and height > self.max_height:
+            return False, "height has to be between 0 and {}. Current: {}".format(self.max_height, height)
+        if width > 0 and width > self.max_width:
+            return False, "width has to be between 0 and {}. Current: {}".format(self.max_width, width)
+        if framerate > 0 and framerate > self.max_framerate:
+            return False, "framerate has to be between 0 and {}. Current: {}".format(self.max_framerate, framerate)
+        return True, None
+
     def handle(self):
-        print('Start receiving from {}...'.format(self.client_address[0]))
         self.r = redis.Redis()
-        self.get_config()
+        self._get_config()
+        self._send_config_to_client()
+        good, reason = self._receive_client_config()
+        if not good:
+            print(reason)
+            return None
+        print('Start receiving from {}...'.format(self.client_address[0]))
         while True:
             data = self.request.recv(self.imgsize)
-            print(len(data))
             self.r.lpush('new', data)
             if len(data) == 0:
                 break

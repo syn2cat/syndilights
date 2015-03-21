@@ -2,6 +2,7 @@
 
 import socketserver
 import redis
+import time
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
@@ -56,11 +57,17 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             print(reason)
             return None
         print('Start receiving from {}...'.format(self.client_address[0]))
+        got_one_frame = False
         while True:
             data = self.request.recv(self.imgsize)
             self.r.lpush('new', data)
             if len(data) == 0:
+                if not got_one_frame:
+                    time.sleep(1)
+                    continue
                 break
+            else:
+                got_one_frame = True
         print('... Done with {}.'.format(self.client_address[0]))
 
 

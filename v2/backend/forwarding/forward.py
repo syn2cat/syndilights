@@ -1,13 +1,23 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import redis
 import time
 from serial import Serial, SerialException
 import sys
+import os
 
-max_height = 5
+max_height = 32
 max_width = 8
 max_framerate = 40
+
+# Use dummy to test the Processing code without have access to actual hardware
+serialDevice = 'dummy'
+
+# OSX serial device for teensy (not the same everywhere but gives a good indications what it might look like)
+#serialDevice = '/dev/tty.usbmodem807701'
+
+# Linux Serial device
+#serialDevice = '/dev/ttyACM0'
 
 wait_time = None
 
@@ -22,13 +32,15 @@ def update_framerate():
 
 
 def send(r, s):
+    os.system('clear')
     print(r.llen('new'))
     data = r.rpop('new')
     if data is not None and len(data) > 0:
         now = time.time()
         end = now + wait_time
         a = bytes([ord('*')]) + bytearray(data) + bytes([ord('#')])
-        s.write(a)
+        if s != 'dummyMode':
+            s.write(a)
         time.sleep(end - now)
 
 
@@ -37,6 +49,12 @@ def serialConfigure(port_name, baudrate=9600):
         We use a very low baudrate by default because the USB port on the teensy
         enforce this value: http://www.pjrc.com/teensy/td_serial.html
     '''
+    if port_name == 'dummy':
+        print("Dummy mode detected, disabling Serial comms")
+        time.sleep(1)
+        ser = 'dummyMode'
+        return ser
+
     ser = Serial()
     ser.port = port_name
     ser.baudrate = baudrate
@@ -78,7 +96,7 @@ if __name__ == "__main__":
     r.hset('config', 'imgsize', max_height * max_width * 24)
     r.hset('config', 'max_framerate', max_framerate)
     r.hset('config', 'cur_framerate', max_framerate)
-    s = serialConfigure('/dev/ttyACM0')
+    s = serialConfigure(serialDevice)
     # s_data = serialDataConfigure('/dev/ttyUSB0')
     wait_time = 1.0 / max_framerate
     while True:

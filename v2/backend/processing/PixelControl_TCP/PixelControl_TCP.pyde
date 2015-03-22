@@ -30,11 +30,11 @@ def TCPConfigure(server, port):
     return Client(this, server, port)
 
 def check_config(max_height, max_width, max_framerate):
-    if height > max_height:
+    if height <= 0 or height > max_height:
         return False, "height cannot be higher than {}. Current: {}.".format(max_height, height)
-    if width > max_width:
+    if width <= 0 or width > max_width:
         return False, "width cannot be higher than {}. Current: {}.".format(max_width, width)
-    if framerate > max_framerate:
+    if framerate <= 0 or framerate > max_framerate:
         return False, "framerate cannot be higher than {}. Current: {}.".format(max_framerate, framerate)
     return True, None
 
@@ -46,11 +46,10 @@ def setup():
     
     ledTCP = TCPConfigure("127.0.0.1", 9999)
     max_height, max_width, max_framerate = receive_config(ledTCP)
-    print(max_height, max_width, max_framerate)
     good, reason = check_config(max_height, max_width, max_framerate)
     if not good:
         raise Exception(reason)
-        send_config(ledTCP)
+    send_config(ledTCP, height, width, framerate)
     size(width, height)
     dimension = width * height
     frameRate(framerate)

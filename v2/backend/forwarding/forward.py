@@ -25,7 +25,6 @@ def send(r, s):
     print(r.llen('new'))
     data = r.rpop('new')
     if data is not None and len(data) > 0:
-        print(len(data))
         now = time.time()
         end = now + wait_time
         a = bytes([ord('*')]) + bytearray(data) + bytes([ord('#')])

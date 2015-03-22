@@ -2,7 +2,6 @@
 
 import socketserver
 import redis
-import time
 
 
 class MyTCPHandler(socketserver.BaseRequestHandler):
@@ -26,14 +25,15 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
         self.imgsize = height * width * 24
 
     def _send_config_to_client(self):
-        self.request.sendall(bytearray([self.max_height]))
-        self.request.sendall(bytearray([self.max_width]))
-        self.request.sendall(bytearray([self.max_framerate]))
+        self.request.sendall(self.max_height.to_bytes(4, byteorder='little'))
+        self.request.sendall(self.max_width.to_bytes(4, byteorder='little'))
+        self.request.sendall(self.max_framerate.to_bytes(4, byteorder='little'))
 
     def _receive_client_config(self):
-        height = int.from_bytes(self.request.recv(1), byteorder='little')
-        width = int.from_bytes(self.request.recv(1), byteorder='little')
-        framerate = int.from_bytes(self.request.recv(1), byteorder='little')
+        height = int.from_bytes(self.request.recv(4), byteorder='little')
+        width = int.from_bytes(self.request.recv(4), byteorder='little')
+        framerate = int.from_bytes(self.request.recv(4), byteorder='little')
+        print(height, width, framerate)
         good, reason = self._check_config(height, width, framerate)
         if good:
             self._set_config(framerate, height, width)
@@ -57,17 +57,11 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             print(reason)
             return None
         print('Start receiving from {}...'.format(self.client_address[0]))
-        got_one_frame = False
         while True:
             data = self.request.recv(self.imgsize)
-            self.r.lpush('new', data)
             if len(data) == 0:
-                if not got_one_frame:
-                    time.sleep(1)
-                    continue
                 break
-            else:
-                got_one_frame = True
+            self.r.lpush('new', data)
         print('... Done with {}.'.format(self.client_address[0]))
 
 

@@ -1,3 +1,13 @@
+syndilights v1
+==============
+
+This is the first iteration of the syndilights (syn2lights) project code.
+Very solid (read complex) C++ implementation of the frameserver.
+
+For the current state of the art please see the 'v2' directory.
+
+For historical reasons see this Video for the initial implementation idea: https://www.youtube.com/watch?v=r5T5VG92JsA (Spoken language is Luxembourgish, sorry no translation available but the images speak for themselves)
+
 Install dependencies
 --------------------
 
@@ -14,14 +24,14 @@ Latest setup is:
 
 * displayclient/html/ws_udp.js
 -----------------------------
-A nodjs server => $ node displayclient/html/ws_udp.js
+A nodejs server => $ node displayclient/html/ws_udp.js
 This listens for UDP packets to show on a virtual building
 This server creates a webserver where a browser can connect to see a simulation
 of the building. => $ firefox/chromium displayclient/html/visionneuse.html
 
 * frameserver
 -------------
-A c++ program recieving UDP frames combining them to generate the final display
+A c++ program receiving UDP frames combining them to generate the final display
 
 * clients
 ---------

@@ -25,6 +25,7 @@ def send_config(socket, height, width, framerate):
     socket.write(struct.pack('<i', width))
     socket.write(struct.pack('<i', framerate))
 
-def send_TCP(socket, data, long_line, gammatable):
-    image2data(data, long_line, gammatable)
+def send_TCP(socket, data, long_line):
+    image2data(data, long_line)
+    # print data
     socket.write(data)

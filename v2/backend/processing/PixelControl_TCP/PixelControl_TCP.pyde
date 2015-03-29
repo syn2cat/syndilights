@@ -8,11 +8,11 @@ from data_generator import prepare_data
 # Config, will be checked upstream
 height = 5
 width = 8
-framerate = 30
+framerate = 40
 #####################################
 
 gamma = 1.7
-brightness = 4
+brightness = 0.2
 dimension = 0
 
 # TODO: test with real serial
@@ -53,12 +53,12 @@ def setup():
     size(width, height)
     dimension = width * height
     frameRate(framerate)
-    data, gammatable = prepare_data(dimension, gamma, brightness)
+    data = prepare_data(dimension, gamma, brightness)
     loadPixels()
     for i in range(dimension):
         pixels[i] = color(0, 0, 0)
     updatePixels()
-    send_TCP(ledTCP, data, long_line, gammatable)
+    send_TCP(ledTCP, data, long_line)
 
 def draw():
     global current_px
@@ -72,4 +72,4 @@ def draw():
         current_px = 0
     else:
         current_px += 1
-    send_TCP(ledTCP, data, long_line, gammatable)
+    send_TCP(ledTCP, data, long_line)

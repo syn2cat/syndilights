@@ -21,6 +21,8 @@
     THE SOFTWARE.
 */
 
+#ifndef OctoWS2811_h
+#define OctoWS2811_h
 
 #include <Arduino.h>
 #include "DMAChannel.h"
@@ -43,10 +45,9 @@
 
 class OctoWS2811 {
 public:
-    OctoWS2811();
+	OctoWS2811();
 	void attach(uint32_t numPerStrip, void *frameBuf, void *drawBuf, uint8_t config = WS2811_GRB);
-
-    void begin(void);
+	void begin(void);
 
 	void setPixel(uint32_t num, int color);
 	void setPixel(uint32_t num, uint8_t red, uint8_t green, uint8_t blue) {
@@ -74,3 +75,4 @@ private:
 	static void isr(void);
 };
 
+#endif

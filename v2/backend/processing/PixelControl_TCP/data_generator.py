@@ -36,7 +36,7 @@ def _encode_pixel(c):
     encoded = _encode_color_grb(rgb)
     return encoded
 
-def prepare_data(dimension, gamma, b):
+def prepare_data(dimension, b):
     global brightness
     global _byte_lookup
     if b > brightness_max:

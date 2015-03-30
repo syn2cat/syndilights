@@ -11,7 +11,6 @@ width = 8
 framerate = 40
 #####################################
 
-gamma = 1.7
 brightness = 0.2
 dimension = 0
 
@@ -24,7 +23,6 @@ ledTCP = None
 data = None
 
 current_px = 0
-gammatable = None
 
 def TCPConfigure(server, port):
     return Client(this, server, port)
@@ -39,7 +37,6 @@ def check_config(max_height, max_width, max_framerate):
     return True, None
 
 def setup():
-    global gammatable
     global dimension
     global data
     global ledTCP
@@ -53,7 +50,7 @@ def setup():
     size(width, height)
     dimension = width * height
     frameRate(framerate)
-    data = prepare_data(dimension, gamma, brightness)
+    data = prepare_data(dimension, brightness)
     loadPixels()
     for i in range(dimension):
         pixels[i] = color(0, 0, 0)

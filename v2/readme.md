@@ -154,6 +154,7 @@ The current demo is a green dot that will chase around the LED-strip.
 Setting long_line to True or False will change the wrapping mode
 
 long_line=False
+```
              o-+ o-+ o-+ o-+ o
              | | | | | | | | |
              o | o | o | o | o
@@ -163,7 +164,9 @@ long_line=False
              o | o | o | o | o
              | | | | | | | | |
              o +-o +-o +-o +-o
+```
 long_line=True
+```
              o---o   o---o   o
              |   |   |   |   |
              o   o   o   o   o
@@ -173,6 +176,7 @@ long_line=True
              o   o   o   o   o
              |   |   | | |   |
              o   o---o   o---o
+```
 
 Sending images to the grid
 ==========================

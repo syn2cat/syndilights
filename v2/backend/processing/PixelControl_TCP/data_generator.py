@@ -50,6 +50,7 @@ def prepare_data(dimension, b):
 def image2data(data, long_line):
     offset = 0
     pixel_nb = 0
+    loadPixels()
     for x in range(0, height):
         pixel_line = pixels[pixel_nb:pixel_nb+width]
         if long_line and pixel_nb/width%2 == 1:

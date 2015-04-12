@@ -3,6 +3,9 @@ import time
 import struct
 from data_generator import image2data
 
+def TCPConfigure(cl_class, server, port):
+    return cl_class(this, server, port)
+
 def receive_config(socket):
     max_height = jarray.zeros(4, "b")
     max_width = jarray.zeros(4, "b")
@@ -27,5 +30,4 @@ def send_config(socket, height, width, framerate):
 
 def send_TCP(socket, data, long_line):
     image2data(data, long_line)
-    # print data
     socket.write(data)

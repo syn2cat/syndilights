@@ -4,7 +4,7 @@ import socketserver
 import redis
 
 
-class MyTCPHandler(socketserver.BaseRequestHandler):
+class MyTCPHandler(socketserver.StreamRequestHandler):
     """
     The RequestHandler class for our server.
 
@@ -58,7 +58,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
             return None
         print('Start receiving from {}...'.format(self.client_address[0]))
         while True:
-            data = self.request.recv(self.imgsize)
+            data = self.rfile.readline().strip()
             if len(data) == 0:
                 break
             self.r.lpush('new', data)
@@ -66,7 +66,7 @@ class MyTCPHandler(socketserver.BaseRequestHandler):
 
 
 if __name__ == "__main__":
-    HOST, PORT = "localhost", 9999
+    HOST, PORT = "0.0.0.0", 9999
 
     # Create the server, binding to localhost on port 9999
     server = socketserver.TCPServer((HOST, PORT), MyTCPHandler)

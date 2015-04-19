@@ -6,8 +6,8 @@ from serial import Serial, SerialException
 import sys
 import os
 
-max_height = 32
-max_width = 8
+max_height = 25
+max_width = 20
 max_framerate = 40
 
 # Use dummy to test the Processing code without have access to actual hardware

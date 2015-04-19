@@ -15,8 +15,8 @@
 // How many NeoPixels are attached to the Arduino?
 // at 800Mhz we can send 33333 color values / second
 // so to have 60hz refresh the max pixels is 555 so we set it to arbitryrily 512
-#define ROWS    5
-#define COLS    5
+#define ROWS    25
+#define COLS    20
 #define NUMPIXELS      ROWS*COLS
 
 

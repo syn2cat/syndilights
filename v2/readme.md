@@ -6,15 +6,67 @@ Nb: The Processing Python code is Python2
 
 This readme assumes you are in the 'v2' directory.
 
+Flow diagram
+============
+
+    +----------------+
+    |                |
+    |  processing    |
+    |  jton(python2) |
+    |                |
+    +--------+-------+
+             |   TCP     
+             v        
+    +--------+-------+
+    |                |
+    |  reciever      |
+    |  python3       |
+    +--------+-------+
+             |   TCP     
+             v   6379     
+    +--------+-------+
+    |                |
+    |    redis       |
+    |                |
+    +--------+-------+                            
+             |  TCP                               
+             v                             o-o o o-o o o-o o
+    +--------+-------+                     | | | | | | | | |
+    |                |                     o o o o o o o o o
+    |    forwarder   |                     | | | | | | | | |
+    |    python3     |                     o o o o o o o o o
+    |                |                     | | | | | | | | |
+    +--------+-------+                     o o o o o o o o o
+             |  serial                     | | | | | | | | |
+             v                             o o-o o o-o o o-o
+    +--------+-------+  +--------+ --------+     |     |       
+    |                |==|        | --------------+     |
+    |    teensy3.1   |==| OctoWS | --------------------+
+    |                |==|        |
+    +----------------+  +--------+
+
 Installation
 ============
 
 ```
+    # This is for install on a linux64 bit. Your milage may vary
+    # download the processinag archive here https://processing.org/download/
+    tar xvzf processing-*-linux64.tgz
+    cd processing-*
+    alias processing=$PWD/processing
+    echo "alias processing=$PWD/processing" >> .profile
+    # install python modules
+    sudo apt-get install python3-pip redis-server python-virtualenv
+    virtualenv -p /usr/bin/python3 virtenv
+    . virtenv/bin/activate
     pip install -r requirements.txt
+    processing
+    # Java->Add mode... [Python] -> Install...
 ```
 
 Base Setup
 ==========
+
 
 Make sure redis-server is running. If it is you should be able to connect to port 6379
 
@@ -90,7 +142,7 @@ In the mode manager select Python and install
 Next step will be to open the following file in processing:
 
 ```
-    backend/processing/PixelControl_TCP/PixelControl_TCP.pyde
+    processing backend/processing/PixelControl_TCP/PixelControl_TCP.pyde
 ```
 
 Configure the height and width of your Pixel Setup
@@ -100,8 +152,31 @@ For test purposes the brightness has been set to low
 The current demo is a green dot that will chase around the LED-strip.
 
 Setting long_line to True or False will change the wrapping mode
-<insert picture or ASCII Art here>
 
+long_line=False
+```
+             o-+ o-+ o-+ o-+ o
+             | | | | | | | | |
+             o | o | o | o | o
+             | | | | | | | | |
+             o | o | o | o | o
+             | | | | | | | | |
+             o | o | o | o | o
+             | | | | | | | | |
+             o +-o +-o +-o +-o
+```
+long_line=True
+```
+             o---o   o---o   o
+             |   |   |   |   |
+             o   o   o   o   o
+             |   |   |   |   |
+             o   o   o   o   o
+             |   |   |   |   |
+             o   o   o   o   o
+             |   |   | | |   |
+             o   o---o   o---o
+```
 
 Sending images to the grid
 ==========================

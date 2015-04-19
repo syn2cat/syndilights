@@ -44,7 +44,7 @@ def prepare_data(dimension, b):
     else:
         brightness = b
     _byte_lookup = _build_byte_lookup()
-    data = jarray.zeros(dimension * 24, "b")
+    data = jarray.zeros(dimension * 24 + 1, "b")
     return data
 
 def image2data(data, long_line):
@@ -66,4 +66,6 @@ def image2data(data, long_line):
                     data[offset] = b
                 offset += 1
             pixel_nb +=1
+    # New line
+    data[-1] = 10
     return data

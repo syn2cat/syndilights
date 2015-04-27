@@ -3,6 +3,7 @@
 import redis
 import time
 from serial import Serial, SerialException
+from serial.tools import list_ports
 import sys
 import os
 
@@ -11,13 +12,17 @@ max_width = 20
 max_framerate = 40
 
 # Use dummy to test the Processing code without have access to actual hardware
-serialDevice = 'dummy'
+# serialDevice = 'dummy'
 
 # OSX serial device for teensy (not the same everywhere but gives a good indications what it might look like)
-#serialDevice = '/dev/tty.usbmodem807701'
+# serialDevice = '/dev/tty.usbmodem807701'
 
 # Linux Serial device
-#serialDevice = '/dev/ttyACM0'
+# serialDevice = '/dev/ttyACM0'
+
+# Automatically find the first serial port used, works on Linux. TODO: test on other OSes
+# Required if you want to reboot the teensy
+serialDevice = 'auto'
 
 wait_time = None
 
@@ -44,6 +49,23 @@ def send(r, s):
         time.sleep(end - now)
 
 
+def reboot(port_name):
+    ser = Serial()
+    ser.port = port_name
+    ser.open()
+    # Send reboot command
+    ser.write(ord('!').to_bytes(4, byteorder='little'))
+    ser.close()
+    time.sleep(3)
+
+
+def find_serial():
+    for path, name, details in list_ports.comports():
+        if details != 'n/a':
+            return path
+    raise Exception('No open ports found.')
+
+
 def serialConfigure(port_name, baudrate=9600):
     '''
         We use a very low baudrate by default because the USB port on the teensy
@@ -54,6 +76,13 @@ def serialConfigure(port_name, baudrate=9600):
         time.sleep(1)
         ser = 'dummyMode'
         return ser
+    elif port_name == 'auto':
+        print("Auto detected, search for open port")
+        port_name = find_serial()
+        print("Port found: ", port_name, ' reboot.')
+        reboot(port_name)
+        port_name = find_serial()
+        print("Done, new port: ", port_name)
 
     ser = Serial()
     ser.port = port_name

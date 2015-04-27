@@ -71,6 +71,11 @@ const int config = WS2811_800kHz; // color config is on the PC side
 
 OctoWS2811 leds;
 
+// Required for soft reboot
+#define RESTART_ADDR       0xE000ED0C
+#define READ_RESTART()     (*(volatile uint32_t *)RESTART_ADDR)
+#define WRITE_RESTART(val) ((*(volatile uint32_t *)RESTART_ADDR) = (val))
+
 void setup() {
   pinMode(13, OUTPUT);
   digitalWrite(13, HIGH);
@@ -96,7 +101,11 @@ void loop() {
     digitalWrite(13, HIGH);
     leds.show();
     digitalWrite(13, LOW);
-  } else if (startChar >= 0) {
+  }
+  else if (startChar == '!') {
+    WRITE_RESTART(0x5FA0004);
+  }
+  else if (startChar >= 0) {
     // discard unknown characters
   }
 }

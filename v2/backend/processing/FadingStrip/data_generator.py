@@ -56,8 +56,8 @@ Possibilities:
 
 def make_line(type, nb, long_line):
     '''
-    If moving up or down: 0 <= nb <= height
-    If moving right or left: 0 <= nb <= width
+    If moving up or down: 0 <= nb < height
+    If moving right or left: 0 <= nb < width
     '''
     indexes = []
     if type == 0:
@@ -68,7 +68,7 @@ def make_line(type, nb, long_line):
     elif type == 1:
         # top left -> right / OK
         pxstart = nb * width
-        for w in range((width)):
+        for w in range(width):
             indexes.append(pxstart + w)
     elif type == 2:
         # bottom left -> up / OK
@@ -78,7 +78,7 @@ def make_line(type, nb, long_line):
     elif type == 3:
         # bottom left -> right / OK
         pxstart = width * (height - 1) - nb * width
-        for w in range((width)):
+        for w in range(width):
             indexes.append(pxstart + w)
     elif type == 4:
         # top right -> down / OK
@@ -88,7 +88,7 @@ def make_line(type, nb, long_line):
     elif type == 5:
         # top right -> left / OK
         pxstart = width - 1 + nb * width
-        for w in range((width)):
+        for w in range(width):
             indexes.append(pxstart - w)
     elif type == 6:
         # bottom right -> up / OK
@@ -98,10 +98,11 @@ def make_line(type, nb, long_line):
     elif type == 7:
         # bottom right -> left / OK
         pxstart = width * height - 1 - nb * width
-        for w in range((width)):
+        for w in range(width):
             indexes.append(pxstart - w)
     else:
         raise Exception("Invalid Type")
+
     if long_line and nb % 2 == 1:
         return reversed([pixels[px] for px in indexes])
     return [pixels[px] for px in indexes]

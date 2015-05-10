@@ -4,9 +4,9 @@ from prepare import prepare
 import random
 
 # Config, will be checked upstream
-height = 15
-width = 25
-framerate = 30
+height = 25
+width = 15
+framerate = 10
 brightness = 1
 #####################################
 #receiver_IP = "10.2.113.151"
@@ -15,7 +15,7 @@ receiver_IP = "dummy"
 receiver_port = 9999
 
 # Do we have one single long line?
-long_line = False
+long_line = True
 # Type of installation (see details in data_generator)
 type = 2
 
@@ -55,7 +55,7 @@ def draw():
         else:
             col = pixels[px]
         if i == cur_len:
-            col = color(red(col) * 0.9, green(col) * 0.9, blue(col) * 0.9)
+            col = color(red(col) * 0.7, green(col) * 0.7, blue(col) * 0.7)
         pixels[px] = col
         px -=1
     updatePixels()

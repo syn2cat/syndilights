@@ -12,7 +12,10 @@ def check_config(max_height, max_width, max_framerate, height, width, framerate)
 
 def prepare(cl_class, server_ip, server_port, height, width, framerate, brightness):
     # Just to make sure pixels[] is initialized.
-    loadPixels()
+    if server_ip == 'dummy':
+        size(width, height)
+        loadPixels()
+        return None, None
     ledTCP = TCPConfigure(cl_class, server_ip, server_port)
     max_height, max_width, max_framerate = receive_config(ledTCP)
     good, reason = check_config(max_height, max_width, max_framerate, height, width, framerate)
@@ -20,6 +23,7 @@ def prepare(cl_class, server_ip, server_port, height, width, framerate, brightne
         raise Exception(reason)
     send_config(ledTCP, height, width, framerate)
     size(width, height)
+    loadPixels()
     dimension = width * height
     data = prepare_data(dimension, brightness)
     return ledTCP, data

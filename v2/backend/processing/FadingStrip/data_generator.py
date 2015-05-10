@@ -47,25 +47,88 @@ def prepare_data(dimension, b):
     data = jarray.zeros(dimension * 24 + 1, "b")
     return data
 
-def image2data(data, long_line):
+'''
+Possibilities:
+    Start: Top left / Top Right / Bottom Left / Bottom Right
+    Direction: Up / Down / Right / Left
+'''
+
+
+def make_line(type, nb, long_line):
+    '''
+    If moving up or down: 0 <= nb <= height
+    If moving right or left: 0 <= nb <= width
+    '''
+    indexes = []
+    if type == 0:
+        # top left -> down / OK
+        pxstart = nb
+        for h in range(height):
+            indexes.append(pxstart + width * h)
+    elif type == 1:
+        # top left -> right / OK
+        pxstart = nb * width
+        for w in range((width)):
+            indexes.append(pxstart + w)
+    elif type == 2:
+        # bottom left -> up / OK
+        pxstart = width * (height - 1) + nb
+        for h in range(height):
+            indexes.append(pxstart - width * h)
+    elif type == 3:
+        # bottom left -> right / OK
+        pxstart = width * (height - 1) - nb * width
+        for w in range((width)):
+            indexes.append(pxstart + w)
+    elif type == 4:
+        # top right -> down / OK
+        pxstart = width - 1 - nb
+        for h in range(height):
+            indexes.append(pxstart + width * h)
+    elif type == 5:
+        # top right -> left / OK
+        pxstart = width - 1 + nb * width
+        for w in range((width)):
+            indexes.append(pxstart - w)
+    elif type == 6:
+        # bottom right -> up / OK
+        pxstart = width * height - 1 - nb * height
+        for h in range(height):
+            indexes.append(pxstart - width * h)
+    elif type == 7:
+        # bottom right -> left / OK
+        pxstart = width * height - 1 - nb * width
+        for w in range((width)):
+            indexes.append(pxstart - w)
+    else:
+        raise Exception("Invalid Type")
+    if long_line and nb % 2 == 1:
+        return reversed([pixels[px] for px in indexes])
+    return [pixels[px] for px in indexes]
+
+
+def image2data(data, type, long_line):
     offset = 0
-    pixel_nb = 0
     loadPixels()
-    for x in range(0, height):
-        pixel_line = pixels[pixel_nb:pixel_nb+width]
-        if long_line and pixel_nb/width%2 == 1:
-            pixel_line = reversed(pixel_line)
-        for px in pixel_line:
-            py_bytes = _encode_pixel(px)
-            for b in py_bytes:
-                if b > 127:
-                    # Convert to signed bytes (expected by jarray)
-                    b -= 256
-                    data[offset] = b
-                else:
-                    data[offset] = b
-                offset += 1
-            pixel_nb +=1
+    inline_image = []
+    if type in [0, 2, 4, 6]:
+        # Organized up or down
+        for x in range(0, width):
+            inline_image += make_line(type, x, long_line)
+    elif type in [1, 3, 5, 7]:
+        # Organized left or right
+        for x in range(0, height):
+            inline_image += make_line(type, x, long_line)
+    for img_px in inline_image:
+        py_bytes = _encode_pixel(img_px)
+        for b in py_bytes:
+            if b > 127:
+                # Convert to signed bytes (expected by jarray)
+                b -= 256
+                data[offset] = b
+            else:
+                data[offset] = b
+            offset += 1
     # New line
     data[-1] = 10
     return data

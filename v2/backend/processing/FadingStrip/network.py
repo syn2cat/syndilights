@@ -28,9 +28,9 @@ def send_config(socket, height, width, framerate):
     socket.write(struct.pack('<i', width))
     socket.write(struct.pack('<i', framerate))
 
-def send_TCP(socket, data, long_line):
+def send_TCP(socket, data, long_line, type):
     if socket is None:
         # Dummy mode
         return
-    image2data(data, long_line)
+    image2data(data, type, long_line)
     socket.write(data)

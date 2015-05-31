@@ -4,10 +4,10 @@ from prepare import prepare
 import random
 
 # Config, will be checked upstream
-height = 25
-width = 15
-framerate = 10
-brightness = 1
+height = 32
+width = 8
+framerate = 20
+brightness = 0.05
 #####################################
 #receiver_IP = "10.2.113.151"
 #receiver_IP = "10.24.147.20"
@@ -15,9 +15,9 @@ receiver_IP = "dummy"
 receiver_port = 9999
 
 # Do we have one single long line?
-long_line = True
+long_line = False
 # Type of installation (see details in data_generator)
-type = 2
+type = 1
 
 # TODO: test with real serial
 # https://www.pjrc.com/teensy/td_uart.html
@@ -28,7 +28,7 @@ current_px = 0
 
 cur_color = None
 cur_len = 0
-len_change_choice = [7, 11, 13, 17, 19]
+len_change_choice = [5, 7, 9]
 
 def setup():
     global ledTCP
@@ -54,9 +54,11 @@ def draw():
             col = pixels[len(pixels) -1]
         else:
             col = pixels[px]
-        if i == cur_len:
-            col = color(red(col) * 0.7, green(col) * 0.7, blue(col) * 0.7)
-        pixels[px] = col
+        if i == 0:
+            pixels[px] = col
+        else:
+            fading = (1/(float(i)/3))
+            pixels[px] = color(red(col) * fading, green(col) * fading, blue(col) * fading)
         px -=1
     updatePixels()
 
